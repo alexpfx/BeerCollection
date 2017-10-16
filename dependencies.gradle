@@ -1,0 +1,64 @@
+ext {
+    minSdkVersion = 19
+    compileSdkVersion = 26
+    buildToolsVersion = "26.0.1"
+
+    supportVersion = "26.1.0"
+
+
+    retrofitVersion = "2.3.0"
+    daggerVersion = "2.12"
+    picassoVersion = "2.5.2"
+    rxJava = "2.1.5"
+    rxAndroid = "2.0.1"
+    butterKnifeVersion = "8.8.1"
+    gsonVersion = "2.8.2"
+
+    constraintLayoutVersion = "1.0.2"
+
+    lib_android = [
+            supportAppCompat      : "com.android.support:appcompat-v7:${supportVersion}",
+            supportCoreUi         : "com.android.support:support-core-ui:${supportVersion}",
+            supportGridLayout     : "com.android.support:gridlayout-v7:${supportVersion}",
+            supportPalette        : "com.android.support:palette-v7:${supportVersion}",
+            supportVerctorDrawable: "com.android.support:support-vector-drawable:${supportVersion}",
+            supportAnnotations    : "com.android.support:support-annotations:${supportVersion}",
+            supportCardView       : "com.android.support:cardview-v7:${supportVersion}",
+
+            constraintLayout      : "com.android.support.constraint:constraint-layout:${constraintLayoutVersion}",
+
+            dagger                : "com.google.dagger:dagger:${daggerVersion}",
+            picasso               : "com.squareup.picasso:picasso:${picassoVersion}",
+
+            rxJava                : "io.reactivex.rxjava2:rxjava:${rxJava}",
+            rxAndroid             : "io.reactivex.rxjava2:rxandroid:${rxAndroid}",
+
+            butterknife           : "com.jakewharton:butterknife:${butterKnifeVersion}"
+
+    ]
+
+
+    apt_android = [
+            butterKnifeCompiler: "com.jakewharton:butterknife-compiler:${butterKnifeVersion}",
+            daggerCompiler     : "com.google.dagger:dagger-compiler:${daggerVersion}"
+    ]
+
+    lib_java = [
+            retrofit         : "com.squareup.retrofit2:retrofit:${retrofitVersion}",
+            retrofitConverter: "com.squareup.retrofit2:converter-gson:${retrofitVersion}",
+            retrofitAdapter  : "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}",
+
+            rxJava           : "io.reactivex.rxjava2:rxjava:${rxJava}",
+            dagger           : "com.google.dagger:dagger:${daggerVersion}",
+            gson             : "com.google.code.gson:gson:${gsonVersion}"
+    ]
+
+    apt_java = [
+            daggerCompiler: "com.google.dagger:dagger-compiler:${daggerVersion}"
+    ]
+    test_common = [
+            junit       : "junit:junit:4.12",
+            hamcrestCore: "org.hamcrest:hamcrest-core:1.3"
+    ]
+
+}

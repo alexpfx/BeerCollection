@@ -1,0 +1,4 @@
+include ':beer-app', ':beer-core'
+project(':beer-app').projectDir = new File('app')
+project(':beer-core').projectDir = new File('core-lib')
+

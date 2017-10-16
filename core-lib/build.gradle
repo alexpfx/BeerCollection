@@ -1,0 +1,23 @@
+apply plugin: 'java'
+apply plugin: 'net.ltgt.apt'
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    def ext = rootProject.ext
+
+    ext.lib_java.each {
+        k, v -> compile v
+    }
+
+    ext.apt_java.each {
+        k, v -> apt v
+    }
+    ext.test_common.each {
+        k, v -> testCompile v
+    }
+
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
