@@ -1,4 +1,4 @@
-include ':beer-app', ':beer-core'
+include ':beer-app', ':beer-core', ':beer-database'
 project(':beer-app').projectDir = new File('app')
 project(':beer-core').projectDir = new File('core-lib')
-
+project (':beer-database').projectDir = new File ('database-lib')

@@ -11,6 +11,12 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        enforceUniquePackageName = false
+    }
+
+    //https://stackoverflow.com/questions/25103288/multiple-dex-files-define-my-package-buildconfig-cant-find-the-cause
+    dexOptions {
+        preDexLibraries = false
     }
 
     compileOptions {
@@ -35,6 +41,8 @@ dependencies {
 
     compile project (':beer-core')
 
+    compile project (':beer-database')
+
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -52,3 +60,5 @@ dependencies {
     }
 
 }
+
+apply plugin: 'com.google.gms.google-services'

@@ -5,6 +5,8 @@ import android.util.Log;
 
 import com.github.alexpfx.udacity.beercollection.domain.client.BreweryDBService;
 import com.github.alexpfx.udacity.beercollection.domain.model.SearchBeerResponse;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import javax.inject.Inject;
 
@@ -26,6 +28,12 @@ public class MainActivity extends BaseActivity {
 
 
         Flowable<SearchBeerResponse> stella = service.searchBeers(KEY, "stella");
+
+        FirebaseDatabase instance = FirebaseDatabase.getInstance();
+
+        DatabaseReference reference = instance.getReference("message");
+
+        reference.setValue("hello, world");
 
 
 
