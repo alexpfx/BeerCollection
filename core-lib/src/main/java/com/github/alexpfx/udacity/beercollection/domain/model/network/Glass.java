@@ -1,12 +1,13 @@
 
-package com.github.alexpfx.udacity.beercollection.domain.model;
+package com.github.alexpfx.udacity.beercollection.domain.model.network;
+
+import com.google.gson.annotations.SerializedName;
 
 import javax.annotation.Generated;
-import com.google.gson.annotations.SerializedName;
 
 @Generated("net.hexar.json2pojo")
 @SuppressWarnings("unused")
-public class Category {
+public class Glass {
 
     @SerializedName("createDate")
     private String mCreateDate;

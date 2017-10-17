@@ -18,6 +18,8 @@ ext {
 
     constraintLayoutVersion = "1.0.2"
 
+    firebaseUIVersion = "3.0.0"
+
     lib_android = [
             supportAppCompat      : "com.android.support:appcompat-v7:${supportVersion}",
             supportCoreUi         : "com.android.support:support-core-ui:${supportVersion}",
@@ -51,7 +53,8 @@ ext {
             supportAppCompat: "com.android.support:appcompat-v7:${supportVersion}",
             firebaseCore    : "com.google.firebase:firebase-core:${firebaseVersion}",
             firebaseDatabase: "com.google.firebase:firebase-database:${firebaseVersion}",
-            firebaseAuth    : "com.google.firebase:firebase-auth:${firebaseVersion}"
+            firebaseAuth    : "com.google.firebase:firebase-auth:${firebaseVersion}",
+            firebaseUiAuth : "com.firebaseui:firebase-ui-auth:${firebaseUIVersion}"
     ]
 
     lib_java = [

@@ -1,6 +1,6 @@
 package com.github.alexpfx.udacity.beercollection.beer.search;
 
-import com.github.alexpfx.udacity.beercollection.domain.model.SearchBeerResponse;
+import com.github.alexpfx.udacity.beercollection.domain.model.network.SearchBeerResponse;
 
 import io.reactivex.Flowable;
 

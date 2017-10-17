@@ -1,7 +1,7 @@
 package com.github.alexpfx.udacity.beercollection.beer.search;
 
 import com.github.alexpfx.udacity.beercollection.domain.client.BreweryDBService;
-import com.github.alexpfx.udacity.beercollection.domain.model.SearchBeerResponse;
+import com.github.alexpfx.udacity.beercollection.domain.model.network.SearchBeerResponse;
 import com.github.alexpfx.udacity.beercollection.util.SchedulerProvider;
 
 import io.reactivex.Flowable;

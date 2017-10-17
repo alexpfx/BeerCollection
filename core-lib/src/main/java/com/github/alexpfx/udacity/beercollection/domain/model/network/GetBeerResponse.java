@@ -1,5 +1,5 @@
 
-package com.github.alexpfx.udacity.beercollection.domain.model;
+package com.github.alexpfx.udacity.beercollection.domain.model.network;
 
 import javax.annotation.Generated;
 import com.google.gson.annotations.SerializedName;

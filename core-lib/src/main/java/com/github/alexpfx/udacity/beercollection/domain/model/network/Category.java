@@ -1,26 +1,26 @@
 
-package com.github.alexpfx.udacity.beercollection.domain.model;
+package com.github.alexpfx.udacity.beercollection.domain.model.network;
 
 import javax.annotation.Generated;
 import com.google.gson.annotations.SerializedName;
 
 @Generated("net.hexar.json2pojo")
 @SuppressWarnings("unused")
-public class Srm {
+public class Category {
 
-    @SerializedName("hex")
-    private String mHex;
+    @SerializedName("createDate")
+    private String mCreateDate;
     @SerializedName("id")
     private Long mId;
     @SerializedName("name")
     private String mName;
 
-    public String getHex() {
-        return mHex;
+    public String getCreateDate() {
+        return mCreateDate;
     }
 
-    public void setHex(String hex) {
-        mHex = hex;
+    public void setCreateDate(String createDate) {
+        mCreateDate = createDate;
     }
 
     public Long getId() {
