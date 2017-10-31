@@ -1,5 +1,6 @@
 package com.github.alexpfx.udacity.beercollection;
 
+import com.github.alexpfx.udacity.beercollection.dagger.DatabaseModule;
 import com.github.alexpfx.udacity.beercollection.domain.ServiceModule;
 
 import javax.inject.Singleton;
@@ -13,9 +14,10 @@ import dagger.Component;
 @Singleton
 @Component(modules = {
         AndroidModule.class,
+        ServiceModule.class,
+        DatabaseModule.class,
         ServiceModule.class
-
 })
 public interface ApplicationComponent {
-    void inject (MainActivity mainActivity);
+    void inject(MainActivity mainActivity);
 }

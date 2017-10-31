@@ -1,7 +1,7 @@
 package com.github.alexpfx.udacity.beercollection.beer.search;
 
 import com.github.alexpfx.udacity.beercollection.base.Repository;
-import com.github.alexpfx.udacity.beercollection.domain.model.database.FireBeer;
+import com.github.alexpfx.udacity.beercollection.domain.model.database.SearchBeerTO;
 
 import io.reactivex.Flowable;
 
@@ -10,5 +10,5 @@ import io.reactivex.Flowable;
  */
 
 public interface SearchRepository extends Repository {
-    Flowable<FireBeer> search (String name);
+    Flowable<SearchBeerTO> search (String name);
 }
