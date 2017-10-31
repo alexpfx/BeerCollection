@@ -1,7 +1,6 @@
-package com.github.alexpfx.udacity.beercollection;
+package com.github.alexpfx.udacity.beercollection.dagger;
 
-import com.github.alexpfx.udacity.beercollection.dagger.DatabaseModule;
-import com.github.alexpfx.udacity.beercollection.domain.ServiceModule;
+import com.github.alexpfx.udacity.beercollection.LoginActivity;
 
 import javax.inject.Singleton;
 
@@ -15,9 +14,12 @@ import dagger.Component;
 @Component(modules = {
         AndroidModule.class,
         ServiceModule.class,
-        DatabaseModule.class,
-        ServiceModule.class
+        DatabaseModule.class
+
 })
 public interface ApplicationComponent {
-    void inject(MainActivity mainActivity);
+    SearchSubComponent plus (SearchModule searchModule, ActivityModule activityModule);
+
+    void inject (LoginActivity activity);
+
 }

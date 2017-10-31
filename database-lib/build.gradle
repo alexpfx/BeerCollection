@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         minSdkVersion 16
@@ -24,7 +24,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
+
+
+
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -38,6 +45,10 @@ dependencies {
     def ext = rootProject.ext
     ext.lib_database.each{
         k,v -> compile v
+    }
+
+    ext.apt_database.each{
+        k,v -> annotationProcessor v
     }
 
 

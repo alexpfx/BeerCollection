@@ -8,40 +8,25 @@ import com.google.firebase.database.Query;
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Emitter;
 import io.reactivex.Flowable;
-import io.reactivex.functions.Cancellable;
 
 /**
  * Created by alexandre on 23/10/17.
  */
 
-public class BaseFirebaseQuery<T> implements FirebaseQuery<T> {
-
-
-    private final Query query;
-    private ChildEvent ce;
-
-    public BaseFirebaseQuery(Query query) {
-        this.query = query;
-    }
-
+public class FlowableFirebaseQueryAdapter<T> implements RxFirebaseAdapter {
 
     @Override
-    public Flowable<T> execute() {
+    public Flowable<T> create(Query query) {
         return Flowable.create(emitter -> {
-            ce = new ChildEvent(emitter);
+            ChildEvent ce = new ChildEvent(emitter);
             query.addChildEventListener(ce);
-
-            emitter.setCancellable(new Cancellable() {
-                @Override
-                public void cancel() throws Exception {
-                    query.removeEventListener(ce);
-                }
-            });
-
+            emitter.setCancellable(() -> query.removeEventListener(ce));
         }, BackpressureStrategy.BUFFER);
 
 
     }
+
+    private static final String TAG = "FlowableFirebaseQueryAd";
 
     class ChildEvent implements ChildEventListener {
 

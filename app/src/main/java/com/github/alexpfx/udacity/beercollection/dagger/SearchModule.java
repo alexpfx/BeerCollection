@@ -4,6 +4,7 @@ import com.github.alexpfx.udacity.beercollection.beer.search.DefaultSearchIntera
 import com.github.alexpfx.udacity.beercollection.beer.search.DefaultSearchPresenter;
 import com.github.alexpfx.udacity.beercollection.beer.search.SearchInteractor;
 import com.github.alexpfx.udacity.beercollection.beer.search.SearchPresenter;
+import com.github.alexpfx.udacity.beercollection.beer.search.SearchView;
 
 import dagger.Module;
 import dagger.Provides;
@@ -14,6 +15,19 @@ import dagger.Provides;
 
 @Module
 public class SearchModule {
+
+    private SearchView searchView;
+
+    public SearchModule(SearchView searchView) {
+        this.searchView = searchView;
+    }
+
+
+    @Provides
+    @SearchScope
+    public SearchView searchView (){
+        return this.searchView;
+    }
 
     @Provides
     @SearchScope
@@ -26,6 +40,9 @@ public class SearchModule {
     public SearchInteractor searchInteractor(DefaultSearchInteractor searchInteractor) {
         return searchInteractor;
     }
+
+
+
 
 
 

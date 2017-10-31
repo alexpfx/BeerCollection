@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
+
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -7,15 +7,29 @@ android {
     defaultConfig {
         applicationId "com.github.alexpfx.udacity.beercollection"
         minSdkVersion 19
-        targetSdkVersion 26
+        targetSdkVersion rootProject.ext.compileSdkVersion
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        enforceUniquePackageName = false
+
+
+        def project_keys_files = rootProject.file("project_keys.properties");
+        def project_keys = new Properties();
+        project_keys.load(new FileInputStream(project_keys_files));
+
+        buildTypes.each {
+            it.buildConfigField 'String', 'KEY_BREWERYDB', project_keys['brewerydb_key']
+        }
+
+        configurations.all {
+            resolutionStrategy.force 'com.google.code.findbugs:jsr305:1.3.9'
+        }
+
     }
 
     //https://stackoverflow.com/questions/25103288/multiple-dex-files-define-my-package-buildconfig-cant-find-the-cause
     dexOptions {
+        javaMaxHeapSize "4g"
         preDexLibraries = false
     }
 
@@ -23,6 +37,14 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+
+
+    packagingOptions {
+        exclude 'META-INF/NOTICE' // It is not include NOTICE file
+        exclude 'META-INF/LICENSE' // It is not include LICENSE file
+    }
+
 
     buildTypes {
         release {
@@ -37,11 +59,12 @@ android {
 dependencies {
     def ext = rootProject.ext
 
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    compile project (':beer-core')
+    compile project(':beer-core')
 
-    compile project (':beer-database')
+    compile project(':beer-database')
 
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -60,5 +83,7 @@ dependencies {
     }
 
 }
+
+
 
 apply plugin: 'com.google.gms.google-services'

@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">BeerCollection</string>
     <string name="sign_out">Sign Out!</string>
+    <string name="label_abv">ABV:</string>
+    <string name="label_ibu">IBU:</string>
+    <string name="label_srm">SRM:</string>
 </resources>

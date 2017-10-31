@@ -1,7 +1,7 @@
 ext {
     minSdkVersion = 19
-    compileSdkVersion = 26
-    buildToolsVersion = "26.0.1"
+    compileSdkVersion = 27
+    buildToolsVersion = "27.0.0"
 
     supportVersion = "26.1.0"
 
@@ -19,6 +19,8 @@ ext {
     constraintLayoutVersion = "1.0.2"
 
     firebaseUIVersion = "3.0.0"
+
+    loggingInterceptorVersion = "2.6.0"
 
     lib_android = [
             supportAppCompat      : "com.android.support:appcompat-v7:${supportVersion}",
@@ -50,24 +52,35 @@ ext {
 
 
     lib_database = [
+            dagger          : "com.google.dagger:dagger:${daggerVersion}",
             supportAppCompat: "com.android.support:appcompat-v7:${supportVersion}",
             firebaseCore    : "com.google.firebase:firebase-core:${firebaseVersion}",
             firebaseDatabase: "com.google.firebase:firebase-database:${firebaseVersion}",
             firebaseAuth    : "com.google.firebase:firebase-auth:${firebaseVersion}",
-            firebaseUiAuth : "com.firebaseui:firebase-ui-auth:${firebaseUIVersion}"
+            firebaseUiAuth  : "com.firebaseui:firebase-ui-auth:${firebaseUIVersion}"
     ]
+
+    apt_database = [
+            daggerCompiler     : "com.google.dagger:dagger-compiler:${daggerVersion}"
+    ]
+
+
 
     lib_java = [
-            retrofit         : "com.squareup.retrofit2:retrofit:${retrofitVersion}",
-            retrofitConverter: "com.squareup.retrofit2:converter-gson:${retrofitVersion}",
-            retrofitAdapter  : "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}",
+            retrofit          : "com.squareup.retrofit2:retrofit:${retrofitVersion}",
+            retrofitConverter : "com.squareup.retrofit2:converter-gson:${retrofitVersion}",
+            retrofitAdapter   : "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}",
+            loggingInterceptor: "com.squareup.okhttp:logging-interceptor:${loggingInterceptorVersion}",
 
-            rxJava           : "io.reactivex.rxjava2:rxjava:${rxJava}",
-            dagger           : "com.google.dagger:dagger:${daggerVersion}",
-            gson             : "com.google.code.gson:gson:${gsonVersion}"
+
+            rxJava            : "io.reactivex.rxjava2:rxjava:${rxJava}",
+            dagger            : "com.google.dagger:dagger:${daggerVersion}",
+
+            gson              : "com.google.code.gson:gson:${gsonVersion}"
 
 
     ]
+
 
     apt_java = [
             daggerCompiler: "com.google.dagger:dagger-compiler:${daggerVersion}"

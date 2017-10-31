@@ -12,12 +12,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        HasComponent<ApplicationComponent> componentHolder = (HasComponent<ApplicationComponent>)
-                getApplicationContext();
-
-        injectDependencies(componentHolder.getComponent());
+        injectDependencies((BeerApp) getApplicationContext());
     }
 
-    protected abstract void injectDependencies(ApplicationComponent component);
+    protected abstract void injectDependencies(BeerApp app);
 
 }

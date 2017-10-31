@@ -1,7 +1,11 @@
-package com.github.alexpfx.udacity.beercollection;
+package com.github.alexpfx.udacity.beercollection.dagger;
 
 import android.content.Context;
 import android.content.res.Resources;
+
+import com.github.alexpfx.udacity.beercollection.AndroidSchedulerProvider;
+import com.github.alexpfx.udacity.beercollection.BeerApp;
+import com.github.alexpfx.udacity.beercollection.util.SchedulerProvider;
 
 import javax.inject.Singleton;
 
@@ -31,6 +35,13 @@ public class AndroidModule {
     @Singleton
     Resources resources() {
         return beerApp.getResources();
+    }
+
+
+    @Provides
+    @Singleton
+    SchedulerProvider schedulerProvider (AndroidSchedulerProvider schedulerProvider){
+        return schedulerProvider;
     }
 
 
