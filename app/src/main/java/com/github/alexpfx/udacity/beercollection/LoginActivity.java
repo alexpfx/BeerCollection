@@ -3,6 +3,7 @@ package com.github.alexpfx.udacity.beercollection;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.github.alexpfx.udacity.beercollection.search.SearchActivity;
 import com.github.alexpfx.udacity.beercollection.util.FirebaseUtils;
 import com.google.firebase.auth.FirebaseAuth;
 

@@ -15,4 +15,10 @@ public interface SearchView extends BaseView {
     void showSearchError (Throwable throwable);
 
     void showNoResults(String query);
+
+    void showLoading ();
+
+    void hideLoading ();
+
+    void clearResults ();
 }

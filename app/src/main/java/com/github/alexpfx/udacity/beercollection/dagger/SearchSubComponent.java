@@ -1,6 +1,6 @@
 package com.github.alexpfx.udacity.beercollection.dagger;
 
-import com.github.alexpfx.udacity.beercollection.SearchActivity;
+import com.github.alexpfx.udacity.beercollection.search.SearchActivity;
 
 import dagger.Subcomponent;
 

@@ -36,6 +36,9 @@ public class DefaultSearchPresenter implements SearchPresenter {
 
     @Override
     public void search(String query) {
+        searchView.clearResults();
+        searchView.showLoading();
+
         Single<LocalType<List<Beer>>> cached = searchInteractor.searchBeers(query);
 
         cached.subscribeOn(schedulerProvider.computation())
@@ -43,15 +46,16 @@ public class DefaultSearchPresenter implements SearchPresenter {
                 .subscribe(
                         beerListData -> {
                             List<Beer> data = beerListData.getData();
-                            if (data != null || data.isEmpty()){
+                            searchView.hideLoading();
+                            if (data == null || data.isEmpty()) {
+                                searchView.showNoResults(query);
+
+                            } else {
                                 searchView.showSearchResult(data);
-                            }else{
-                                searchView.showNoResults (query);
                             }
 
                         },
                         searchView::showSearchError
-
                 );
 
     }

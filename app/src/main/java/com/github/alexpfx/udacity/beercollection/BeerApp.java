@@ -28,6 +28,11 @@ public class BeerApp extends Application {
         applicationComponent = createComponent();
     }
 
+//    @Override
+//    protected void attachBaseContext(Context base) {
+//        super.attachBaseContext(IconicsContextWrapper.wrap(base));
+//    }
+
     private ApplicationComponent createComponent() {
         return DaggerApplicationComponent.builder().serviceModule(new ServiceModule(new BreweryDbConfig(BuildConfig
                 .KEY_BREWERYDB))).androidModule(new AndroidModule(this)).build();

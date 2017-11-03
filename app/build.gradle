@@ -82,6 +82,19 @@ dependencies {
         k, v -> testCompile v
     }
 
+    implementation 'com.mikepenz:google-material-typeface:3.0.1.2.original@aar'
+    implementation "com.mikepenz:iconics-core:2.9.5@aar"
+    implementation 'com.mikepenz:community-material-typeface:2.0.46.1@aar'
+    implementation 'com.mikepenz:material-design-iconic-typeface:2.2.0.4@aar'
+    implementation "com.mikepenz:iconics-views:2.9.5@aar"
+    implementation 'com.mikepenz:fontawesome-typeface:4.7.0.2@aar'
+
+
+
+
+    implementation "com.android.support:appcompat-v7:26.1.0"
+    implementation "com.mikepenz:iconics-views:2.9.5@aar"
+
 }
 
 

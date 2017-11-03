@@ -22,8 +22,11 @@ ext {
 
     loggingInterceptorVersion = "2.6.0"
 
+    iconifyVersion = "2.2.2"
+
     lib_android = [
             supportAppCompat      : "com.android.support:appcompat-v7:${supportVersion}",
+            recyclerView          : "com.android.support:recyclerview-v7:${supportVersion}",
             supportCoreUi         : "com.android.support:support-core-ui:${supportVersion}",
             supportGridLayout     : "com.android.support:gridlayout-v7:${supportVersion}",
             supportPalette        : "com.android.support:palette-v7:${supportVersion}",
@@ -38,8 +41,9 @@ ext {
 
             rxJava                : "io.reactivex.rxjava2:rxjava:${rxJava}",
             rxAndroid             : "io.reactivex.rxjava2:rxandroid:${rxAndroid}",
+            butterknife           : "com.jakewharton:butterknife:${butterKnifeVersion}",
 
-            butterknife           : "com.jakewharton:butterknife:${butterKnifeVersion}"
+
 
 
     ]
@@ -53,7 +57,7 @@ ext {
 
     lib_database = [
             dagger          : "com.google.dagger:dagger:${daggerVersion}",
-            supportAppCompat: "com.android.support:appcompat-v7:${supportVersion}",
+
             firebaseCore    : "com.google.firebase:firebase-core:${firebaseVersion}",
             firebaseDatabase: "com.google.firebase:firebase-database:${firebaseVersion}",
             firebaseAuth    : "com.google.firebase:firebase-auth:${firebaseVersion}",
@@ -61,7 +65,7 @@ ext {
     ]
 
     apt_database = [
-            daggerCompiler     : "com.google.dagger:dagger-compiler:${daggerVersion}"
+            daggerCompiler: "com.google.dagger:dagger-compiler:${daggerVersion}"
     ]
 
 

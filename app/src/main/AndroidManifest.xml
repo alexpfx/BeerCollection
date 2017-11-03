@@ -17,7 +17,7 @@
             android:launchMode="singleTop">
         </activity>
         <activity
-            android:name=".SearchActivity"
+            android:name=".search.SearchActivity"
             android:launchMode="singleTop">
 
         </activity>
