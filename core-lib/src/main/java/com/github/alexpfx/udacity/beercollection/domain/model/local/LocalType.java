@@ -8,6 +8,13 @@ public class LocalType<T> {
     private long timestamp;
     private T data;
 
+    public LocalType() {
+    }
+
+    public LocalType(T data) {
+        this.data = data;
+        timestamp = System.currentTimeMillis();
+    }
 
     public boolean isEmpty() {
         return data == null;

@@ -5,13 +5,13 @@ import com.github.alexpfx.udacity.beercollection.domain.model.local.LocalType;
 
 import java.util.List;
 
-import io.reactivex.Single;
+import io.reactivex.Flowable;
 
 /**
  * Created by alexandre on 29/10/17.
  */
 
-public interface BeerDataSource {
+public interface BeerLocalDataSource {
     void insert (LocalType<List<Beer>> beers);
-    Single<LocalType<Beer>> load (String id);
+    Flowable<LocalType<Beer>> load (String id);
 }

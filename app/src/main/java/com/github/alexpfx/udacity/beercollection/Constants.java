@@ -5,4 +5,6 @@ package com.github.alexpfx.udacity.beercollection;
  */
 
 public class Constants {
+
+    public static final String KEY_BEER_ID = "KEY_BEER_KEY";
 }

@@ -1,17 +1,21 @@
 package com.github.alexpfx.udacity.beercollection.dagger;
 
-import com.github.alexpfx.udacity.beercollection.beer.search.SearchDataSource;
+import com.github.alexpfx.udacity.beercollection.beer.search.BeerRemoteDataSource;
 import com.github.alexpfx.udacity.beercollection.domain.client.BreweryDBService;
+import com.github.alexpfx.udacity.beercollection.domain.model.local.Beer;
+import com.github.alexpfx.udacity.beercollection.domain.model.local.LocalType;
 import com.github.alexpfx.udacity.beercollection.domain.model.remote.config.BreweryDbConfig;
 import com.github.alexpfx.udacity.beercollection.util.Mappers;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import javax.inject.Named;
+import java.util.List;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import io.reactivex.Single;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -70,17 +74,29 @@ public class ServiceModule {
     @Provides
     @Singleton
     public BreweryDBService breweryDBService(Retrofit retrofit) {
-        return retrofit.create(BreweryDBService.class);
+        BreweryDBService breweryDBService = retrofit.create(BreweryDBService.class);
+
+        return breweryDBService;
     }
 
 
     @Singleton
     @Provides
-    @Named("remoteSearchDatasource")
-    public SearchDataSource searchDataSource(BreweryDbConfig config, BreweryDBService service) {
-        return name ->
-                service.searchBeers(config.getKey(), name)
+    public BeerRemoteDataSource remoteBeerDataSource(BreweryDbConfig config, BreweryDBService service) {
+        return new BeerRemoteDataSource() {
+
+
+            @Override
+            public Single<LocalType<List<Beer>>> search(String name) {
+                return service.searchBeers(config.getKey(), name)
                         .map(Mappers.SEARCH_MAPPER);
+            }
+
+            @Override
+            public Single<LocalType<Beer>> load(String id) {
+                return service.load(id, config.getKey()).map(Mappers.LOAD_MAPPER);
+            }
+;        };
     }
 
 

@@ -30,7 +30,7 @@ public class AndroidSchedulerProvider implements SchedulerProvider {
     }
 
     @Override
-    public Scheduler ui() {
+    public Scheduler mainThread() {
         return AndroidSchedulers.mainThread();
     }
 }

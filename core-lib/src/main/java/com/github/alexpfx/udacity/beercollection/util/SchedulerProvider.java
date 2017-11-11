@@ -11,5 +11,5 @@ public interface SchedulerProvider {
 
     Scheduler io();
 
-    Scheduler ui();
+    Scheduler mainThread();
 }

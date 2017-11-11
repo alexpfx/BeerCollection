@@ -1,52 +1,51 @@
 package com.github.alexpfx.udacity.beercollection.domain.model.remote.search;
 
+import javax.annotation.Generated;
 import com.google.gson.annotations.SerializedName;
 
-import javax.annotation.Generated;
-
 @Generated("com.robohorse.robopojogenerator")
-public class Available {
+public class Available{
 
-    @SerializedName("name")
-    private String name;
+	@SerializedName("name")
+	private String name;
 
-    @SerializedName("description")
-    private String description;
+	@SerializedName("description")
+	private String description;
 
-    @SerializedName("id")
-    private int id;
+	@SerializedName("id")
+	private int id;
 
-    public String getName() {
-        return name;
-    }
+	public void setName(String name){
+		this.name = name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getName(){
+		return name;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public void setDescription(String description){
+		this.description = description;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public String getDescription(){
+		return description;
+	}
 
-    public int getId() {
-        return id;
-    }
+	public void setId(int id){
+		this.id = id;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public int getId(){
+		return id;
+	}
 
-    @Override
-    public String toString() {
-        return
-                "Available{" +
-                        "name = '" + name + '\'' +
-                        ",description = '" + description + '\'' +
-                        ",id = '" + id + '\'' +
-                        "}";
-    }
+	@Override
+ 	public String toString(){
+		return 
+			"Available{" + 
+			"name = '" + name + '\'' + 
+			",description = '" + description + '\'' + 
+			",id = '" + id + '\'' + 
+			"}";
+		}
 }

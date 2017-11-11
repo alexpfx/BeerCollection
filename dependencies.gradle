@@ -24,6 +24,8 @@ ext {
 
     iconifyVersion = "2.2.2"
 
+    rxBindingVersion = "2.0.0"
+
     lib_android = [
             supportAppCompat      : "com.android.support:appcompat-v7:${supportVersion}",
             recyclerView          : "com.android.support:recyclerview-v7:${supportVersion}",
@@ -43,7 +45,7 @@ ext {
             rxAndroid             : "io.reactivex.rxjava2:rxandroid:${rxAndroid}",
             butterknife           : "com.jakewharton:butterknife:${butterKnifeVersion}",
 
-
+            rxBinding             : "com.jakewharton.rxbinding2:rxbinding:${rxBindingVersion}"
 
 
     ]

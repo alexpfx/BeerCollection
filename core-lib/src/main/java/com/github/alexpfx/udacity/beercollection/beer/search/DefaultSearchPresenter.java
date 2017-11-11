@@ -21,7 +21,7 @@ public class DefaultSearchPresenter implements SearchPresenter {
 
     public static final String SORT = "ASC";
     public static final String ORDER = "name";
-    private final SearchView searchView;
+    private SearchView searchView;
     private final SearchInteractor searchInteractor;
     private SchedulerProvider schedulerProvider;
 
@@ -42,21 +42,30 @@ public class DefaultSearchPresenter implements SearchPresenter {
         Single<LocalType<List<Beer>>> cached = searchInteractor.searchBeers(query);
 
         cached.subscribeOn(schedulerProvider.computation())
-                .observeOn(schedulerProvider.ui())
+                .observeOn(schedulerProvider.mainThread())
                 .subscribe(
                         beerListData -> {
                             List<Beer> data = beerListData.getData();
                             searchView.hideLoading();
                             if (data == null || data.isEmpty()) {
                                 searchView.showNoResults(query);
-
                             } else {
                                 searchView.showSearchResult(data);
                             }
-
                         },
-                        searchView::showSearchError
+                        error -> searchView.showSearchError()
                 );
+
+    }
+
+
+    @Override
+    public void onDestroy() {
+
+    }
+
+    @Override
+    public void bind(SearchView view) {
 
     }
 }

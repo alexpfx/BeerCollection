@@ -88,6 +88,7 @@ dependencies {
     implementation 'com.mikepenz:material-design-iconic-typeface:2.2.0.4@aar'
     implementation "com.mikepenz:iconics-views:2.9.5@aar"
     implementation 'com.mikepenz:fontawesome-typeface:4.7.0.2@aar'
+    implementation 'com.mikepenz:typeicons-typeface:+@aar'
 
 
 
@@ -95,7 +96,13 @@ dependencies {
     implementation "com.android.support:appcompat-v7:26.1.0"
     implementation "com.mikepenz:iconics-views:2.9.5@aar"
 
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+
 }
+
+
+
 
 
 

@@ -25,7 +25,7 @@ public class SearchModule {
 
     @Provides
     @SearchScope
-    public SearchView searchView (){
+    public SearchView searchView() {
         return this.searchView;
     }
 
@@ -40,9 +40,6 @@ public class SearchModule {
     public SearchInteractor searchInteractor(DefaultSearchInteractor searchInteractor) {
         return searchInteractor;
     }
-
-
-
 
 
 

@@ -17,6 +17,7 @@ dependencies {
         k, v -> testCompile v
     }
 
+    implementation 'com.jakewharton.timber:timber:4.6.0'
 
 }
 sourceCompatibility = "1.8"

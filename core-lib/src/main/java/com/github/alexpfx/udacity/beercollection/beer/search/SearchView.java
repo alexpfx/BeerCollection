@@ -12,7 +12,7 @@ import java.util.List;
 public interface SearchView extends BaseView {
     void showSearchResult(List<Beer> searchResult);
 
-    void showSearchError (Throwable throwable);
+    void showSearchError ();
 
     void showNoResults(String query);
 

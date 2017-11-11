@@ -6,4 +6,7 @@
     <string name="label_srm">SRM</string>
     <string name="message_no_results">There is no result for search query:</string>
     <string name="action_dismiss">Dismiss</string>
+    <string name="title_activity_detail">DetailActivity</string>
+    <string name="title_activity_my_collection">MyCollection</string>
+    <string name="action_settings">Settings</string>
 </resources>

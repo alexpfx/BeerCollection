@@ -7,72 +7,57 @@ import java.util.List;
 import javax.annotation.Generated;
 
 @Generated("com.robohorse.robopojogenerator")
-public class SearchResponse {
+public class SearchResponse extends ServerResponse{
 
-    @SerializedName("totalResults")
-    private int totalResults;
+	@SerializedName("totalResults")
+	private int totalResults;
 
-    @SerializedName("numberOfPages")
-    private int numberOfPages;
+	@SerializedName("numberOfPages")
+	private int numberOfPages;
 
-    @SerializedName("data")
-    private List<DataItem> data;
+	@SerializedName("data")
+	private List<DataItem> data;
 
-    @SerializedName("currentPage")
-    private int currentPage;
+	@SerializedName("currentPage")
+	private int currentPage;
 
-    @SerializedName("status")
-    private String status;
+	public void setTotalResults(int totalResults){
+		this.totalResults = totalResults;
+	}
 
-    public int getTotalResults() {
-        return totalResults;
-    }
+	public int getTotalResults(){
+		return totalResults;
+	}
 
-    public void setTotalResults(int totalResults) {
-        this.totalResults = totalResults;
-    }
+	public void setNumberOfPages(int numberOfPages){
+		this.numberOfPages = numberOfPages;
+	}
 
-    public int getNumberOfPages() {
-        return numberOfPages;
-    }
+	public int getNumberOfPages(){
+		return numberOfPages;
+	}
 
-    public void setNumberOfPages(int numberOfPages) {
-        this.numberOfPages = numberOfPages;
-    }
+	public void setData(List<DataItem> data){
+		this.data = data;
+	}
 
-    public List<DataItem> getData() {
-        return data;
-    }
+	public List<DataItem> getData(){
+		return data;
+	}
 
-    public void setData(List<DataItem> data) {
-        this.data = data;
-    }
+	public void setCurrentPage(int currentPage){
+		this.currentPage = currentPage;
+	}
 
-    public int getCurrentPage() {
-        return currentPage;
-    }
+	public int getCurrentPage(){
+		return currentPage;
+	}
 
-    public void setCurrentPage(int currentPage) {
-        this.currentPage = currentPage;
-    }
 
-    public String getStatus() {
-        return status;
-    }
+	@Override
+	public boolean validate() {
+		return data != null && !data.isEmpty();
+	}
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
 
-    @Override
-    public String toString() {
-        return
-                "SearchResponse{" +
-                        "totalResults = '" + totalResults + '\'' +
-                        ",numberOfPages = '" + numberOfPages + '\'' +
-                        ",data = '" + data + '\'' +
-                        ",currentPage = '" + currentPage + '\'' +
-                        ",status = '" + status + '\'' +
-                        "}";
-    }
 }

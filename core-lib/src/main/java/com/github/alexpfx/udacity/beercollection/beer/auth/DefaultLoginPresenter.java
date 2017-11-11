@@ -14,4 +14,15 @@ public class DefaultLoginPresenter implements LoginPresenter {
     public void login() {
 
     }
+
+
+    @Override
+    public void onDestroy() {
+
+    }
+
+    @Override
+    public void bind(LoginView view) {
+
+    }
 }

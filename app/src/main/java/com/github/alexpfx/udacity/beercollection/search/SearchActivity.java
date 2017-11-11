@@ -1,5 +1,6 @@
 package com.github.alexpfx.udacity.beercollection.search;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -14,9 +15,11 @@ import android.widget.EditText;
 
 import com.github.alexpfx.udacity.beercollection.BaseActivity;
 import com.github.alexpfx.udacity.beercollection.BeerApp;
+import com.github.alexpfx.udacity.beercollection.Constants;
 import com.github.alexpfx.udacity.beercollection.R;
 import com.github.alexpfx.udacity.beercollection.beer.search.SearchPresenter;
 import com.github.alexpfx.udacity.beercollection.beer.search.SearchView;
+import com.github.alexpfx.udacity.beercollection.detail.DetailActivity;
 import com.github.alexpfx.udacity.beercollection.domain.model.local.Beer;
 import com.mikepenz.iconics.context.IconicsLayoutInflater2;
 
@@ -30,7 +33,6 @@ import butterknife.OnClick;
 
 /**
  * Adicionar indicador de loading
- *
  */
 public class SearchActivity extends BaseActivity implements SearchView {
     private static final String TAG = "SearchActivity";
@@ -62,7 +64,28 @@ public class SearchActivity extends BaseActivity implements SearchView {
         LinearLayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rcvSearchResult.setLayoutManager(layout);
         rcvSearchResult.addItemDecoration(new DividerItemDecoration(this, layout.getOrientation()));
+
+
+
+
+        adapter.getClickDrinkObservable().subscribe(view -> {
+            Beer beer = (Beer) view.getTag();
+
+
+
+        });
+
+        adapter.getViewClickObservable().subscribe(view -> {
+            Beer beer = (Beer) view.getTag();
+
+            Intent intent = new Intent(this, DetailActivity.class);
+            intent.putExtra(Constants.KEY_BEER_ID, beer.getId());
+            startActivity(intent);
+
+        });
+
     }
+
 
     @Override
     protected void injectDependencies(BeerApp app) {
@@ -75,13 +98,14 @@ public class SearchActivity extends BaseActivity implements SearchView {
     }
 
     @Override
-    public void showSearchError(Throwable throwable) {
-        Log.e(TAG, "search errors: " + throwable.getMessage(), throwable);
+    public void showSearchError() {
+        Log.e(TAG, "search error");
     }
 
     @Override
     public void showNoResults(String query) {
-        Snackbar snack = Snackbar.make(findViewById(R.id.layout_search), getString(R.string.message_no_results) + " " + query,
+        Snackbar snack = Snackbar.make(findViewById(R.id.layout_search), getString(R.string.message_no_results) + " "
+                        + query,
                 Snackbar.LENGTH_LONG);
         snack.setAction(getString(R.string.action_dismiss), view -> snack.dismiss());
         snack.show();

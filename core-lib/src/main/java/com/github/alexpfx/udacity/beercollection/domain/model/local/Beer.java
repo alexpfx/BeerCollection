@@ -18,6 +18,16 @@ public class Beer {
     private String styleCategory;
     private String servingTemperature;
     private String glass;
+    private String shortStyle;
+    private String brewery;
+
+
+    public Beer(String name) {
+        this.name = name;
+    }
+
+    public Beer() {
+    }
 
     public String getId() {
         return id;
@@ -121,5 +131,43 @@ public class Beer {
 
     public void setGlass(String glass) {
         this.glass = glass;
+    }
+
+    public String getShortStyle() {
+        return shortStyle;
+    }
+
+    public void setShortStyle(String shortStyle) {
+        this.shortStyle = shortStyle;
+    }
+
+    public String getBrewery() {
+        return brewery;
+    }
+
+    public void setBrewery(String brewery) {
+        this.brewery = brewery;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Beer{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", abv='" + abv + '\'' +
+                ", ibu='" + ibu + '\'' +
+                ", srm='" + srm + '\'' +
+                ", labelLarge='" + labelLarge + '\'' +
+                ", labelIcon='" + labelIcon + '\'' +
+                ", labelMedium='" + labelMedium + '\'' +
+                ", style='" + style + '\'' +
+                ", styleCategory='" + styleCategory + '\'' +
+                ", servingTemperature='" + servingTemperature + '\'' +
+                ", glass='" + glass + '\'' +
+                ", shortStyle='" + shortStyle + '\'' +
+                ", brewery='" + brewery + '\'' +
+                '}';
     }
 }

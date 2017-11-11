@@ -19,7 +19,6 @@
         <activity
             android:name=".search.SearchActivity"
             android:launchMode="singleTop">
-
         </activity>
         <activity android:name=".LoginActivity">
             <intent-filter>
@@ -27,6 +26,22 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".detail.DetailActivity"
+            android:label="@string/title_activity_detail"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".collection.MyCollection"
+            android:label="@string/title_activity_my_collection"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".collection.MyCollectionActivity"
+            android:label="@string/title_activity_my_collection"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
 

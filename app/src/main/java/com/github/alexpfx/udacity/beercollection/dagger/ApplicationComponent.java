@@ -1,6 +1,7 @@
 package com.github.alexpfx.udacity.beercollection.dagger;
 
 import com.github.alexpfx.udacity.beercollection.LoginActivity;
+import com.github.alexpfx.udacity.beercollection.collection.MyCollectionSubComponent;
 
 import javax.inject.Singleton;
 
@@ -18,7 +19,9 @@ import dagger.Component;
 
 })
 public interface ApplicationComponent {
-    SearchSubComponent plus (SearchModule searchModule, ActivityModule activityModule);
+    SearchSubComponent plus (SearchModule searchModule);
+    DetailSubComponent plus (DetailModule detailModule);
+    MyCollectionSubComponent plus (MyCollectionModule myCollectionModule);
 
     void inject (LoginActivity activity);
 

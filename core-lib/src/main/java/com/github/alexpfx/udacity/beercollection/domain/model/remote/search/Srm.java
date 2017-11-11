@@ -1,52 +1,51 @@
 package com.github.alexpfx.udacity.beercollection.domain.model.remote.search;
 
+import javax.annotation.Generated;
 import com.google.gson.annotations.SerializedName;
 
-import javax.annotation.Generated;
-
 @Generated("com.robohorse.robopojogenerator")
-public class Srm {
+public class Srm{
 
-    @SerializedName("name")
-    private String name;
+	@SerializedName("name")
+	private String name;
 
-    @SerializedName("hex")
-    private String hex;
+	@SerializedName("hex")
+	private String hex;
 
-    @SerializedName("id")
-    private int id;
+	@SerializedName("id")
+	private int id;
 
-    public String getName() {
-        return name;
-    }
+	public void setName(String name){
+		this.name = name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getName(){
+		return name;
+	}
 
-    public String getHex() {
-        return hex;
-    }
+	public void setHex(String hex){
+		this.hex = hex;
+	}
 
-    public void setHex(String hex) {
-        this.hex = hex;
-    }
+	public String getHex(){
+		return hex;
+	}
 
-    public int getId() {
-        return id;
-    }
+	public void setId(int id){
+		this.id = id;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public int getId(){
+		return id;
+	}
 
-    @Override
-    public String toString() {
-        return
-                "Srm{" +
-                        "name = '" + name + '\'' +
-                        ",hex = '" + hex + '\'' +
-                        ",id = '" + id + '\'' +
-                        "}";
-    }
+	@Override
+ 	public String toString(){
+		return 
+			"Srm{" + 
+			"name = '" + name + '\'' + 
+			",hex = '" + hex + '\'' + 
+			",id = '" + id + '\'' + 
+			"}";
+		}
 }

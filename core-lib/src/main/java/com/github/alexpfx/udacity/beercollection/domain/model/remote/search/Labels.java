@@ -1,52 +1,51 @@
 package com.github.alexpfx.udacity.beercollection.domain.model.remote.search;
 
+import javax.annotation.Generated;
 import com.google.gson.annotations.SerializedName;
 
-import javax.annotation.Generated;
-
 @Generated("com.robohorse.robopojogenerator")
-public class Labels {
+public class Labels{
 
-    @SerializedName("large")
-    private String large;
+	@SerializedName("large")
+	private String large;
 
-    @SerializedName("icon")
-    private String icon;
+	@SerializedName("icon")
+	private String icon;
 
-    @SerializedName("medium")
-    private String medium;
+	@SerializedName("medium")
+	private String medium;
 
-    public String getLarge() {
-        return large;
-    }
+	public void setLarge(String large){
+		this.large = large;
+	}
 
-    public void setLarge(String large) {
-        this.large = large;
-    }
+	public String getLarge(){
+		return large;
+	}
 
-    public String getIcon() {
-        return icon;
-    }
+	public void setIcon(String icon){
+		this.icon = icon;
+	}
 
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
+	public String getIcon(){
+		return icon;
+	}
 
-    public String getMedium() {
-        return medium;
-    }
+	public void setMedium(String medium){
+		this.medium = medium;
+	}
 
-    public void setMedium(String medium) {
-        this.medium = medium;
-    }
+	public String getMedium(){
+		return medium;
+	}
 
-    @Override
-    public String toString() {
-        return
-                "Labels{" +
-                        "large = '" + large + '\'' +
-                        ",icon = '" + icon + '\'' +
-                        ",medium = '" + medium + '\'' +
-                        "}";
-    }
+	@Override
+ 	public String toString(){
+		return 
+			"Labels{" + 
+			"large = '" + large + '\'' + 
+			",icon = '" + icon + '\'' + 
+			",medium = '" + medium + '\'' + 
+			"}";
+		}
 }

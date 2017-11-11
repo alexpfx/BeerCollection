@@ -3,15 +3,20 @@ package com.github.alexpfx.udacity.beercollection;
 import android.app.Activity;
 import android.app.Application;
 
+import com.github.alexpfx.udacity.beercollection.beer.detail.DetailView;
 import com.github.alexpfx.udacity.beercollection.beer.search.SearchView;
-import com.github.alexpfx.udacity.beercollection.dagger.ActivityModule;
+import com.github.alexpfx.udacity.beercollection.collection.MyCollectionSubComponent;
 import com.github.alexpfx.udacity.beercollection.dagger.AndroidModule;
 import com.github.alexpfx.udacity.beercollection.dagger.ApplicationComponent;
 import com.github.alexpfx.udacity.beercollection.dagger.DaggerApplicationComponent;
+import com.github.alexpfx.udacity.beercollection.dagger.DetailModule;
+import com.github.alexpfx.udacity.beercollection.dagger.DetailSubComponent;
+import com.github.alexpfx.udacity.beercollection.dagger.MyCollectionModule;
 import com.github.alexpfx.udacity.beercollection.dagger.SearchModule;
 import com.github.alexpfx.udacity.beercollection.dagger.SearchSubComponent;
 import com.github.alexpfx.udacity.beercollection.dagger.ServiceModule;
 import com.github.alexpfx.udacity.beercollection.domain.model.remote.config.BreweryDbConfig;
+import com.squareup.leakcanary.LeakCanary;
 
 /**
  * Created by alexandre on 14/10/17.
@@ -20,18 +25,32 @@ import com.github.alexpfx.udacity.beercollection.domain.model.remote.config.Brew
 public class BeerApp extends Application {
 
     ApplicationComponent applicationComponent;
+    MyCollectionSubComponent myCollectionSubComponent;
     private SearchSubComponent searchSubComponent;
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        applicationComponent = createComponent();
-    }
+    private DetailSubComponent detailSubComponent;
 
 //    @Override
 //    protected void attachBaseContext(Context base) {
 //        super.attachBaseContext(IconicsContextWrapper.wrap(base));
 //    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+
+        super.onCreate();
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(this);
+        // Normal app init code...
+
+
+        applicationComponent = createComponent();
+    }
 
     private ApplicationComponent createComponent() {
         return DaggerApplicationComponent.builder().serviceModule(new ServiceModule(new BreweryDbConfig(BuildConfig
@@ -45,11 +64,22 @@ public class BeerApp extends Application {
 
     public SearchSubComponent getSearchSubComponent(Activity activity) {
         if (searchSubComponent == null) {
-            searchSubComponent = applicationComponent.plus(new SearchModule((SearchView) activity), new ActivityModule(activity));
+            searchSubComponent = applicationComponent.plus(new SearchModule((SearchView) activity));
         }
         return searchSubComponent;
     }
 
+    public DetailSubComponent getDetailSubComponent(Activity activity) {
+        detailSubComponent = applicationComponent.plus(new DetailModule((DetailView) activity));
+        return detailSubComponent;
+    }
+
+    public MyCollectionSubComponent getMyCollectionSubComponent() {
+        if (myCollectionSubComponent == null) {
+            myCollectionSubComponent = applicationComponent.plus(new MyCollectionModule());
+        }
+        return myCollectionSubComponent;
+    }
 
 
 }

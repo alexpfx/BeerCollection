@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/image_beer_label"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:adjustViewBounds="true"
+        android:cropToPadding="true"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        app:srcCompat="@drawable/heineken"/>
+
+    <TextView
+        android:id="@+id/text_beer_name"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:background="@drawable/scrim_background"
+        android:gravity="start|center_vertical"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large.Inverse"
+        app:layout_constraintBottom_toTopOf="@+id/text_last_drink_date"
+        app:layout_constraintEnd_toStartOf="@+id/text_quantity"
+        app:layout_constraintStart_toStartOf="@+id/image_beer_label"
+        android:padding="8dp"
+        tools:text="Heineken"/>
+
+
+    <TextView
+        android:id="@+id/text_last_drink_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/scrim_background"
+        android:gravity="start|center_vertical"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small.Inverse"
+        app:layout_constraintBottom_toBottomOf="@+id/image_beer_label"
+        app:layout_constraintEnd_toEndOf="@+id/image_beer_label"
+        app:layout_constraintStart_toStartOf="@+id/image_beer_label"
+        android:padding="8dp"
+        tools:text="17/10/2017 - 00:05"/>
+
+
+    <TextView
+
+        android:id="@+id/text_quantity"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/scrim_background"
+        android:gravity="end|center_vertical"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small.Inverse"
+        app:layout_constraintBottom_toTopOf="@+id/text_last_drink_date"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/image_beer_label"
+        tools:text="10"
+        />
+
+
+</android.support.constraint.ConstraintLayout>

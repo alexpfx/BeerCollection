@@ -3,19 +3,26 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_item_beer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:layout_editor_absoluteY="81dp">
 
     <TextView
         android:id="@+id/txt_beer_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-        app:layout_constraintStart_toStartOf="parent"
+        android:gravity="start|center_vertical"
+        app:layout_constraintBottom_toTopOf="@+id/txt_beer_style"
+        app:layout_constraintEnd_toStartOf="@+id/img_beer_label"
+        app:layout_constraintStart_toEndOf="@+id/btn_drink"
         app:layout_constraintTop_toTopOf="parent"
+
         tools:text="Heineken Lager"/>
 
     <TextView
@@ -26,7 +33,7 @@
         android:layout_marginTop="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_beer_name"
+        app:layout_constraintTop_toBottomOf="@+id/btn_drink"
         tools:text="American-Style permium lager"/>
 
 
@@ -34,8 +41,6 @@
         android:id="@+id/img_beer_label"
         android:layout_width="80dp"
         android:layout_height="80dp"
-
-
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -75,6 +80,19 @@
         app:layout_constraintStart_toEndOf="@+id/txt_ibu"
         app:layout_constraintTop_toBottomOf="@+id/txt_beer_style"
         tools:text="SRM: 5"/>
+
+    <ImageButton
+        android:id="@+id/btn_drink"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:background="@null"
+        app:ico_color="@color/colorPrimary"
+        app:ico_icon="typ_beer"
+        app:ico_size="24dp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="8dp"
+        tools:src="@drawable/fui_done_check_mark"/>
 
 
 </android.support.constraint.ConstraintLayout>

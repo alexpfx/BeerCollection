@@ -11,7 +11,7 @@ import io.reactivex.Single;
  * Created by alexandre on 16/10/17.
  */
 
-public interface RemoteBeerDataSource {
+public interface BeerRemoteDataSource {
     Single<LocalType<List<Beer>>> search(String name);
     Single<LocalType<Beer>> load (String id);
 

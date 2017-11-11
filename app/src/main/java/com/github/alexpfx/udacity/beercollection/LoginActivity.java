@@ -3,7 +3,7 @@ package com.github.alexpfx.udacity.beercollection;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.github.alexpfx.udacity.beercollection.search.SearchActivity;
+import com.github.alexpfx.udacity.beercollection.collection.MyCollectionActivity;
 import com.github.alexpfx.udacity.beercollection.util.FirebaseUtils;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -12,6 +12,7 @@ import javax.inject.Inject;
 public class LoginActivity extends BaseActivity {
 
     public static final int REQUEST_CODE = 1;
+
     @Inject
     FirebaseAuth firebaseAuth;
 
@@ -32,7 +33,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void startMainScreen() {
-        startActivity(new Intent(this, SearchActivity.class));
+        startActivity(new Intent(this, MyCollectionActivity.class));
         finish();
     }
 
