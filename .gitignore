@@ -9,3 +9,5 @@
 .externalNativeBuild
 /.idea
 app/google-services.json
+pomodoro.xml
+sprint.xml
