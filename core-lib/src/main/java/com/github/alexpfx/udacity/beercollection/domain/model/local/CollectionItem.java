@@ -9,6 +9,13 @@ import java.util.Date;
 public class CollectionItem {
     Beer beer;
     Date drinkDate;
+    Integer quantity;
+
+    public CollectionItem(Beer beer, Date drinkDate, Integer quantity) {
+        this.beer = beer;
+        this.drinkDate = drinkDate;
+        this.quantity = quantity;
+    }
 
     public CollectionItem(Beer beer, Date drinkDate) {
         this.beer = beer;
@@ -23,7 +30,7 @@ public class CollectionItem {
         return drinkDate;
     }
 
-    public void setDrinkDate(Date drinkDate) {
-        this.drinkDate = drinkDate;
+    public Integer getQuantity() {
+        return quantity;
     }
 }

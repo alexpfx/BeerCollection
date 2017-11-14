@@ -2,6 +2,7 @@ package com.github.alexpfx.udacity.beercollection.dagger;
 
 import com.github.alexpfx.udacity.beercollection.BeerCollectionDataSource;
 import com.github.alexpfx.udacity.beercollection.beer.BeerLocalDataSource;
+import com.github.alexpfx.udacity.beercollection.domain.model.DrinkBeerUpdateItem;
 import com.github.alexpfx.udacity.beercollection.domain.model.local.Beer;
 import com.github.alexpfx.udacity.beercollection.domain.model.local.CollectionItem;
 import com.github.alexpfx.udacity.beercollection.domain.model.local.LocalType;
@@ -11,10 +12,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Singleton;
 
@@ -50,13 +54,20 @@ public class DatabaseModule {
     @Provides
     @Singleton
     BeerCollectionDataSource beerCollectionDataSource(FirebaseDatabase database, FirebaseAuth firebaseAuth) {
-
         return new BeerCollectionDataSource() {
             @Override
-            public void insert(CollectionItem collectionItem) {
-                database.getReference().child(firebaseAuth.getCurrentUser().getUid()).child("mycollection").push()
-                        .setValue(collectionItem);
+            public void insert(DrinkBeerUpdateItem collectionItem) {
+                DatabaseReference ref = database.getReference().child(firebaseAuth.getCurrentUser().getUid()
+                ).child("collection").child(collectionItem.getBeerId()).push().getRef();
+
+
+                Map map = new HashMap();
+                map.put("quantity", collectionItem.getQuantity());
+                map.put("timestamp", ServerValue.TIMESTAMP);
+                ref.setValue(map);
+
             }
+
 
             @Override
             public Single<List<CollectionItem>> all() {

@@ -13,5 +13,6 @@ import dagger.Subcomponent;
 @MyCollectionScope
 @Subcomponent(modules = {MyCollectionModule.class})
 public interface MyCollectionSubComponent {
+    void inject (MyCollectionActivity activity);
     void inject (MyCollectionFragment fragment);
 }

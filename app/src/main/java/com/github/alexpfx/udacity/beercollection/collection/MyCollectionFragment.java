@@ -11,7 +11,8 @@ import android.view.ViewGroup;
 import com.github.alexpfx.udacity.beercollection.BaseFragment;
 import com.github.alexpfx.udacity.beercollection.BeerApp;
 import com.github.alexpfx.udacity.beercollection.R;
-import com.github.alexpfx.udacity.beercollection.beer.collection.MyCollectionPresenter;
+import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerView;
+import com.github.alexpfx.udacity.beercollection.beer.collection.LoadCollectionPresenter;
 import com.github.alexpfx.udacity.beercollection.beer.collection.MyCollectionView;
 import com.github.alexpfx.udacity.beercollection.domain.model.local.CollectionItem;
 
@@ -25,7 +26,7 @@ import butterknife.ButterKnife;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MyCollectionFragment extends BaseFragment implements MyCollectionView {
+public class MyCollectionFragment extends BaseFragment implements MyCollectionView, DrinkBeerView {
 
     private static final String TAG = "MyCollectionFragment";
     @BindView(R.id.rcv_collection)
@@ -33,7 +34,9 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     @Inject
     CollectionAdapter adapter;
     @Inject
-    MyCollectionPresenter presenter;
+    LoadCollectionPresenter presenter;
+
+
 
     public MyCollectionFragment() {
     }
@@ -43,7 +46,11 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_collection, container, false);
         ButterKnife.bind(this, view);
+
+
+
         if (savedInstanceState == null) {
+
 //            presenter.bind(this);
         }
 
@@ -56,7 +63,7 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
 
     @Override
     protected void injectDependencies(BeerApp app) {
-        app.getMyCollectionSubComponent().inject(this);
+        app.getMyCollectionSubComponent(this, this).inject(this);
     }
 
     @Override

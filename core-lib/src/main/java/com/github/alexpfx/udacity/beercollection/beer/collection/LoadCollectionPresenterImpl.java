@@ -11,8 +11,7 @@ import io.reactivex.disposables.Disposable;
  * Created by alexandre on 09/11/17.
  */
 @MyCollectionScope
-public class DefaultMyCollectionPresenter implements MyCollectionPresenter {
-
+public class LoadCollectionPresenterImpl implements LoadCollectionPresenter {
 
     private MyCollectionView view;
     private final MyCollectionInteractor interactor;
@@ -21,7 +20,7 @@ public class DefaultMyCollectionPresenter implements MyCollectionPresenter {
 
 
     @Inject
-    public DefaultMyCollectionPresenter(MyCollectionInteractor interactor, SchedulerProvider provider){
+    public LoadCollectionPresenterImpl(MyCollectionInteractor interactor, SchedulerProvider provider){
         this.interactor = interactor;
         this.provider = provider;
     }

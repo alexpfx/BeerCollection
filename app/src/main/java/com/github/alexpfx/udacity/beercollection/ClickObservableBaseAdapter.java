@@ -41,8 +41,6 @@ public abstract class ClickObservableBaseAdapter<VH extends RecyclerView.ViewHol
     protected abstract View inflate(LayoutInflater inflater, ViewGroup parent);
 
 
-
-
     @Override
     public void setItems(List<I> items) {
         this.items = items;

@@ -3,6 +3,8 @@ package com.github.alexpfx.udacity.beercollection;
 import android.app.Activity;
 import android.app.Application;
 
+import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerView;
+import com.github.alexpfx.udacity.beercollection.beer.collection.MyCollectionView;
 import com.github.alexpfx.udacity.beercollection.beer.detail.DetailView;
 import com.github.alexpfx.udacity.beercollection.beer.search.SearchView;
 import com.github.alexpfx.udacity.beercollection.collection.MyCollectionSubComponent;
@@ -18,9 +20,6 @@ import com.github.alexpfx.udacity.beercollection.dagger.ServiceModule;
 import com.github.alexpfx.udacity.beercollection.domain.model.remote.config.BreweryDbConfig;
 import com.squareup.leakcanary.LeakCanary;
 
-/**
- * Created by alexandre on 14/10/17.
- */
 
 public class BeerApp extends Application {
 
@@ -74,11 +73,9 @@ public class BeerApp extends Application {
         return detailSubComponent;
     }
 
-    public MyCollectionSubComponent getMyCollectionSubComponent() {
-        if (myCollectionSubComponent == null) {
-            myCollectionSubComponent = applicationComponent.plus(new MyCollectionModule());
-        }
-        return myCollectionSubComponent;
+    public MyCollectionSubComponent getMyCollectionSubComponent(DrinkBeerView drinkBeerView, MyCollectionView myCollectionView) {
+        return applicationComponent.plus(new MyCollectionModule(drinkBeerView, myCollectionView));
+
     }
 
 

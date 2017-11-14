@@ -46,6 +46,8 @@ public class SearchActivity extends BaseActivity implements SearchView {
     @Inject
     SearchPresenter searchPresenter;
 
+
+
     @Inject
     SearchAdapter adapter;
 
@@ -65,14 +67,14 @@ public class SearchActivity extends BaseActivity implements SearchView {
         rcvSearchResult.setLayoutManager(layout);
         rcvSearchResult.addItemDecoration(new DividerItemDecoration(this, layout.getOrientation()));
 
-
-
-
         adapter.getClickDrinkObservable().subscribe(view -> {
+
             Beer beer = (Beer) view.getTag();
-
-
-
+            Intent data = new Intent();
+            data.putExtra(Constants.KEY_BEER_ID, beer.getId());
+            data.putExtra(Constants.KEY_BEER_NAME, beer.getName());
+            setResult(RESULT_OK, data);
+            finish();
         });
 
         adapter.getViewClickObservable().subscribe(view -> {
@@ -80,6 +82,7 @@ public class SearchActivity extends BaseActivity implements SearchView {
 
             Intent intent = new Intent(this, DetailActivity.class);
             intent.putExtra(Constants.KEY_BEER_ID, beer.getId());
+            intent.putExtra(Constants.KEY_BEER_NAME, beer.getName());
             startActivity(intent);
 
         });

@@ -47,7 +47,6 @@ public class SearchAdapter extends ClickObservableBaseAdapter<SearchAdapter.Seac
 
     @Override
     protected SeachViewHolder createViewHolder(View view) {
-
         return new SeachViewHolder(view);
     }
 
