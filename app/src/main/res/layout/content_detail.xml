@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     >
 <android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
@@ -12,6 +13,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.github.alexpfx.udacity.beercollection.detail.DetailActivity"
     tools:showIn="@layout/activity_detail">
+
 
 
     <ImageView
@@ -24,6 +26,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/heineken"/>
+
 
     <TextView
         android:id="@+id/txt_ibu"
@@ -104,6 +107,27 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_description"
         tools:text="Brewed by: Heineken"/>
 
+    <ImageButton
+        android:id="@+id/btn_drink"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:background="@null"
+        app:ico_color="@color/colorPrimary"
+        app:ico_icon="typ_beer"
+        app:ico_size="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/img_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:src="@drawable/fui_done_check_mark"/>
+
+
     <TextView
         android:id="@+id/txt_style"
         android:layout_width="wrap_content"
@@ -144,15 +168,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_serving_temperature"
         tools:text="Glass: Pint"/>
 
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@null"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/common_google_signin_btn_icon_dark_normal"/>
+
+
 </android.support.constraint.ConstraintLayout>
 </ScrollView>
