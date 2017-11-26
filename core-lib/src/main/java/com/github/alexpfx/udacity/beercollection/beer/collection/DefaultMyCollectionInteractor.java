@@ -1,8 +1,8 @@
 package com.github.alexpfx.udacity.beercollection.beer.collection;
 
 import com.github.alexpfx.udacity.beercollection.BeerCollectionDataSource;
-import com.github.alexpfx.udacity.beercollection.dagger.MyCollectionScope;
-import com.github.alexpfx.udacity.beercollection.domain.model.local.CollectionItem;
+import com.github.alexpfx.udacity.beercollection.dagger.PerActivity;
+import com.github.alexpfx.udacity.beercollection.domain.model.collection.CollectionItemVO;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import io.reactivex.Single;
 /**
  * Created by alexandre on 09/11/17.
  */
-@MyCollectionScope
+@PerActivity
 public class DefaultMyCollectionInteractor implements MyCollectionInteractor {
     private BeerCollectionDataSource dataSource;
 
@@ -23,7 +23,7 @@ public class DefaultMyCollectionInteractor implements MyCollectionInteractor {
     }
 
     @Override
-    public Single<List<CollectionItem>> load() {
+    public Single<List<CollectionItemVO>> load() {
         return dataSource.all();
     }
 }

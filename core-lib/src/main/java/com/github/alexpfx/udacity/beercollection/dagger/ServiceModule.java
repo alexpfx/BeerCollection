@@ -2,8 +2,7 @@ package com.github.alexpfx.udacity.beercollection.dagger;
 
 import com.github.alexpfx.udacity.beercollection.beer.search.BeerRemoteDataSource;
 import com.github.alexpfx.udacity.beercollection.domain.client.BreweryDBService;
-import com.github.alexpfx.udacity.beercollection.domain.model.local.Beer;
-import com.github.alexpfx.udacity.beercollection.domain.model.local.LocalType;
+import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
 import com.github.alexpfx.udacity.beercollection.domain.model.remote.config.BreweryDbConfig;
 import com.github.alexpfx.udacity.beercollection.util.Mappers;
 import com.google.gson.Gson;
@@ -87,13 +86,13 @@ public class ServiceModule {
 
 
             @Override
-            public Single<LocalType<List<Beer>>> search(String name) {
+            public Single<List<Beer>> search(String name) {
                 return service.searchBeers(config.getKey(), name)
                         .map(Mappers.SEARCH_MAPPER);
             }
 
             @Override
-            public Single<LocalType<Beer>> load(String id) {
+            public Single<Beer> load(String id) {
                 return service.load(id, config.getKey()).map(Mappers.LOAD_MAPPER);
             }
 ;        };

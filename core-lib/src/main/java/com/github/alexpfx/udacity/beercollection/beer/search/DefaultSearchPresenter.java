@@ -1,29 +1,30 @@
 package com.github.alexpfx.udacity.beercollection.beer.search;
 
-import com.github.alexpfx.udacity.beercollection.dagger.SearchScope;
-import com.github.alexpfx.udacity.beercollection.domain.model.local.Beer;
-import com.github.alexpfx.udacity.beercollection.domain.model.local.LocalType;
+import com.github.alexpfx.udacity.beercollection.dagger.PerActivity;
+import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
+import com.github.alexpfx.udacity.beercollection.util.Mappers;
 import com.github.alexpfx.udacity.beercollection.util.SchedulerProvider;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.Single;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Created by alexandre on 17/10/17.
  */
 
-@SearchScope
+@PerActivity
 public class DefaultSearchPresenter implements SearchPresenter {
 
 
     public static final String SORT = "ASC";
     public static final String ORDER = "name";
-    private SearchView searchView;
     private final SearchInteractor searchInteractor;
+    private SearchView searchView;
     private SchedulerProvider schedulerProvider;
+    private Disposable disposable;
 
 
     @Inject
@@ -39,13 +40,14 @@ public class DefaultSearchPresenter implements SearchPresenter {
         searchView.clearResults();
         searchView.showLoading();
 
-        Single<LocalType<List<Beer>>> cached = searchInteractor.searchBeers(query);
-
-        cached.subscribeOn(schedulerProvider.computation())
+        disposable = searchInteractor.searchBeers(query).cache().toFlowable().flatMapIterable(list -> list)
+                .filter(Mappers.BEER_FILTER)
+                .toList()
+                .subscribeOn(schedulerProvider.computation())
                 .observeOn(schedulerProvider.mainThread())
                 .subscribe(
                         beerListData -> {
-                            List<Beer> data = beerListData.getData();
+                            List<Beer> data = beerListData;
                             searchView.hideLoading();
                             if (data == null || data.isEmpty()) {
                                 searchView.showNoResults(query);
@@ -61,6 +63,8 @@ public class DefaultSearchPresenter implements SearchPresenter {
 
     @Override
     public void onDestroy() {
+        if (disposable != null)
+            disposable.dispose();
 
     }
 

@@ -2,9 +2,8 @@ package com.github.alexpfx.udacity.beercollection.beer.detail;
 
 import com.github.alexpfx.udacity.beercollection.beer.BeerLocalDataSource;
 import com.github.alexpfx.udacity.beercollection.beer.search.BeerRemoteDataSource;
-import com.github.alexpfx.udacity.beercollection.dagger.DetailScope;
-import com.github.alexpfx.udacity.beercollection.domain.model.local.Beer;
-import com.github.alexpfx.udacity.beercollection.domain.model.local.LocalType;
+import com.github.alexpfx.udacity.beercollection.dagger.PerActivity;
+import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
 import com.github.alexpfx.udacity.beercollection.util.SchedulerProvider;
 
 import java.util.Collections;
@@ -20,7 +19,7 @@ import io.reactivex.functions.Consumer;
  * Created by alexandre on 04/11/17.
  */
 
-@DetailScope
+@PerActivity
 public class DefaultLoadBeerInteractor implements LoadBeerInteractor {
     private Logger logger = Logger.getLogger(this.getClass().getName());
 
@@ -29,9 +28,9 @@ public class DefaultLoadBeerInteractor implements LoadBeerInteractor {
 
     private BeerRemoteDataSource remote;
 
-    private Consumer<? super LocalType<Beer>> onSuccess = (Consumer<LocalType<Beer>>) data -> {
+    private Consumer<? super Beer> onSuccess = (Consumer<Beer>) data -> {
         Thread.sleep(1000);
-        local.insert(new LocalType<>(Collections.singletonList(data.getData())));
+        local.insert(Collections.singletonList(data));
     };
     private Consumer<? super Throwable> onError = (Consumer<Throwable>) throwable -> {
         logger.log(Level.WARNING, "error loading from remote repository");
@@ -47,8 +46,8 @@ public class DefaultLoadBeerInteractor implements LoadBeerInteractor {
 
     //https://medium.com/@iammert/offline-app-with-rxjava-2-and-room-ccd0b5c18101
     @Override
-    public Flowable<LocalType<Beer>> load(String beerId) {
-        Flowable<LocalType<Beer>> localFlowable = local.load(beerId);
+    public Flowable<Beer> load(String beerId) {
+        Flowable<Beer> localFlowable = local.load(beerId);
 
 
 

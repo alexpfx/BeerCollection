@@ -1,6 +1,6 @@
 package com.github.alexpfx.udacity.beercollection.beer.detail;
 
-import com.github.alexpfx.udacity.beercollection.dagger.DetailScope;
+import com.github.alexpfx.udacity.beercollection.dagger.PerActivity;
 import com.github.alexpfx.udacity.beercollection.util.SchedulerProvider;
 
 import javax.inject.Inject;
@@ -11,7 +11,7 @@ import io.reactivex.disposables.Disposable;
  * Created by alexandre on 04/11/17.
  */
 
-@DetailScope
+@PerActivity
 public class DefaultDetailPresenter implements DetailPresenter {
 
     private final LoadBeerInteractor interactor;
@@ -34,7 +34,7 @@ public class DefaultDetailPresenter implements DetailPresenter {
                 .subscribeOn(schedulerProvider.computation())
                 .observeOn(schedulerProvider.mainThread())
                 .subscribe(
-                        next -> view.showBeer(next.getData()),
+                        next -> view.showBeer(next),
                         error -> {
                             error.printStackTrace();
                             System.out.println("error!");

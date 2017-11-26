@@ -1,4 +1,4 @@
-package com.github.alexpfx.udacity.beercollection.domain.model.local;
+package com.github.alexpfx.udacity.beercollection.domain.model.beer;
 
 /**
  * Created by alexandre on 24/10/17.

@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 import com.github.alexpfx.udacity.beercollection.ClickObservableBaseAdapter;
 import com.github.alexpfx.udacity.beercollection.R;
-import com.github.alexpfx.udacity.beercollection.dagger.SearchScope;
-import com.github.alexpfx.udacity.beercollection.domain.model.local.Beer;
+import com.github.alexpfx.udacity.beercollection.dagger.PerActivity;
+import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.squareup.picasso.Picasso;
 
@@ -30,7 +30,7 @@ import io.reactivex.subjects.PublishSubject;
 /**
  * Created by alexandre on 31/10/17.
  */
-@SearchScope
+@PerActivity
 public class SearchAdapter extends ClickObservableBaseAdapter<SearchAdapter.SeachViewHolder, Beer> {
     private static final String TAG = "SearchAdapter";
     private List<Beer> items = new ArrayList<>();

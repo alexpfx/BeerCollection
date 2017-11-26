@@ -3,7 +3,7 @@ ext {
     compileSdkVersion = 27
     buildToolsVersion = "27.0.0"
 
-    supportVersion = "26.1.0"
+    supportVersion = "27.0.1"
 
 
     retrofitVersion = "2.3.0"
@@ -26,6 +26,17 @@ ext {
 
     rxBindingVersion = "2.0.0"
 
+    lib_android_implementation = [
+            timber :  'com.jakewharton.timber:timber:4.6.0',
+            iconicsCore              : "com.mikepenz:iconics-core:2.9.5@aar",
+            materialTypeface         : 'com.mikepenz:google-material-typeface:3.0.1.2.original@aar',
+            communityMaterialTypeface: 'com.mikepenz:community-material-typeface:2.0.46.1@aar',
+            iconicTypeface           : 'com.mikepenz:material-design-iconic-typeface:2.2.0.4@aar',
+            iconicViews              : "com.mikepenz:iconics-views:2.9.5@aar",
+            fontawesomeTypeface      : 'com.mikepenz:fontawesome-typeface:4.7.0.2@aar',
+            typeiconsTypeface        : 'com.mikepenz:typeicons-typeface:+@aar'
+    ]
+
     lib_android = [
             supportAppCompat      : "com.android.support:appcompat-v7:${supportVersion}",
             recyclerView          : "com.android.support:recyclerview-v7:${supportVersion}",
@@ -35,6 +46,7 @@ ext {
             supportVerctorDrawable: "com.android.support:support-vector-drawable:${supportVersion}",
             supportAnnotations    : "com.android.support:support-annotations:${supportVersion}",
             supportCardView       : "com.android.support:cardview-v7:${supportVersion}",
+            supportDesign         : "com.android.support:design:${supportVersion}",
 
             constraintLayout      : "com.android.support.constraint:constraint-layout:${constraintLayoutVersion}",
 
@@ -83,7 +95,6 @@ ext {
             dagger            : "com.google.dagger:dagger:${daggerVersion}",
 
             gson              : "com.google.code.gson:gson:${gsonVersion}"
-
 
 
     ]

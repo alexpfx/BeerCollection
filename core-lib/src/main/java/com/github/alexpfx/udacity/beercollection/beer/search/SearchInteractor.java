@@ -1,8 +1,7 @@
 package com.github.alexpfx.udacity.beercollection.beer.search;
 
 
-import com.github.alexpfx.udacity.beercollection.domain.model.local.Beer;
-import com.github.alexpfx.udacity.beercollection.domain.model.local.LocalType;
+import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
 
 import java.util.List;
 
@@ -13,5 +12,5 @@ import io.reactivex.Single;
  */
 
 public interface SearchInteractor {
-    Single<LocalType<List<Beer>>> searchBeers(String query);
+    Single<List<Beer>> searchBeers(String query);
 }

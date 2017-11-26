@@ -24,19 +24,19 @@ public class SearchModule {
 
 
     @Provides
-    @SearchScope
+    @PerActivity
     public SearchView searchView() {
         return this.searchView;
     }
 
     @Provides
-    @SearchScope
+    @PerActivity
     public SearchPresenter searchPresenter(DefaultSearchPresenter searchPresenter) {
         return searchPresenter;
     }
 
     @Provides
-    @SearchScope
+    @PerActivity
     public SearchInteractor searchInteractor(DefaultSearchInteractor searchInteractor) {
         return searchInteractor;
     }

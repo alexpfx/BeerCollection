@@ -1,7 +1,7 @@
 package com.github.alexpfx.udacity.beercollection.beer.search;
 
 import com.github.alexpfx.udacity.beercollection.base.BaseView;
-import com.github.alexpfx.udacity.beercollection.domain.model.local.Beer;
+import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
 
 import java.util.List;
 

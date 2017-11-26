@@ -1,7 +1,6 @@
 package com.github.alexpfx.udacity.beercollection.beer.search;
 
-import com.github.alexpfx.udacity.beercollection.domain.model.local.Beer;
-import com.github.alexpfx.udacity.beercollection.domain.model.local.LocalType;
+import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
 
 import java.util.List;
 
@@ -12,7 +11,7 @@ import io.reactivex.Single;
  */
 
 public interface BeerRemoteDataSource {
-    Single<LocalType<List<Beer>>> search(String name);
-    Single<LocalType<Beer>> load (String id);
+    Single<List<Beer>> search(String name);
+    Single<Beer> load (String id);
 
 }

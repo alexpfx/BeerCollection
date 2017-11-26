@@ -1,7 +1,6 @@
 package com.github.alexpfx.udacity.beercollection;
 
-import com.github.alexpfx.udacity.beercollection.domain.model.local.Beer;
-import com.github.alexpfx.udacity.beercollection.domain.model.local.LocalType;
+import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
 
 import java.util.List;
 
@@ -20,7 +19,7 @@ public abstract class NetworkBoundSource<L, R> {
         getLocal().subscribe(emitter::onNext);
     }
 
-    public abstract Single<List<LocalType<Beer>>> getRemote();
+    public abstract Single<List<Beer>> getRemote();
 
     public abstract Flowable<L> getLocal();
 

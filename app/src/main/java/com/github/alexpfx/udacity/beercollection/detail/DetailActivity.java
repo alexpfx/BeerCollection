@@ -10,7 +10,7 @@ import com.github.alexpfx.udacity.beercollection.DrinkBeerFragmentDialog;
 import com.github.alexpfx.udacity.beercollection.R;
 import com.github.alexpfx.udacity.beercollection.beer.detail.DetailPresenter;
 import com.github.alexpfx.udacity.beercollection.beer.detail.DetailView;
-import com.github.alexpfx.udacity.beercollection.domain.model.local.Beer;
+import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
 
 import javax.inject.Inject;
 

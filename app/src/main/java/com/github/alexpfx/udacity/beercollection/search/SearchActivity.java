@@ -20,7 +20,7 @@ import com.github.alexpfx.udacity.beercollection.R;
 import com.github.alexpfx.udacity.beercollection.beer.search.SearchPresenter;
 import com.github.alexpfx.udacity.beercollection.beer.search.SearchView;
 import com.github.alexpfx.udacity.beercollection.detail.DetailActivity;
-import com.github.alexpfx.udacity.beercollection.domain.model.local.Beer;
+import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
 import com.mikepenz.iconics.context.IconicsLayoutInflater2;
 
 import java.util.List;

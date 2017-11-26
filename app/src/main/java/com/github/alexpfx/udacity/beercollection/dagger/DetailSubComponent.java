@@ -8,7 +8,7 @@ import dagger.Subcomponent;
  * Created by alexandre on 04/11/17.
  */
 
-@DetailScope
+@PerActivity
 @Subcomponent(modules = DetailModule.class)
 public interface DetailSubComponent {
 

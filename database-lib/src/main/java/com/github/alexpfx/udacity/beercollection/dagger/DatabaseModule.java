@@ -3,9 +3,8 @@ package com.github.alexpfx.udacity.beercollection.dagger;
 import com.github.alexpfx.udacity.beercollection.BeerCollectionDataSource;
 import com.github.alexpfx.udacity.beercollection.beer.BeerLocalDataSource;
 import com.github.alexpfx.udacity.beercollection.domain.model.DrinkBeerUpdateItem;
-import com.github.alexpfx.udacity.beercollection.domain.model.local.Beer;
-import com.github.alexpfx.udacity.beercollection.domain.model.local.CollectionItem;
-import com.github.alexpfx.udacity.beercollection.domain.model.local.LocalType;
+import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
+import com.github.alexpfx.udacity.beercollection.domain.model.collection.CollectionItemVO;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -58,10 +57,10 @@ public class DatabaseModule {
             @Override
             public void insert(DrinkBeerUpdateItem collectionItem) {
                 DatabaseReference ref = database.getReference().child(firebaseAuth.getCurrentUser().getUid()
-                ).child("collection").child(collectionItem.getBeerId()).push().getRef();
-
+                ).child("collection").push().getRef();
 
                 Map map = new HashMap();
+                map.put("beerId", collectionItem.getBeerId());
                 map.put("quantity", collectionItem.getQuantity());
                 map.put("timestamp", ServerValue.TIMESTAMP);
                 ref.setValue(map);
@@ -70,30 +69,33 @@ public class DatabaseModule {
 
 
             @Override
-            public Single<List<CollectionItem>> all() {
-                return Single.create(emitter -> {
+            public Single<List<CollectionItemVO>> all() {
+                return Single.<List<CollectionItemVO>>create(emitter -> {
                     Query mycollection = database.getReference().child(firebaseAuth.getCurrentUser().getUid()).child
-                            ("mycollection").orderByKey();
+                            ("collection").orderByKey();
 
+                    List<CollectionItemVO> items = new ArrayList<>();
 
-                    List<CollectionItem> items = new ArrayList<>();
-
-                    mycollection.addListenerForSingleValueEvent(new ValueEventListener() {
+                    ValueEventListener eventListener = new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                             for (DataSnapshot child : children) {
-                                items.add(child.getValue(CollectionItem.class));
+                                CollectionItemVO value = child.getValue(CollectionItemVO.class);
+                                items.add(value);
                             }
+                            emitter.onSuccess(items);
+                            mycollection.removeEventListener(this);
                         }
 
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
                             emitter.onError(new RuntimeException(databaseError.getMessage()));
+                            mycollection.removeEventListener(this);
                         }
+                    };
+                    mycollection.addListenerForSingleValueEvent(eventListener);
 
-                    });
-                    emitter.onSuccess(items);
                 });
 
             }
@@ -105,8 +107,8 @@ public class DatabaseModule {
     BeerLocalDataSource beerDataSource(FirebaseDatabase database, FirebaseAuth firebaseAuth) {
         return new BeerLocalDataSource() {
             @Override
-            public void insert(LocalType<List<Beer>> beers) {
-                List<Beer> data = beers.getData();
+            public void insert(List<Beer> beers) {
+                List<Beer> data = beers;
                 if (data == null) {
                     return;
                 }
@@ -120,7 +122,7 @@ public class DatabaseModule {
             }
 
             @Override
-            public Flowable<LocalType<Beer>> load(String id) {
+            public Flowable<Beer> load(String id) {
                 return Flowable.create(e -> {
                     DatabaseReference ref = database.getReference().child(firebaseAuth.getCurrentUser()
                             .getUid())
@@ -134,7 +136,7 @@ public class DatabaseModule {
                     ValueEventListener valueEventListener = new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            e.onNext(new LocalType<>(dataSnapshot.getValue(Beer.class)));
+                            e.onNext(dataSnapshot.getValue(Beer.class));
                         }
 
                         @Override

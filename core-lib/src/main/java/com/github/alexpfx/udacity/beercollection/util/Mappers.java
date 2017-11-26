@@ -1,7 +1,6 @@
 package com.github.alexpfx.udacity.beercollection.util;
 
-import com.github.alexpfx.udacity.beercollection.domain.model.local.Beer;
-import com.github.alexpfx.udacity.beercollection.domain.model.local.LocalType;
+import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
 import com.github.alexpfx.udacity.beercollection.domain.model.remote.search.Category;
 import com.github.alexpfx.udacity.beercollection.domain.model.remote.search.DataItem;
 import com.github.alexpfx.udacity.beercollection.domain.model.remote.search.LoadBeerResponse;
@@ -9,37 +8,48 @@ import com.github.alexpfx.udacity.beercollection.domain.model.remote.search.Sear
 import com.github.alexpfx.udacity.beercollection.domain.model.remote.search.ServerResponse;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
 
 /**
  * Created by alexandre on 24/10/17.
  */
 
+
 public class Mappers {
 
-    public static final Function<LoadBeerResponse, LocalType<Beer>> LOAD_MAPPER = loadBeerResponse -> {
-        LocalType<Beer> beer = new LocalType<>();
+    public static final Predicate<Beer> BEER_FILTER = beer -> !(
+            beer.getLabelMedium() == null ||
+            beer.getName() == null ||
+                    beer.getAbv() == null ||
+                    beer.getDescription() == null ||
+                    beer.getShortStyle() == null);
+
+
+    public static final Function<LoadBeerResponse, Beer> LOAD_MAPPER = loadBeerResponse -> {
+        Beer beer = new Beer();
 
         if (!isValid(loadBeerResponse)) {
             return beer;
         }
 
-        beer.setData(from(loadBeerResponse.getDataItem()));
+        beer = from(loadBeerResponse.getDataItem());
         return beer;
 
     };
-    public static Function<SearchResponse, LocalType<List<Beer>>> SEARCH_MAPPER = response -> {
-        LocalType<List<Beer>> beerLocalType = new LocalType<>();
+    public static Function<SearchResponse, List<Beer>> SEARCH_MAPPER = response -> {
+        List<Beer> beerLocalType = Collections.emptyList();
 
         if (!isValid(response)) {
             return beerLocalType;
         }
 
         List<Beer> beers = from(response.getData());
-        beerLocalType.setData(beers);
-        return beerLocalType;
+
+        return beers;
     };
 
     private static List<Beer> from(List<DataItem> data) {

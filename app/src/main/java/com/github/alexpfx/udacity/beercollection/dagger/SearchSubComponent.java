@@ -8,7 +8,7 @@ import dagger.Subcomponent;
  * Created by alexandre on 17/10/17.
  */
 
-@SearchScope
+@PerActivity
 @Subcomponent(modules = {SearchModule.class, ActivityModule.class})
 public interface SearchSubComponent {
     void inject (SearchActivity mainActivity);

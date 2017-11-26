@@ -22,23 +22,25 @@ public class DetailModule {
         this.detailView = detailView;
     }
 
-    @DetailScope
+    @PerActivity
     @Provides
     public DetailView detailView(){
         return detailView;
     }
 
-    @DetailScope
+    @PerActivity
     @Provides
     DetailPresenter detailPresenter(DefaultDetailPresenter defaultDetailPresenter) {
         defaultDetailPresenter.bind(detailView);
         return defaultDetailPresenter;
     }
 
-    @DetailScope
+    @PerActivity
     @Provides
     LoadBeerInteractor detailInteractor(DefaultLoadBeerInteractor defaultDetailInteractor) {
         return defaultDetailInteractor;
     }
+
+
 
 }

@@ -5,11 +5,13 @@ import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerInteractorImpl;
 import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerPresenter;
 import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerPresenterImpl;
 import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerView;
-import com.github.alexpfx.udacity.beercollection.beer.collection.LoadCollectionPresenterImpl;
 import com.github.alexpfx.udacity.beercollection.beer.collection.DefaultMyCollectionInteractor;
-import com.github.alexpfx.udacity.beercollection.beer.collection.MyCollectionInteractor;
 import com.github.alexpfx.udacity.beercollection.beer.collection.LoadCollectionPresenter;
+import com.github.alexpfx.udacity.beercollection.beer.collection.LoadCollectionPresenterImpl;
+import com.github.alexpfx.udacity.beercollection.beer.collection.MyCollectionInteractor;
 import com.github.alexpfx.udacity.beercollection.beer.collection.MyCollectionView;
+import com.github.alexpfx.udacity.beercollection.beer.detail.DefaultLoadBeerInteractor;
+import com.github.alexpfx.udacity.beercollection.beer.detail.LoadBeerInteractor;
 
 import dagger.Module;
 import dagger.Provides;
@@ -30,44 +32,54 @@ public class MyCollectionModule {
         this.myCollectionView = myCollectionView;
     }
 
+    public MyCollectionModule(DrinkBeerView drinkBeerView) {
+        this.drinkBeerView = drinkBeerView;
+    }
+
 
     @Provides
-    @MyCollectionScope
+    @PerActivity
     public MyCollectionView myCollectionView(){
         return this.myCollectionView;
     }
 
 
     @Provides
-    @MyCollectionScope
+    @PerActivity
     public DrinkBeerView drinkBeerView (){
         return drinkBeerView;
     }
 
 
     @Provides
-    @MyCollectionScope
+    @PerActivity
     MyCollectionInteractor myCollectionInteractor (DefaultMyCollectionInteractor defaultMyCollectionInteractor){
         return defaultMyCollectionInteractor;
     }
 
     @Provides
-    @MyCollectionScope
+    @PerActivity
     LoadCollectionPresenter myCollectionPresenter(LoadCollectionPresenterImpl defaultMyCollectionPresenter){
         return defaultMyCollectionPresenter;
     }
 
 
     @Provides
-    @MyCollectionScope
+    @PerActivity
     DrinkBeerPresenter drinkBeerPresenter (DrinkBeerPresenterImpl drinkBeerPresenter){
         return drinkBeerPresenter;
     }
 
     @Provides
-    @MyCollectionScope
+    @PerActivity
     DrinkBeerInteractor drinkBeerInteractor (DrinkBeerInteractorImpl drinkBeerInteractor){
         return drinkBeerInteractor;
+    }
+
+    @PerActivity
+    @Provides
+    LoadBeerInteractor detailInteractor(DefaultLoadBeerInteractor defaultDetailInteractor) {
+        return defaultDetailInteractor;
     }
 
 

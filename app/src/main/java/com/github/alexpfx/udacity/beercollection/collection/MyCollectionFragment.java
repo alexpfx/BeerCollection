@@ -1,12 +1,12 @@
 package com.github.alexpfx.udacity.beercollection.collection;
 
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.github.alexpfx.udacity.beercollection.BaseFragment;
 import com.github.alexpfx.udacity.beercollection.BeerApp;
@@ -14,7 +14,7 @@ import com.github.alexpfx.udacity.beercollection.R;
 import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerView;
 import com.github.alexpfx.udacity.beercollection.beer.collection.LoadCollectionPresenter;
 import com.github.alexpfx.udacity.beercollection.beer.collection.MyCollectionView;
-import com.github.alexpfx.udacity.beercollection.domain.model.local.CollectionItem;
+import com.github.alexpfx.udacity.beercollection.domain.model.collection.CollectionItem;
 
 import java.util.List;
 
@@ -26,37 +26,40 @@ import butterknife.ButterKnife;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MyCollectionFragment extends BaseFragment implements MyCollectionView, DrinkBeerView {
+public class MyCollectionFragment extends BaseFragment implements MyCollectionView, DrinkBeerView, SwipeRefreshLayout
+        .OnRefreshListener {
 
     private static final String TAG = "MyCollectionFragment";
     @BindView(R.id.rcv_collection)
     RecyclerView rcvCollection;
+
+    @BindView(R.id.swipe_refresh_collection)
+    SwipeRefreshLayout swipeRefreshCollection;
+
+    @BindView(R.id.text_empty_content)
+    TextView txtMessagesEmptyCollection;
+
     @Inject
     CollectionAdapter adapter;
+
     @Inject
     LoadCollectionPresenter presenter;
 
 
-
     public MyCollectionFragment() {
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_collection, container, false);
         ButterKnife.bind(this, view);
+        swipeRefreshCollection.setOnRefreshListener(this);
 
+        presenter.load();
 
-
-        if (savedInstanceState == null) {
-
-//            presenter.bind(this);
-        }
-
-//        presenter.load();
-
-        rcvCollection.setLayoutManager(new GridLayoutManager(this.getContext(), 2));
+        rcvCollection.setAdapter(adapter);
         return view;
 
     }
@@ -68,27 +71,46 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
 
     @Override
     public void showUserCollection(List<CollectionItem> items) {
-        Log.d(TAG, "showUserCollection: ");
+        rcvCollection.setVisibility(View.VISIBLE);
+        txtMessagesEmptyCollection.setVisibility(View.INVISIBLE);
 
+        adapter.setItems(items);
     }
 
     @Override
-    public void showErrorLoadingCollection() {
-
+    public void showErrorLoadingCollection(String message) {
+        rcvCollection.setVisibility(View.INVISIBLE);
+        txtMessagesEmptyCollection.setVisibility(View.VISIBLE);
+        txtMessagesEmptyCollection.setText(getString(R.string.message_content_cannot_loaded));
     }
+
+    @Override
+    public void showCollectionEmpty() {
+        rcvCollection.setVisibility(View.INVISIBLE);
+        txtMessagesEmptyCollection.setVisibility(View.VISIBLE);
+        txtMessagesEmptyCollection.setText(getString(R.string.message_no_itens_in_collection));
+    }
+
 
     @Override
     public void showLoading() {
-
+        swipeRefreshCollection.setRefreshing(true);
     }
 
     @Override
-    public void hideLodading() {
-
+    public void hideLoading() {
+        swipeRefreshCollection.setRefreshing(false);
     }
 
     @Override
     public void clearResults() {
-
+        adapter.clear();
     }
+
+    @Override
+    public void onRefresh() {
+        presenter.load();
+    }
+
+
 }

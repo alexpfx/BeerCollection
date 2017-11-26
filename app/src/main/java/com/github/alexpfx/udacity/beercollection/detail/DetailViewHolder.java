@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.alexpfx.udacity.beercollection.R;
-import com.github.alexpfx.udacity.beercollection.domain.model.local.Beer;
+import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.squareup.picasso.Picasso;
 
@@ -83,7 +83,7 @@ public class DetailViewHolder {
         txtServingTemperature.setText(beer.getServingTemperature());
         txtGlass.setText(beer.getGlass());
 
-        Picasso.with(context).load(beer.getLabelLarge()).resize(720, 720).centerCrop().into(imgLabel);
+        Picasso.with(context).load(beer.getLabelLarge()).resize(200,200).placeholder(R.drawable.beerplaceholder).centerCrop().into(imgLabel);
 
     }
 

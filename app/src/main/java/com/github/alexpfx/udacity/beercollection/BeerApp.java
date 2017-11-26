@@ -18,7 +18,10 @@ import com.github.alexpfx.udacity.beercollection.dagger.SearchModule;
 import com.github.alexpfx.udacity.beercollection.dagger.SearchSubComponent;
 import com.github.alexpfx.udacity.beercollection.dagger.ServiceModule;
 import com.github.alexpfx.udacity.beercollection.domain.model.remote.config.BreweryDbConfig;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.leakcanary.LeakCanary;
+
+import timber.log.Timber;
 
 
 public class BeerApp extends Application {
@@ -36,6 +39,13 @@ public class BeerApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        FirebaseDatabase.getInstance().setPersistenceEnabled(false);
+
+        if (BuildConfig.DEBUG){
+            Timber.plant(new Timber.DebugTree());
+        }else {
+            // crash reporting tree
+        }
 
 
         super.onCreate();
@@ -75,8 +85,11 @@ public class BeerApp extends Application {
 
     public MyCollectionSubComponent getMyCollectionSubComponent(DrinkBeerView drinkBeerView, MyCollectionView myCollectionView) {
         return applicationComponent.plus(new MyCollectionModule(drinkBeerView, myCollectionView));
-
     }
 
+    public MyCollectionSubComponent getMyCollectionSubComponent(DrinkBeerView drinkBeerView) {
+        return applicationComponent.plus(new MyCollectionModule(drinkBeerView));
+
+    }
 
 }

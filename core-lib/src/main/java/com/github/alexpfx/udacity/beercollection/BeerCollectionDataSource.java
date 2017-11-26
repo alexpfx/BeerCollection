@@ -1,7 +1,7 @@
 package com.github.alexpfx.udacity.beercollection;
 
 import com.github.alexpfx.udacity.beercollection.domain.model.DrinkBeerUpdateItem;
-import com.github.alexpfx.udacity.beercollection.domain.model.local.CollectionItem;
+import com.github.alexpfx.udacity.beercollection.domain.model.collection.CollectionItemVO;
 
 import java.util.List;
 
@@ -13,5 +13,5 @@ import io.reactivex.Single;
 
 public interface BeerCollectionDataSource {
     void insert (DrinkBeerUpdateItem item);
-    Single<List<CollectionItem>> all ();
+    Single<List<CollectionItemVO>> all ();
 }

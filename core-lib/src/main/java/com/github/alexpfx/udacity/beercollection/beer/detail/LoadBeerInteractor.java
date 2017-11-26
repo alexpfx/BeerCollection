@@ -1,8 +1,7 @@
 package com.github.alexpfx.udacity.beercollection.beer.detail;
 
 import com.github.alexpfx.udacity.beercollection.base.BaseInteractor;
-import com.github.alexpfx.udacity.beercollection.domain.model.local.Beer;
-import com.github.alexpfx.udacity.beercollection.domain.model.local.LocalType;
+import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
 
 import io.reactivex.Flowable;
 
@@ -11,5 +10,5 @@ import io.reactivex.Flowable;
  */
 
 public interface LoadBeerInteractor extends BaseInteractor {
-    Flowable<LocalType<Beer>> load(String beerId);
+    Flowable<Beer> load(String beerId);
 }

@@ -1,7 +1,7 @@
 package com.github.alexpfx.udacity.beercollection.collection;
 
 import com.github.alexpfx.udacity.beercollection.dagger.MyCollectionModule;
-import com.github.alexpfx.udacity.beercollection.dagger.MyCollectionScope;
+import com.github.alexpfx.udacity.beercollection.dagger.PerActivity;
 
 import dagger.Subcomponent;
 
@@ -10,7 +10,7 @@ import dagger.Subcomponent;
  */
 
 
-@MyCollectionScope
+@PerActivity
 @Subcomponent(modules = {MyCollectionModule.class})
 public interface MyCollectionSubComponent {
     void inject (MyCollectionActivity activity);
