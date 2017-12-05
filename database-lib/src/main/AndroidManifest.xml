@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 
-          package="com.github.alexpfx.udacity.beercollection"
+          package="com.github.alexpfx.udacity.beercollection.databaselib"
 >
 
     <application android:allowBackup="true"

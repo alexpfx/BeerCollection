@@ -1,5 +1,6 @@
 package com.github.alexpfx.udacity.beercollection.collection;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
@@ -22,12 +23,16 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.subjects.PublishSubject;
 
 /**
  * A placeholder fragment containing a simple view.
  */
 public class MyCollectionFragment extends BaseFragment implements MyCollectionView, DrinkBeerView, SwipeRefreshLayout
-        .OnRefreshListener {
+        .OnRefreshListener{
 
     private static final String TAG = "MyCollectionFragment";
     @BindView(R.id.rcv_collection)
@@ -42,27 +47,77 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     @Inject
     CollectionAdapter adapter;
 
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
+
+    Listener listener;
+
     @Inject
     LoadCollectionPresenter presenter;
+
+    private PublishSubject subject;
+    private Unbinder unbinder;
+    private Disposable disposable;
 
 
     public MyCollectionFragment() {
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof Listener) {
+            this.listener = (Listener) context;
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        compositeDisposable.dispose();
+        listener = null;
+        unbinder.unbind();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_collection, container, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         swipeRefreshCollection.setOnRefreshListener(this);
 
         presenter.load();
 
         rcvCollection.setAdapter(adapter);
+
+
+        setClickListeners ();
+
+
         return view;
 
     }
+
+    //https://stackoverflow.com/questions/36497690/how-to-handle-item-clicks-for-a-recycler-view-using-rxjava
+    private void setClickListeners() {
+        disposable = adapter.getDetailClickSubject().subscribe(v -> listener.onDetail(getBeerIdFromTag(v)));
+
+        compositeDisposable.add(disposable);
+
+        disposable = adapter.getClickHistorySubject().subscribe(v -> listener.onHistory(getBeerIdFromTag(v)));
+
+        compositeDisposable.add(disposable);
+
+        disposable = adapter.getClickAddBeerSubject().subscribe(v -> listener.onAdd(getBeerIdFromTag(v)));
+
+        compositeDisposable.add(disposable);
+
+
+    }
+
+    private String getBeerIdFromTag(View v) {
+        return (String) v.getTag();
+    }
+
 
     @Override
     protected void injectDependencies(BeerApp app) {
@@ -94,12 +149,17 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
 
     @Override
     public void showLoading() {
-        swipeRefreshCollection.setRefreshing(true);
+        if (swipeRefreshCollection != null){
+            swipeRefreshCollection.setRefreshing(true);
+        }
     }
 
     @Override
     public void hideLoading() {
-        swipeRefreshCollection.setRefreshing(false);
+        if (swipeRefreshCollection != null){
+            swipeRefreshCollection.setRefreshing(false);
+        }
+
     }
 
     @Override
@@ -112,5 +172,11 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         presenter.load();
     }
 
+
+    public interface Listener {
+        void onDetail (String beerId);
+        void onHistory (String beerId);
+        void onAdd (String id);
+    }
 
 }

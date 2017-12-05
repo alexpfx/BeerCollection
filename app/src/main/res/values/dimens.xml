@@ -8,9 +8,9 @@
     <dimen name="app_bar_normal">56dp</dimen>
     <dimen name="app_bar_expanded">128dp</dimen>
 
-    <dimen name="card_height_tiny">32dp</dimen>
-    <dimen name="card_height_small">64dp</dimen>
-    <dimen name="card_height_normal">128dp</dimen>
+    <dimen name="card_height_tiny">24dp</dimen>
+    <dimen name="card_height_small">48dp</dimen>
+    <dimen name="card_height_normal">64dp</dimen>
     <dimen name="card_height_large">192dp</dimen>
     <dimen name="card_height_huge">224dp</dimen>
 
@@ -65,4 +65,7 @@ http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
     <dimen name="widget_2x">110dp</dimen>
     <dimen name="widget_3x">180dp</dimen>
     <dimen name="widget_4x">250dp</dimen>
+    <dimen name="text_size_title">20sp</dimen>
+    <dimen name="text_size_subtitle">16sp</dimen>
+    <dimen name="text_size_body">14sp</dimen>
 </resources>

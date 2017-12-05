@@ -22,17 +22,8 @@
             android:visibility="visible"
             />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rcv_collection"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="true"
-            android:visibility="invisible"
-            app:layoutManager="android.support.v7.widget.GridLayoutManager"
-            app:spanCount="2"
-            tools:listitem="@layout/item_collection"
+        <include layout="@layout/layout_recyclerview_collection"/>
 
-            />
     </FrameLayout>
 
 </android.support.v4.widget.SwipeRefreshLayout>

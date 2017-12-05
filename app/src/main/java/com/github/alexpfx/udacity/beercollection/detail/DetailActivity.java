@@ -1,5 +1,7 @@
 package com.github.alexpfx.udacity.beercollection.detail;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -30,7 +32,7 @@ public class DetailActivity extends BaseActivity implements DetailView {
         detailViewHolder.getBeerClickObservable().subscribe(view -> {
             Beer beer = (Beer) view.getTag();
 
-            DrinkBeerFragmentDialog.getInstance(beer.getId(), beer.getName()).show(getSupportFragmentManager(), "DrinkBeerFragmentDialog");
+            DrinkBeerFragmentDialog.getInstance(beer.getId()).show(getSupportFragmentManager(), "DrinkBeerFragmentDialog");
         });
 
         String beerid = (String) getIntent().getExtras().get(Constants.KEY_BEER_ID);
@@ -66,6 +68,12 @@ public class DetailActivity extends BaseActivity implements DetailView {
         super.onPause();
         detailPresenter.onDestroy();
         detailViewHolder.unbind();
+    }
+
+    public static void startDetail (Context context, String beerId){
+        Intent intent = new Intent(context, DetailActivity.class);
+        intent.putExtra(Constants.KEY_BEER_ID, beerId);
+        context.startActivity(intent);
     }
 }
 

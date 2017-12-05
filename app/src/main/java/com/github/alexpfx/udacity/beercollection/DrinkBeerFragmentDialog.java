@@ -21,16 +21,17 @@ public class DrinkBeerFragmentDialog extends DialogFragment {
     NumberPicker inputQuantity;
     private Listener listener;
 
-    public static DrinkBeerFragmentDialog getInstance (String beerId, String beerName, Listener listener){
-        DrinkBeerFragmentDialog instance = getInstance(beerId, beerName);
+
+
+    public static DrinkBeerFragmentDialog getInstance (String beerId, Listener listener){
+        DrinkBeerFragmentDialog instance = getInstance(beerId);
         instance.listener = listener;
         return instance;
     }
 
-    public static DrinkBeerFragmentDialog getInstance(String beerId, String beerName) {
+    public static DrinkBeerFragmentDialog getInstance(String beerId) {
         Bundle bundle = new Bundle();
         bundle.putString(Constants.KEY_BEER_ID, beerId);
-        bundle.putString(Constants.KEY_BEER_NAME, beerName);
         DrinkBeerFragmentDialog drinkBeerFragmentDialog = new DrinkBeerFragmentDialog();
         drinkBeerFragmentDialog.setArguments(bundle);
         return drinkBeerFragmentDialog;
@@ -39,11 +40,9 @@ public class DrinkBeerFragmentDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        String beerName = getArguments().getString(Constants.KEY_BEER_NAME);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(beerName);
-
+        builder.setTitle(getString(R.string.message_how_many_beers));
 
         LayoutInflater layoutInflater = getActivity().getLayoutInflater();
         View view = layoutInflater.inflate(R.layout.layout_drink_dialog, null);

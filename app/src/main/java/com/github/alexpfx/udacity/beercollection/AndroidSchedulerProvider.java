@@ -1,6 +1,6 @@
 package com.github.alexpfx.udacity.beercollection;
 
-import com.github.alexpfx.udacity.beercollection.util.SchedulerProvider;
+import com.github.alexpfx.udacity.beercollection.databaselib.util.SchedulerProvider;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

@@ -1,5 +1,6 @@
 package com.github.alexpfx.udacity.beercollection.search;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,15 +11,19 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.github.alexpfx.udacity.beercollection.BaseActivity;
 import com.github.alexpfx.udacity.beercollection.BeerApp;
 import com.github.alexpfx.udacity.beercollection.Constants;
 import com.github.alexpfx.udacity.beercollection.R;
-import com.github.alexpfx.udacity.beercollection.beer.search.SearchPresenter;
-import com.github.alexpfx.udacity.beercollection.beer.search.SearchView;
+import com.github.alexpfx.udacity.beercollection.databaselib.search.SearchPresenter;
+import com.github.alexpfx.udacity.beercollection.databaselib.search.SearchView;
 import com.github.alexpfx.udacity.beercollection.detail.DetailActivity;
 import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
 import com.mikepenz.iconics.context.IconicsLayoutInflater2;
@@ -30,6 +35,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnEditorAction;
 
 /**
  * Adicionar indicador de loading
@@ -45,7 +51,6 @@ public class SearchActivity extends BaseActivity implements SearchView {
 
     @Inject
     SearchPresenter searchPresenter;
-
 
 
     @Inject
@@ -67,15 +72,6 @@ public class SearchActivity extends BaseActivity implements SearchView {
         rcvSearchResult.setLayoutManager(layout);
         rcvSearchResult.addItemDecoration(new DividerItemDecoration(this, layout.getOrientation()));
 
-        adapter.getClickDrinkObservable().subscribe(view -> {
-
-            Beer beer = (Beer) view.getTag();
-            Intent data = new Intent();
-            data.putExtra(Constants.KEY_BEER_ID, beer.getId());
-            data.putExtra(Constants.KEY_BEER_NAME, beer.getName());
-            setResult(RESULT_OK, data);
-            finish();
-        });
 
         adapter.getViewClickObservable().subscribe(view -> {
             Beer beer = (Beer) view.getTag();
@@ -129,6 +125,17 @@ public class SearchActivity extends BaseActivity implements SearchView {
         adapter.clear();
     }
 
+    @OnEditorAction(R.id.edt_search)
+    public boolean onEditorActionSearch(TextView tv, int actionId, KeyEvent keyEvent) {
+        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+            actionSearch(tv);
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(tv.getWindowToken(),
+                    InputMethodManager.RESULT_UNCHANGED_SHOWN);
+            return true;
+        }
+        return false;
+    }
 
     @OnClick(R.id.btn_action_search)
     public void actionSearch(View view) {
@@ -137,7 +144,7 @@ public class SearchActivity extends BaseActivity implements SearchView {
         } else {
             edtSearch.requestFocus();
         }
-
     }
+
 
 }

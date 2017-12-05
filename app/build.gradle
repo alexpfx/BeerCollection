@@ -30,7 +30,6 @@ android {
     //https://stackoverflow.com/questions/25103288/multiple-dex-files-define-my-package-buildconfig-cant-find-the-cause
     dexOptions {
         javaMaxHeapSize "4g"
-        preDexLibraries = false
     }
 
     compileOptions {

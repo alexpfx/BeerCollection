@@ -6,19 +6,18 @@ import android.app.Application;
 import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerView;
 import com.github.alexpfx.udacity.beercollection.beer.collection.MyCollectionView;
 import com.github.alexpfx.udacity.beercollection.beer.detail.DetailView;
-import com.github.alexpfx.udacity.beercollection.beer.search.SearchView;
 import com.github.alexpfx.udacity.beercollection.collection.MyCollectionSubComponent;
-import com.github.alexpfx.udacity.beercollection.dagger.AndroidModule;
-import com.github.alexpfx.udacity.beercollection.dagger.ApplicationComponent;
-import com.github.alexpfx.udacity.beercollection.dagger.DaggerApplicationComponent;
-import com.github.alexpfx.udacity.beercollection.dagger.DetailModule;
-import com.github.alexpfx.udacity.beercollection.dagger.DetailSubComponent;
-import com.github.alexpfx.udacity.beercollection.dagger.MyCollectionModule;
-import com.github.alexpfx.udacity.beercollection.dagger.SearchModule;
-import com.github.alexpfx.udacity.beercollection.dagger.SearchSubComponent;
-import com.github.alexpfx.udacity.beercollection.dagger.ServiceModule;
+import com.github.alexpfx.udacity.beercollection.databaselib.dagger.AndroidModule;
+import com.github.alexpfx.udacity.beercollection.databaselib.dagger.ApplicationComponent;
+import com.github.alexpfx.udacity.beercollection.databaselib.dagger.DaggerApplicationComponent;
+import com.github.alexpfx.udacity.beercollection.databaselib.dagger.DetailModule;
+import com.github.alexpfx.udacity.beercollection.databaselib.dagger.DetailSubComponent;
+import com.github.alexpfx.udacity.beercollection.databaselib.dagger.MyCollectionModule;
+import com.github.alexpfx.udacity.beercollection.databaselib.dagger.SearchModule;
+import com.github.alexpfx.udacity.beercollection.databaselib.dagger.SearchSubComponent;
+import com.github.alexpfx.udacity.beercollection.databaselib.dagger.ServiceModule;
+import com.github.alexpfx.udacity.beercollection.databaselib.search.SearchView;
 import com.github.alexpfx.udacity.beercollection.domain.model.remote.config.BreweryDbConfig;
-import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.leakcanary.LeakCanary;
 
 import timber.log.Timber;
@@ -39,14 +38,10 @@ public class BeerApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        FirebaseDatabase.getInstance().setPersistenceEnabled(false);
 
         if (BuildConfig.DEBUG){
             Timber.plant(new Timber.DebugTree());
-        }else {
-            // crash reporting tree
         }
-
 
         super.onCreate();
         if (LeakCanary.isInAnalyzerProcess(this)) {

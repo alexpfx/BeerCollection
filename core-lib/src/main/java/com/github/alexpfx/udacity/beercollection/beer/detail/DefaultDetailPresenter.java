@@ -1,7 +1,7 @@
 package com.github.alexpfx.udacity.beercollection.beer.detail;
 
-import com.github.alexpfx.udacity.beercollection.dagger.PerActivity;
-import com.github.alexpfx.udacity.beercollection.util.SchedulerProvider;
+import com.github.alexpfx.udacity.beercollection.databaselib.dagger.PerActivity;
+import com.github.alexpfx.udacity.beercollection.databaselib.util.SchedulerProvider;
 
 import javax.inject.Inject;
 

@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.github.alexpfx.udacity.beercollection.collection.MyCollectionActivity;
-import com.github.alexpfx.udacity.beercollection.util.FirebaseUtils;
+import com.github.alexpfx.udacity.beercollection.databaselib.util.FirebaseUtils;
 import com.google.firebase.auth.FirebaseAuth;
 
 import javax.inject.Inject;

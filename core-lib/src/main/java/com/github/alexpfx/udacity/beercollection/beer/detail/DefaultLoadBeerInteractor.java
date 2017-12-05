@@ -1,10 +1,10 @@
 package com.github.alexpfx.udacity.beercollection.beer.detail;
 
 import com.github.alexpfx.udacity.beercollection.beer.BeerLocalDataSource;
-import com.github.alexpfx.udacity.beercollection.beer.search.BeerRemoteDataSource;
-import com.github.alexpfx.udacity.beercollection.dagger.PerActivity;
+import com.github.alexpfx.udacity.beercollection.databaselib.search.BeerRemoteDataSource;
+import com.github.alexpfx.udacity.beercollection.databaselib.dagger.PerActivity;
 import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
-import com.github.alexpfx.udacity.beercollection.util.SchedulerProvider;
+import com.github.alexpfx.udacity.beercollection.databaselib.util.SchedulerProvider;
 
 import java.util.Collections;
 import java.util.logging.Level;

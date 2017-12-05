@@ -3,9 +3,9 @@ package com.github.alexpfx.udacity.beercollection.beer.collection;
 import com.github.alexpfx.udacity.beercollection.Constants;
 import com.github.alexpfx.udacity.beercollection.Logger;
 import com.github.alexpfx.udacity.beercollection.beer.detail.LoadBeerInteractor;
-import com.github.alexpfx.udacity.beercollection.dagger.PerActivity;
+import com.github.alexpfx.udacity.beercollection.databaselib.dagger.PerActivity;
 import com.github.alexpfx.udacity.beercollection.domain.model.collection.CollectionItem;
-import com.github.alexpfx.udacity.beercollection.util.SchedulerProvider;
+import com.github.alexpfx.udacity.beercollection.databaselib.util.SchedulerProvider;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,6 +16,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Flowable;
 import io.reactivex.Single;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 /**
@@ -30,6 +31,8 @@ public class LoadCollectionPresenterImpl implements LoadCollectionPresenter {
     private Disposable subscription;
     private LoadBeerInteractor loadBeerInteractor;
     private final Logger logger;
+
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
 
     @Inject
@@ -51,7 +54,8 @@ public class LoadCollectionPresenterImpl implements LoadCollectionPresenter {
         view.showLoading();
         logger.d("load");
 
-        collectionInteractor.load().timeout(Constants.TIMEOUT, TimeUnit.SECONDS).toFlowable().flatMap
+        Disposable disposable = collectionInteractor.load().timeout(Constants.TIMEOUT, TimeUnit.SECONDS).toFlowable()
+                .flatMap
                 (Flowable::fromIterable)
                 .flatMap(civo ->
                         Flowable
@@ -68,6 +72,7 @@ public class LoadCollectionPresenterImpl implements LoadCollectionPresenter {
                         this::handleCollection,
                         this::handleError);
 
+        compositeDisposable.add(disposable);
 
     }
 
@@ -87,14 +92,10 @@ public class LoadCollectionPresenterImpl implements LoadCollectionPresenter {
         view.showErrorLoadingCollection(onError.getMessage());
     }
 
-
     @Override
     public void onDestroy() {
-        if (subscription != null) {
-            subscription.dispose();
-        }
-
-
+        compositeDisposable.clear();
+        compositeDisposable.dispose();
     }
 
     @Override

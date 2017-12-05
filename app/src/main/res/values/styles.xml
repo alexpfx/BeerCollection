@@ -13,7 +13,26 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
 
+
+    <style name="BeerItemTextStyleTitle" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/light_text</item>
+        <item name="android:gravity">start|center_vertical</item>
+        <item name="android:paddingStart">@dimen/space_small</item>
+        <item name="android:paddingEnd">@dimen/space_small</item>
+        <item name="android:textSize">@dimen/text_size_title</item>
+        <item name="android:textStyle">bold</item>
+
+
+    </style>
+
+    <style name="BeerItemTextStyleSubtitle" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/light_text</item>
+        <item name="android:paddingStart">@dimen/space_small</item>
+        <item name="android:paddingEnd">@dimen/space_small</item>
+        <item name="android:textSize">@dimen/text_size_body</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
 
@@ -23,3 +42,4 @@
 
 
 </resources>
+

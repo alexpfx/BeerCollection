@@ -1,7 +1,7 @@
 package com.github.alexpfx.udacity.beercollection.beer.collection;
 
 import com.github.alexpfx.udacity.beercollection.BeerCollectionDataSource;
-import com.github.alexpfx.udacity.beercollection.dagger.PerActivity;
+import com.github.alexpfx.udacity.beercollection.databaselib.dagger.PerActivity;
 import com.github.alexpfx.udacity.beercollection.domain.model.collection.CollectionItemVO;
 
 import java.util.List;

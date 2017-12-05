@@ -5,6 +5,7 @@ package com.github.alexpfx.udacity.beercollection.domain.model.beer;
  */
 
 public class Beer {
+
     private String id;
     private String name;
     private String description;

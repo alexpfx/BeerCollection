@@ -1,7 +1,7 @@
 package com.github.alexpfx.udacity.beercollection.collection;
 
-import com.github.alexpfx.udacity.beercollection.dagger.MyCollectionModule;
-import com.github.alexpfx.udacity.beercollection.dagger.PerActivity;
+import com.github.alexpfx.udacity.beercollection.databaselib.dagger.MyCollectionModule;
+import com.github.alexpfx.udacity.beercollection.databaselib.dagger.PerActivity;
 
 import dagger.Subcomponent;
 

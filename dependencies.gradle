@@ -28,6 +28,7 @@ ext {
 
     lib_android_implementation = [
             timber :  'com.jakewharton.timber:timber:4.6.0',
+            /* iconics */
             iconicsCore              : "com.mikepenz:iconics-core:2.9.5@aar",
             materialTypeface         : 'com.mikepenz:google-material-typeface:3.0.1.2.original@aar',
             communityMaterialTypeface: 'com.mikepenz:community-material-typeface:2.0.46.1@aar',

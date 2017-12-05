@@ -6,15 +6,13 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.github.alexpfx.udacity.beercollection.ClickObservableBaseAdapter;
+import com.github.alexpfx.udacity.beercollection.AbstractBaseAdapter;
 import com.github.alexpfx.udacity.beercollection.R;
-import com.github.alexpfx.udacity.beercollection.dagger.PerActivity;
+import com.github.alexpfx.udacity.beercollection.databaselib.dagger.PerActivity;
 import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
-import com.jakewharton.rxbinding2.view.RxView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -31,7 +29,7 @@ import io.reactivex.subjects.PublishSubject;
  * Created by alexandre on 31/10/17.
  */
 @PerActivity
-public class SearchAdapter extends ClickObservableBaseAdapter<SearchAdapter.SeachViewHolder, Beer> {
+public class SearchAdapter extends AbstractBaseAdapter<SearchAdapter.SeachViewHolder, Beer> {
     private static final String TAG = "SearchAdapter";
     private List<Beer> items = new ArrayList<>();
     private PublishSubject<View> clickDrink = PublishSubject.create();
@@ -53,9 +51,9 @@ public class SearchAdapter extends ClickObservableBaseAdapter<SearchAdapter.Seac
     @Override
     protected View inflate(LayoutInflater inflater, ViewGroup parent) {
         View view = inflater.inflate(R.layout.item_beer, parent, false);
-
-        View btnView = view.findViewById(R.id.btn_drink);
-        RxView.clicks(btnView).map(a -> btnView).subscribe(clickDrink);
+//TODO: descompentar.
+//        View btnView = view.findViewById(R.id.btn_drink);
+//        RxView.clicks(btnView).map(a -> btnView).subscribe(clickDrink);
 
 
         return view;
@@ -101,8 +99,8 @@ public class SearchAdapter extends ClickObservableBaseAdapter<SearchAdapter.Seac
         TextView txtSrm;
 
 
-        @BindView(R.id.btn_drink)
-        ImageButton btnDrink;
+//        @BindView(R.id.btn_drink)
+//        ImageButton btnDrink;
 
 
         private Context context;
@@ -117,16 +115,19 @@ public class SearchAdapter extends ClickObservableBaseAdapter<SearchAdapter.Seac
 
 
         public void bind(Beer beer) {
-
             itemView.setTag(beer);
             txtBeerName.setText(beer.getName());
             txtBeerStyle.setText(beer.getStyle());
             setOrHide(context.getString(R.string.label_abv), txtAbv, beer.getAbv());
             setOrHide(context.getString(R.string.label_ibu), txtIbu, beer.getIbu());
             setOrHide(context.getString(R.string.label_srm), txtSrm, beer.getSrm());
-            Picasso.with(context).load(beer.getLabelMedium()).resize(160, 160).centerCrop().into(imgBeerLabel);
-            btnDrink.setTag(beer);
 
+
+            Picasso.with(context).load(beer.getLabelLarge())
+                    .resize(320, 320)
+                    .transform(new CropMiddleFirstPixelTransformation())
+                    .centerCrop()
+                    .into(imgBeerLabel);
 
         }
 

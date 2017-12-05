@@ -7,7 +7,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.firebase.ui.auth.AuthUI;
-import com.github.alexpfx.udacity.beercollection.beer.search.SearchPresenter;
+import com.github.alexpfx.udacity.beercollection.databaselib.search.SearchPresenter;
 import com.google.android.gms.auth.api.signin.internal.SignInHubActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
