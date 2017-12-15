@@ -12,6 +12,6 @@ import io.reactivex.Single;
  */
 
 public interface BeerCollectionDataSource {
-    void insert (DrinkBeerUpdateItem item);
+    Single insert (DrinkBeerUpdateItem item);
     Single<List<CollectionItemVO>> all ();
 }

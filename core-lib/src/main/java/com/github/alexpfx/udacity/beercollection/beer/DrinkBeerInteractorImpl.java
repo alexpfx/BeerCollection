@@ -6,6 +6,8 @@ import com.github.alexpfx.udacity.beercollection.domain.model.DrinkBeerUpdateIte
 
 import javax.inject.Inject;
 
+import io.reactivex.Single;
+
 /**
  * Created by alexandre on 12/11/17.
  */
@@ -20,7 +22,7 @@ public class DrinkBeerInteractorImpl implements DrinkBeerInteractor {
     }
 
     @Override
-    public void save(DrinkBeerUpdateItem beer) {
-        dataSource.insert(beer);
+    public Single save(DrinkBeerUpdateItem beer) {
+        return dataSource.insert(beer);
     }
 }

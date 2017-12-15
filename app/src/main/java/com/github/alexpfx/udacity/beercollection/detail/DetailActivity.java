@@ -3,77 +3,82 @@ package com.github.alexpfx.udacity.beercollection.detail;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v7.widget.Toolbar;
 
 import com.github.alexpfx.udacity.beercollection.BaseActivity;
 import com.github.alexpfx.udacity.beercollection.BeerApp;
 import com.github.alexpfx.udacity.beercollection.Constants;
-import com.github.alexpfx.udacity.beercollection.DrinkBeerFragmentDialog;
 import com.github.alexpfx.udacity.beercollection.R;
-import com.github.alexpfx.udacity.beercollection.beer.detail.DetailPresenter;
-import com.github.alexpfx.udacity.beercollection.beer.detail.DetailView;
-import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
+import com.github.alexpfx.udacity.beercollection.ToolbarHelper;
 
-import javax.inject.Inject;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-public class DetailActivity extends BaseActivity implements DetailView {
+public class DetailActivity extends BaseActivity implements DetailFragment.Listener {
     private static final String TAG = "DetailActivity";
 
-    @Inject
-    DetailPresenter detailPresenter;
+//    DetailPresenter detailPresenter;
 
-    private DetailViewHolder detailViewHolder;
+//    private DetailViewHolder detailViewHolder;
+
+
+
+    @BindView(R.id.collapsing_toolbar)
+    CollapsingToolbarLayout collapsingToolbarLayout;
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+
+    public static void startDetail(Context context, String beerId) {
+        Intent intent = new Intent(context, DetailActivity.class);
+        intent.putExtra(Constants.KEY_BEER_ID, beerId);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        detailViewHolder = new DetailViewHolder(getWindow().getDecorView());
-        detailViewHolder.getBeerClickObservable().subscribe(view -> {
-            Beer beer = (Beer) view.getTag();
 
-            DrinkBeerFragmentDialog.getInstance(beer.getId()).show(getSupportFragmentManager(), "DrinkBeerFragmentDialog");
-        });
+        ButterKnife.bind(this);
 
-        String beerid = (String) getIntent().getExtras().get(Constants.KEY_BEER_ID);
-        detailPresenter.load(beerid);
+        ToolbarHelper.setupToolbar(this, toolbar, false, true, false);
+
+
+
+
+
+
+//        detailViewHolder = new DetailViewHolder(getWindow().getDecorView());
+
+//        detailViewHolder.getBeerClickObservable().subscribe(view -> {
+//            Beer beer = (Beer) view.getTag();
+//
+//            DrinkBeerFragmentDialog.getInstance(beer.getId()).show(getSupportFragmentManager(),
+// "DrinkBeerFragmentDialog");
+//        });
+
 
     }
 
     @Override
     protected void injectDependencies(BeerApp app) {
-        app.getDetailSubComponent(this).inject(this);
-    }
-
-    @Override
-    public void showBeer(Beer beer) {
-        detailViewHolder.setBeer(beer);
-    }
-
-
-    @Override
-    public void showLoadError(Throwable throwable) {
-        Log.e(TAG, "showLoadError: ", throwable);
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
 
     }
+
 
     @Override
     protected void onPause() {
         super.onPause();
-        detailPresenter.onDestroy();
-        detailViewHolder.unbind();
+//        detailPresenter.onDestroy();
+//        detailViewHolder.unbind();
     }
 
-    public static void startDetail (Context context, String beerId){
-        Intent intent = new Intent(context, DetailActivity.class);
-        intent.putExtra(Constants.KEY_BEER_ID, beerId);
-        context.startActivity(intent);
+    @Override
+    public void onTitleChanged(String title) {
+        collapsingToolbarLayout.setTitle(title);
     }
 }
 

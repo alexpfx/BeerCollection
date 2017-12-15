@@ -2,7 +2,11 @@
 <resources>
 
     <color name="white">#fff</color>
+    <color name="black">#000</color>
     <color name="light_text">#dfff</color>
+
+
+    <color name="iconColor">@color/icons</color>
 
     <color name="colorPrimary">@color/primary</color>
     <color name="colorPrimaryDark">@color/primary_dark</color>
@@ -18,8 +22,14 @@
 
     <color name="primary_text">#212121</color>
     <color name="secondary_text">#757575</color>
-    <color name="icons">#FFFFFF</color>
+
+    <color name="icons">#8C000000</color>
+
     <color name="divider">#BDBDBD</color>
+    <color name="scrim_color">#8c666666</color>
+
 
 </resources>
+
+
 

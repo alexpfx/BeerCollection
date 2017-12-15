@@ -5,12 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jakewharton.rxbinding2.view.RxView;
-
 import java.util.List;
-
-import io.reactivex.Observable;
-import io.reactivex.subjects.PublishSubject;
 
 /**
  * Created by alexandre on 04/11/17.
@@ -19,20 +14,13 @@ import io.reactivex.subjects.PublishSubject;
 public abstract class AbstractBaseAdapter<VH extends RecyclerView.ViewHolder, I> extends RecyclerView
         .Adapter<VH> implements BaseAdapter<I> {
 
-    private PublishSubject<View> clickSubject = PublishSubject.create();
     private List<I> items;
 
-
-
-    public final Observable<View> getViewClickObservable() {
-        return clickSubject.hide();
-    }
 
     @Override
     public final VH onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflate(LayoutInflater.from(parent.getContext()), parent);
         VH viewHolder = createViewHolder(view);
-        RxView.clicks(view).takeUntil(RxView.detaches(parent)).map(a -> view).subscribe(clickSubject);
         return viewHolder;
     }
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.StringRes;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +12,7 @@ import android.support.v7.widget.TooltipCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -43,6 +45,7 @@ public class CollectionAdapter extends AbstractBaseAdapter<CollectionAdapter.Col
     private final PublishSubject<View> clickDetailSubject = PublishSubject.create();
     private final PublishSubject<View> clickAddBeerSubject = PublishSubject.create();
     private final PublishSubject<View> clickHistorySubject = PublishSubject.create();
+    private boolean usePallete = false;
 
 
     @Inject
@@ -52,6 +55,15 @@ public class CollectionAdapter extends AbstractBaseAdapter<CollectionAdapter.Col
     public Observable<View> getDetailClickSubject() {
         return clickDetailSubject.hide();
     }
+
+    public Observable<View> getClickAddBeerSubject() {
+        return clickAddBeerSubject.hide();
+    }
+
+    public Observable<View> getClickHistorySubject() {
+        return clickHistorySubject.hide();
+    }
+
 
     @Override
     protected CollectionViewHolder createViewHolder(View view) {
@@ -68,13 +80,6 @@ public class CollectionAdapter extends AbstractBaseAdapter<CollectionAdapter.Col
         holder.bind(getItem(position));
     }
 
-    public PublishSubject<View> getClickAddBeerSubject() {
-        return clickAddBeerSubject;
-    }
-
-    public PublishSubject<View> getClickHistorySubject() {
-        return clickHistorySubject;
-    }
 
 
     public class CollectionViewHolder extends RecyclerView.ViewHolder {
@@ -87,6 +92,12 @@ public class CollectionAdapter extends AbstractBaseAdapter<CollectionAdapter.Col
         @BindView(R.id.text_quantity)
         TextView textQuantity;
 
+        @BindView(R.id.btn_drink_action)
+        ImageButton btnDrink;
+
+        @BindView(R.id.layout_collecion_item)
+        ConstraintLayout layout;
+
         @BindView(R.id.view_scrim)
         View viewScrim;
 
@@ -94,12 +105,16 @@ public class CollectionAdapter extends AbstractBaseAdapter<CollectionAdapter.Col
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
                 imageBeerLabel.setImageBitmap(bitmap);
+                if (!usePallete) return;
+
                 Palette.from(bitmap).generate(palette -> {
 //                    Palette.Swatch vibrantSwatch = palette.getDarkVibrantSwatch();
+
                     Palette.Swatch vibrantSwatch = palette.getDominantSwatch();
 
 //                    Palette.Swatch vibrantSwatch = palette.getDarkMutedSwatch();
 //                    Palette.Swatch vibrantSwatch = palette.getLightMutedSwatch();
+
 
 
                     if (vibrantSwatch != null) {
@@ -109,7 +124,7 @@ public class CollectionAdapter extends AbstractBaseAdapter<CollectionAdapter.Col
 
                         int textRgb = vibrantSwatch.getBodyTextColor();
 
-                        viewScrim.setBackgroundColor(rgbScrim);
+//                        viewScrim.setBackgroundColor(rgbScrim);
 
                         textBeerName.setBackgroundColor(rgbTextBackground);
                         textBeerName.setTextColor(textRgb);
@@ -120,6 +135,7 @@ public class CollectionAdapter extends AbstractBaseAdapter<CollectionAdapter.Col
 
                         textQuantity.setBackgroundColor(rgbTextBackground);
                         textQuantity.setTextColor(textRgb);
+
 
                     }
                 });
@@ -143,7 +159,11 @@ public class CollectionAdapter extends AbstractBaseAdapter<CollectionAdapter.Col
             ButterKnife.bind(this, itemView);
             context = itemView.getContext();
         }
+
+        private static final String TAG = "CollectionViewHolder";
 /*
+
+
         View view = inflate(LayoutInflater.from(parent.getContext()), parent);
         VH viewHolder = createViewHolder(view);
         RxView.clicks(view).takeUntil(RxView.detaches(parent)).map(a -> view).subscribe(clickSubject);
@@ -160,6 +180,30 @@ public class CollectionAdapter extends AbstractBaseAdapter<CollectionAdapter.Col
 
             setupLastDrinkDateView(collectionItemVO);
 
+            setupEvents (beer);
+
+        }
+
+        private void setupEvents(Beer beer) {
+            String beerId = beer.getId();
+
+            btnDrink.setTag(beerId);
+            RxView.clicks(btnDrink).map(a ->
+                    btnDrink).subscribe(clickAddBeerSubject);
+
+
+            layout.setTag(beerId);
+            RxView.clicks(layout).map(a -> layout).subscribe(clickDetailSubject);
+
+            textBeerName.setTag(beerId);
+            RxView.clicks(textBeerName).map(a -> textBeerName).subscribe(clickHistorySubject);
+
+            textLastDrinkDate.setTag(beerId);
+            RxView.clicks(textLastDrinkDate).map(a -> textLastDrinkDate).subscribe(clickHistorySubject);
+
+//            viewScrim.setTag(beerId);
+//            RxView.clicks(viewScrim).map(a -> viewScrim).subscribe(clickHistorySubject);
+
         }
 
         private void setupLabelView(Beer beer) {
@@ -171,26 +215,16 @@ public class CollectionAdapter extends AbstractBaseAdapter<CollectionAdapter.Col
                     .centerCrop()
                     .into(target);
 
-            setBeerIdViewTag(imageBeerLabel, beer.getId());
-
-            RxView.clicks(imageBeerLabel).takeUntil(RxView.detaches((View) imageBeerLabel.getParent())).map(a ->
-                    imageBeerLabel).subscribe(clickDetailSubject);
-
         }
 
 
         private void setupBeerNameView(CollectionItem collectionItemVO, Beer beer) {
-            setBeerIdViewTag(textBeerName, beer.getId());
             textBeerName.setText(beer.getName());
             setTooltipText(textBeerName, R.string.tooltip_beer_name);
 
-            RxView.clicks(textBeerName).takeUntil(RxView.detaches((View) textBeerName.getParent())).map(a ->
-                    textBeerName).subscribe(clickDetailSubject);
         }
 
-        private void setBeerIdViewTag(View view, String id) {
-            view.setTag(id);
-        }
+
 
         private void setupLastDrinkDateView(CollectionItem collectionItem) {
             DateFormat dateInstance = DateFormat.getDateInstance(DateFormat.SHORT);
@@ -198,23 +232,12 @@ public class CollectionAdapter extends AbstractBaseAdapter<CollectionAdapter.Col
             textLastDrinkDate.setText(dateFormated);
             setTooltipText(textLastDrinkDate, R.string.tooltip_last_beer);
 
-            setBeerIdViewTag(textLastDrinkDate, collectionItem.getBeer().getId());
 
-            RxView.clicks(textLastDrinkDate).takeUntil(RxView.detaches((View) textLastDrinkDate.getParent())).map(a ->
-                    textLastDrinkDate).subscribe(clickHistorySubject);
         }
 
         private void setupQuantityView(CollectionItem collectionItem) {
             textQuantity.setText(String.valueOf(collectionItem.countBeers()));
             setTooltipText(textQuantity, R.string.tooltip_quantity);
-
-            setBeerIdViewTag(textQuantity, collectionItem.getBeer().getId());
-
-//            RxView.clicks(textQuantity).takeUntil(RxView.detaches((View) textQuantity.getParent())).map(a ->
-//                    textQuantity).subscribe(clickAddBeerSubject);
-
-            RxView.clicks(textQuantity).map(a -> textQuantity).subscribe(clickAddBeerSubject);
-
 
         }
 

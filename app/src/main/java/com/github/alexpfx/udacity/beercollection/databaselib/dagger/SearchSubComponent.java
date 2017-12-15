@@ -9,7 +9,7 @@ import dagger.Subcomponent;
  */
 
 @PerActivity
-@Subcomponent(modules = {SearchModule.class, ActivityModule.class})
+@Subcomponent(modules = {SearchModule.class, DrinkBeerModule.class})
 public interface SearchSubComponent {
     void inject (SearchActivity mainActivity);
 }

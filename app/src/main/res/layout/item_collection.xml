@@ -5,70 +5,79 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layout_constraint"
+    android:id="@+id/layout_collecion_item"
     android:layout_width="match_parent"
     android:layout_height="@dimen/card_height_large"
-
-    >
+    android:layout_margin="1dp"
+    android:background="@color/black"
+    tools:layout_editor_absoluteY="25dp">
 
 
     <ImageView
+
         android:id="@+id/image_beer_label"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/card_height_large"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:adjustViewBounds="true"
+        android:alpha="0.9"
         android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@drawable/heineken"/>
+
 
     <View
         android:id="@+id/view_scrim"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="68dp"
+        android:background="@drawable/scrim_background"
+        app:layout_constraintBottom_toBottomOf="@+id/image_beer_label"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/image_beer_label"
+        app:layout_constraintVertical_bias="1.0"/>
 
     <TextView
         android:id="@+id/text_last_drink_date"
-        style="@style/BeerItemTextStyleSubtitle"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/card_height_small"
-        android:gravity="start|center_vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintStart_toStartOf="parent"
-        android:tooltipText="@string/label_last_beer"
-        tools:text="17/10/2017"/>
-
-    <TextView
-        android:id="@+id/text_beer_name"
-        style="@style/BeerItemTextStyleTitle"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/card_height_small"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Heineken"/>
+        style="@style/CollectionItemTextSecundary"
+        app:layout_constraintStart_toStartOf="@+id/text_beer_name"
+        app:layout_constraintTop_toBottomOf="@+id/text_beer_name"
+        tools:text="Text"/>
 
     <TextView
         android:id="@+id/text_quantity"
-        style="@style/BeerItemTextStyleSubtitle"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/card_height_small"
+        style="@style/CollectionItemTextSecundary"
         android:layout_centerVertical="true"
-        android:gravity="end|center_vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/view_scrim"
+        app:layout_constraintEnd_toEndOf="@+id/view_scrim"
         tools:text="110"/>
 
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5"/>
+    <TextView
+        android:id="@+id/text_beer_name"
+        style="@style/CollectionItemTextPrimary"
+        android:layout_width="0dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        app:layout_constraintEnd_toEndOf="@+id/view_scrim"
+        app:layout_constraintStart_toEndOf="@+id/btn_drink_action"
+        app:layout_constraintTop_toTopOf="@+id/view_scrim"
+        tools:text="Text \nText"/>
+
+
+    <ImageButton
+        android:id="@+id/btn_drink_action"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:background="?attr/selectableItemBackground"
+        app:ico_color="@color/white"
+        app:ico_icon="typ-beer"
+        app:ico_size="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/view_scrim"
+        app:layout_constraintStart_toStartOf="@+id/view_scrim"
+        app:layout_constraintTop_toTopOf="@+id/view_scrim"
+        tools:src="@drawable/googleg_standard_color_18"/>
 
 
 </android.support.constraint.ConstraintLayout>

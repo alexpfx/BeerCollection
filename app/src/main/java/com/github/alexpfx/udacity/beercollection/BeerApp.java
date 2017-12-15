@@ -2,11 +2,12 @@ package com.github.alexpfx.udacity.beercollection;
 
 import android.app.Activity;
 import android.app.Application;
+import android.support.v4.app.Fragment;
 
-import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerView;
-import com.github.alexpfx.udacity.beercollection.beer.collection.MyCollectionView;
 import com.github.alexpfx.udacity.beercollection.beer.detail.DetailView;
+import com.github.alexpfx.udacity.beercollection.collection.MyCollectionFragment;
 import com.github.alexpfx.udacity.beercollection.collection.MyCollectionSubComponent;
+import com.github.alexpfx.udacity.beercollection.databaselib.dagger.ActivityModule;
 import com.github.alexpfx.udacity.beercollection.databaselib.dagger.AndroidModule;
 import com.github.alexpfx.udacity.beercollection.databaselib.dagger.ApplicationComponent;
 import com.github.alexpfx.udacity.beercollection.databaselib.dagger.DaggerApplicationComponent;
@@ -16,7 +17,6 @@ import com.github.alexpfx.udacity.beercollection.databaselib.dagger.MyCollection
 import com.github.alexpfx.udacity.beercollection.databaselib.dagger.SearchModule;
 import com.github.alexpfx.udacity.beercollection.databaselib.dagger.SearchSubComponent;
 import com.github.alexpfx.udacity.beercollection.databaselib.dagger.ServiceModule;
-import com.github.alexpfx.udacity.beercollection.databaselib.search.SearchView;
 import com.github.alexpfx.udacity.beercollection.domain.model.remote.config.BreweryDbConfig;
 import com.squareup.leakcanary.LeakCanary;
 
@@ -43,6 +43,15 @@ public class BeerApp extends Application {
             Timber.plant(new Timber.DebugTree());
         }
 
+
+
+
+
+
+
+
+
+
         super.onCreate();
         if (LeakCanary.isInAnalyzerProcess(this)) {
             // This process is dedicated to LeakCanary for heap analysis.
@@ -68,23 +77,23 @@ public class BeerApp extends Application {
 
     public SearchSubComponent getSearchSubComponent(Activity activity) {
         if (searchSubComponent == null) {
-            searchSubComponent = applicationComponent.plus(new SearchModule((SearchView) activity));
+            searchSubComponent = applicationComponent.plus(new SearchModule(), new ActivityModule(activity));
         }
         return searchSubComponent;
     }
 
-    public DetailSubComponent getDetailSubComponent(Activity activity) {
-        detailSubComponent = applicationComponent.plus(new DetailModule((DetailView) activity));
+    public DetailSubComponent getDetailSubComponent(Fragment fragment) {
+        detailSubComponent = applicationComponent.plus(new DetailModule((DetailView) fragment));
         return detailSubComponent;
     }
 
-    public MyCollectionSubComponent getMyCollectionSubComponent(DrinkBeerView drinkBeerView, MyCollectionView myCollectionView) {
-        return applicationComponent.plus(new MyCollectionModule(drinkBeerView, myCollectionView));
+
+    public MyCollectionSubComponent getMyCollectionSubComponent(Activity activity){
+        return applicationComponent.plus(new MyCollectionModule(), new ActivityModule(activity));
     }
 
-    public MyCollectionSubComponent getMyCollectionSubComponent(DrinkBeerView drinkBeerView) {
-        return applicationComponent.plus(new MyCollectionModule(drinkBeerView));
-
+    public MyCollectionSubComponent getMyCollectionSubComponent(Activity activity, MyCollectionFragment fragment) {
+        return applicationComponent.plus(new MyCollectionModule(fragment), new ActivityModule(activity));
     }
 
 }

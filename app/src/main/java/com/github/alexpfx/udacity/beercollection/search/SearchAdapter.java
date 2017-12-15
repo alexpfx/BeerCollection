@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +14,7 @@ import com.github.alexpfx.udacity.beercollection.AbstractBaseAdapter;
 import com.github.alexpfx.udacity.beercollection.R;
 import com.github.alexpfx.udacity.beercollection.databaselib.dagger.PerActivity;
 import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
+import com.jakewharton.rxbinding2.view.RxView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 /**
  * Created by alexandre on 31/10/17.
@@ -32,15 +35,20 @@ import io.reactivex.subjects.PublishSubject;
 public class SearchAdapter extends AbstractBaseAdapter<SearchAdapter.SeachViewHolder, Beer> {
     private static final String TAG = "SearchAdapter";
     private List<Beer> items = new ArrayList<>();
-    private PublishSubject<View> clickDrink = PublishSubject.create();
+    private PublishSubject<View> clickDetailViewObservable = PublishSubject.create();
+    private PublishSubject<View> clickDownloadViewObservable = PublishSubject.create();
 
     @Inject
     public SearchAdapter() {
 
     }
 
-    public Observable<View> getClickDrinkObservable() {
-        return clickDrink.hide();
+    public PublishSubject<View> getClickDownloadViewObservable() {
+        return clickDownloadViewObservable;
+    }
+
+    public Observable<View> getClickDetailViewObservable() {
+        return clickDetailViewObservable.hide();
     }
 
     @Override
@@ -51,10 +59,6 @@ public class SearchAdapter extends AbstractBaseAdapter<SearchAdapter.SeachViewHo
     @Override
     protected View inflate(LayoutInflater inflater, ViewGroup parent) {
         View view = inflater.inflate(R.layout.item_beer, parent, false);
-//TODO: descompentar.
-//        View btnView = view.findViewById(R.id.btn_drink);
-//        RxView.clicks(btnView).map(a -> btnView).subscribe(clickDrink);
-
 
         return view;
     }
@@ -87,20 +91,12 @@ public class SearchAdapter extends AbstractBaseAdapter<SearchAdapter.SeachViewHo
         TextView txtBeerName;
         @BindView(R.id.txt_beer_style)
         TextView txtBeerStyle;
-        //        @BindView(R.id.btn_favorite)
-//        ImageButton btnFavorite;
+
         @BindView(R.id.img_beer_label)
         ImageView imgBeerLabel;
-        @BindView(R.id.txt_abv)
-        TextView txtAbv;
-        @BindView(R.id.txt_ibu)
-        TextView txtIbu;
-        @BindView(R.id.txt_srm)
-        TextView txtSrm;
 
-
-//        @BindView(R.id.btn_drink)
-//        ImageButton btnDrink;
+        @BindView((R.id.btn_download))
+        ImageButton btnDownload;
 
 
         private Context context;
@@ -109,23 +105,26 @@ public class SearchAdapter extends AbstractBaseAdapter<SearchAdapter.SeachViewHo
             super(itemView);
             ButterKnife.bind(this, itemView);
 
+            RxView.clicks(itemView).map(a -> itemView).subscribe(clickDetailViewObservable);
+            RxView.clicks(btnDownload).map(a -> btnDownload).subscribe(clickDownloadViewObservable);
+
             context = itemView.getContext();
             this.itemView = itemView;
         }
 
 
         public void bind(Beer beer) {
-            itemView.setTag(beer);
+            itemView.setTag(beer.getId());
+            btnDownload.setTag(beer.getId());
+
+
             txtBeerName.setText(beer.getName());
             txtBeerStyle.setText(beer.getStyle());
-            setOrHide(context.getString(R.string.label_abv), txtAbv, beer.getAbv());
-            setOrHide(context.getString(R.string.label_ibu), txtIbu, beer.getIbu());
-            setOrHide(context.getString(R.string.label_srm), txtSrm, beer.getSrm());
 
-
-            Picasso.with(context).load(beer.getLabelLarge())
+            Picasso.with(context).load(beer.getLabelIcon())
                     .resize(320, 320)
                     .transform(new CropMiddleFirstPixelTransformation())
+                    .transform(new CropCircleTransformation())
                     .centerCrop()
                     .into(imgBeerLabel);
 

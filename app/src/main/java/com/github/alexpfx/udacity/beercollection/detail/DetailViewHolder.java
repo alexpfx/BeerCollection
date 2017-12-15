@@ -2,28 +2,44 @@ package com.github.alexpfx.udacity.beercollection.detail;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.github.alexpfx.udacity.beercollection.R;
 import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
-import com.jakewharton.rxbinding2.view.RxView;
-import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
 
 /**
  * Created by alexandre on 07/11/17.
  */
 
+
 public class DetailViewHolder {
 
-    @BindView(R.id.img_label)
+    @BindView(R.id.txt_short_style)
+    TextView txtShortStyle;
+
+    @BindView(R.id.txt_style_name)
+    TextView txtStyle;
+
+    @BindView(R.id.txt_style_category_name)
+    TextView txtStyleCategory;
+
+    @BindView(R.id.txt_beer_name)
+    TextView txtName;
+
+    @BindView(R.id.txt_beer_description)
+    TextView txtDescription;
+
+    @BindView(R.id.scroll_detail)
+    ScrollView scrollView;
+
+
+    /*@BindView(R.id.img_label)
     ImageView imgLabel;
     @BindView(R.id.txt_ibu)
     TextView txtIbu;
@@ -31,24 +47,21 @@ public class DetailViewHolder {
     TextView txtAbv;
     @BindView(R.id.txt_srm)
     TextView txtSrm;
-    @BindView(R.id.txt_name)
-    TextView txtName;
-    @BindView(R.id.txt_short_style)
-    TextView txtShortStyle;
-    @BindView(R.id.txt_description)
+
+
+    /*@BindView(R.id.txt_description)
     TextView txtDescription;
     @BindView(R.id.txt_brewery)
     TextView txtBrewery;
-    @BindView(R.id.txt_style)
-    TextView txtStyle;
-    @BindView(R.id.txt_style_category)
-    TextView txtStyleCategory;
+
+
+
     @BindView(R.id.txt_serving_temperature)
     TextView txtServingTemperature;
     @BindView(R.id.txt_glass)
     TextView txtGlass;
     @BindView(R.id.btn_drink)
-    ImageButton btnDrink;
+    ImageButton btnDrink;*/
 
     private Unbinder unbinder;
     private Context context;
@@ -60,30 +73,40 @@ public class DetailViewHolder {
         context = view.getContext();
         unbinder = ButterKnife.bind(this, view);
 
-        RxView.clicks(btnDrink).map(a -> btnDrink).subscribe
-                (beerClickSubject);
+        /*RxView.clicks(btnDrink).map(a -> btnDrink).subscribe
+                (beerClickSubject);*/
     }
 
-    public Observable<View> getBeerClickObservable() {
+    /*public Observable<View> getBeerClickObservable() {
         return beerClickSubject.hide();
-    }
+    }*/
 
     public void setBeer(Beer beer) {
 
-        btnDrink.setTag(beer);
+/*        btnDrink.setTag(beer);
         txtIbu.setText(beer.getIbu());
         txtAbv.setText(beer.getAbv());
         txtSrm.setText(beer.getSrm());
+        */
         txtName.setText(beer.getName());
         txtShortStyle.setText(beer.getShortStyle());
-        txtDescription.setText(beer.getDescription());
-//        txtBrewery.setText();
-        txtStyle.setText(beer.getStyle());
         txtStyleCategory.setText(beer.getStyleCategory());
+        txtStyle.setText(beer.getStyle());
+        txtDescription.setText(beer.getDescription());
+
+
+
+
+
+/*
+//        txtBrewery.setText();
+
+
         txtServingTemperature.setText(beer.getServingTemperature());
         txtGlass.setText(beer.getGlass());
 
-        Picasso.with(context).load(beer.getLabelLarge()).resize(200,200).placeholder(R.drawable.beerplaceholder).centerCrop().into(imgLabel);
+        Picasso.with(context).load(beer.getLabelLarge()).resize(200,200).placeholder(R.drawable.beerplaceholder)
+        .centerCrop().into(imgLabel);*/
 
     }
 

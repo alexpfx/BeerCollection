@@ -1,0 +1,145 @@
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scroll_detail"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    tools:context="com.github.alexpfx.udacity.beercollection.detail.DetailFragment"
+    >
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/layout_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:paddingEnd="?attr/listPreferredItemPaddingRight"
+        android:paddingStart="?attr/listPreferredItemPaddingLeft"
+        android:paddingTop="?attr/listPreferredItemPaddingLeft"
+
+
+        >
+
+        <TextView
+            android:id="@+id/lbl_beer"
+            style="@style/HeadSection"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="4dp"
+            android:text="@string/label_detail_head_beer_info"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/lbl_beer_name"
+            style="@style/Label"
+            android:text="@string/label_detail_beer_name"
+            app:layout_constraintStart_toStartOf="@+id/guideline_label_margins"
+            app:layout_constraintTop_toBottomOf="@+id/lbl_beer"/>
+
+        <TextView
+            android:id="@+id/txt_beer_name"
+            style="@style/Content"
+            app:layout_constraintStart_toStartOf="@+id/guideline_content_margins"
+            app:layout_constraintTop_toBottomOf="@+id/lbl_beer"
+            tools:text="Heineken"/>
+
+        <TextView
+            android:id="@+id/lbl_beer_Description"
+            style="@style/Label"
+            android:text="@string/label_detail_beer_description"
+            app:layout_constraintStart_toStartOf="@+id/guideline_label_margins"
+            app:layout_constraintTop_toBottomOf="@+id/lbl_beer_name"/>
+
+        <TextView
+            android:id="@+id/txt_beer_description"
+            style="@style/Content"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline_content_margins"
+            app:layout_constraintTop_toBottomOf="@+id/lbl_beer_Description"/>
+
+
+        <TextView
+            android:id="@+id/lbl_style"
+            style="@style/HeadSection"
+            android:text="@string/label_style"
+            app:layout_constraintStart_toStartOf="@+id/guideline_label_margins"
+            app:layout_constraintTop_toBottomOf="@+id/space"/>
+
+        <TextView
+            android:id="@+id/lbl_short_style"
+            style="@style/Label"
+            android:text="@string/label_short_style"
+            app:layout_constraintStart_toStartOf="@+id/guideline_label_margins"
+            app:layout_constraintTop_toBottomOf="@+id/lbl_style_name"/>
+
+        <TextView
+
+            android:id="@+id/txt_short_style"
+            style="@style/Content"
+            app:layout_constraintStart_toStartOf="@+id/guideline_content_margins"
+            app:layout_constraintTop_toBottomOf="@+id/txt_style_name"
+            tools:text="American Dark Lager"/>
+
+
+        <TextView
+            android:id="@+id/lbl_style_name"
+            style="@style/Label"
+            android:text="@string/label_style_name"
+            app:layout_constraintStart_toStartOf="@+id/guideline_label_margins"
+            app:layout_constraintTop_toBottomOf="@+id/lbl_style"/>
+
+        <TextView
+            android:id="@+id/txt_style_name"
+            style="@style/Content"
+            app:layout_constraintStart_toStartOf="@+id/guideline_content_margins"
+            app:layout_constraintTop_toBottomOf="@+id/lbl_style"
+            tools:text="American-Style Dark Lager"/>
+
+
+        <TextView
+            android:id="@+id/lbl_style_category_name"
+            style="@style/Label"
+            android:layout_height="19dp"
+            android:text="@string/label_style_category_name"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline_label_margins"
+            app:layout_constraintTop_toBottomOf="@+id/lbl_short_style"/>
+
+        <TextView
+            android:id="@+id/txt_style_category_name"
+            style="@style/Content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline_content_margins"
+            app:layout_constraintTop_toBottomOf="@+id/txt_short_style"
+            tools:text="North American Lager"/>
+
+
+        <Space
+            android:id="@+id/space"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_beer_description"/>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_label_margins"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="16dp"/>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_content_margins"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+
+            app:layout_constraintGuide_begin="120dp"/>
+
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.v4.widget.NestedScrollView>

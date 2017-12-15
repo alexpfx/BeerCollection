@@ -94,7 +94,6 @@ public class LoadCollectionPresenterImpl implements LoadCollectionPresenter {
 
     @Override
     public void onDestroy() {
-        compositeDisposable.clear();
         compositeDisposable.dispose();
     }
 

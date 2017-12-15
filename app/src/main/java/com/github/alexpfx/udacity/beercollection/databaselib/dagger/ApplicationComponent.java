@@ -19,9 +19,9 @@ import dagger.Component;
 
 })
 public interface ApplicationComponent {
-    SearchSubComponent plus (SearchModule searchModule);
+    SearchSubComponent plus (SearchModule searchModule, ActivityModule activityModule);
     DetailSubComponent plus (DetailModule detailModule);
-    MyCollectionSubComponent plus (MyCollectionModule myCollectionModule);
+    MyCollectionSubComponent plus (MyCollectionModule myCollectionModule, ActivityModule activityModule);
 
     void inject (LoginActivity activity);
 

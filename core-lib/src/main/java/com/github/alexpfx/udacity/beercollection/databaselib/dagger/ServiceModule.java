@@ -52,6 +52,8 @@ public class ServiceModule {
     @Singleton
     public OkHttpClient client() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
+
+
         /*
             specialize client here.
          */

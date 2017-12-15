@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,6 @@ import android.widget.TextView;
 import com.github.alexpfx.udacity.beercollection.BaseFragment;
 import com.github.alexpfx.udacity.beercollection.BeerApp;
 import com.github.alexpfx.udacity.beercollection.R;
-import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerView;
 import com.github.alexpfx.udacity.beercollection.beer.collection.LoadCollectionPresenter;
 import com.github.alexpfx.udacity.beercollection.beer.collection.MyCollectionView;
 import com.github.alexpfx.udacity.beercollection.domain.model.collection.CollectionItem;
@@ -26,12 +26,11 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.subjects.PublishSubject;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MyCollectionFragment extends BaseFragment implements MyCollectionView, DrinkBeerView, SwipeRefreshLayout
+public class MyCollectionFragment extends BaseFragment implements MyCollectionView, SwipeRefreshLayout
         .OnRefreshListener{
 
     private static final String TAG = "MyCollectionFragment";
@@ -47,16 +46,14 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     @Inject
     CollectionAdapter adapter;
 
-    CompositeDisposable compositeDisposable = new CompositeDisposable();
+    CompositeDisposable compositeDisposable;
 
     Listener listener;
 
     @Inject
     LoadCollectionPresenter presenter;
 
-    private PublishSubject subject;
     private Unbinder unbinder;
-    private Disposable disposable;
 
 
     public MyCollectionFragment() {
@@ -71,10 +68,15 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     }
 
     @Override
+    public void onDetach() {
+        super.onDetach();
+        this.listener = null;
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         compositeDisposable.dispose();
-        listener = null;
         unbinder.unbind();
     }
 
@@ -85,25 +87,40 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         unbinder = ButterKnife.bind(this, view);
         swipeRefreshCollection.setOnRefreshListener(this);
 
-        presenter.load();
-
         rcvCollection.setAdapter(adapter);
-
 
         setClickListeners ();
 
+        executeOnActivityActionBar(ab -> ab.setDisplayHomeAsUpEnabled(true));
 
         return view;
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.load();
+    }
+
     //https://stackoverflow.com/questions/36497690/how-to-handle-item-clicks-for-a-recycler-view-using-rxjava
     private void setClickListeners() {
-        disposable = adapter.getDetailClickSubject().subscribe(v -> listener.onDetail(getBeerIdFromTag(v)));
+        Disposable disposable = adapter.getDetailClickSubject().subscribe(v -> listener.onDetail(getBeerIdFromTag(v)));
 
+        compositeDisposable = new CompositeDisposable();
+
+        if (compositeDisposable.isDisposed()){
+            Log.d(TAG, "setClickListeners: ");
+        }
         compositeDisposable.add(disposable);
 
-        disposable = adapter.getClickHistorySubject().subscribe(v -> listener.onHistory(getBeerIdFromTag(v)));
+        disposable = adapter.getClickHistorySubject().subscribe(
+                v -> listener.onHistory(getBeerIdFromTag(v))
+                , onError -> {
+                    Log.e(TAG, "setClickListeners: ", onError);
+
+                }
+        );
 
         compositeDisposable.add(disposable);
 
@@ -121,7 +138,7 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
 
     @Override
     protected void injectDependencies(BeerApp app) {
-        app.getMyCollectionSubComponent(this, this).inject(this);
+        app.getMyCollectionSubComponent(getActivity(), this).inject(this);
     }
 
     @Override
@@ -171,6 +188,7 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     public void onRefresh() {
         presenter.load();
     }
+
 
 
     public interface Listener {

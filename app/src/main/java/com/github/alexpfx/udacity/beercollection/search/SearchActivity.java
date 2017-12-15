@@ -22,9 +22,12 @@ import com.github.alexpfx.udacity.beercollection.BaseActivity;
 import com.github.alexpfx.udacity.beercollection.BeerApp;
 import com.github.alexpfx.udacity.beercollection.Constants;
 import com.github.alexpfx.udacity.beercollection.R;
+import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerPresenter;
+import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerView;
 import com.github.alexpfx.udacity.beercollection.databaselib.search.SearchPresenter;
 import com.github.alexpfx.udacity.beercollection.databaselib.search.SearchView;
 import com.github.alexpfx.udacity.beercollection.detail.DetailActivity;
+import com.github.alexpfx.udacity.beercollection.domain.model.DrinkBeerUpdateItem;
 import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
 import com.mikepenz.iconics.context.IconicsLayoutInflater2;
 
@@ -40,7 +43,7 @@ import butterknife.OnEditorAction;
 /**
  * Adicionar indicador de loading
  */
-public class SearchActivity extends BaseActivity implements SearchView {
+public class SearchActivity extends BaseActivity implements SearchView, DrinkBeerView {
     private static final String TAG = "SearchActivity";
 
     @BindView(R.id.rcv_search_result)
@@ -52,6 +55,8 @@ public class SearchActivity extends BaseActivity implements SearchView {
     @Inject
     SearchPresenter searchPresenter;
 
+    @Inject
+    DrinkBeerPresenter drinkBeerPresenter;
 
     @Inject
     SearchAdapter adapter;
@@ -73,14 +78,19 @@ public class SearchActivity extends BaseActivity implements SearchView {
         rcvSearchResult.addItemDecoration(new DividerItemDecoration(this, layout.getOrientation()));
 
 
-        adapter.getViewClickObservable().subscribe(view -> {
-            Beer beer = (Beer) view.getTag();
+        adapter.getClickDetailViewObservable().subscribe(view -> {
+            String beerId = String.valueOf(view.getTag());
 
             Intent intent = new Intent(this, DetailActivity.class);
-            intent.putExtra(Constants.KEY_BEER_ID, beer.getId());
-            intent.putExtra(Constants.KEY_BEER_NAME, beer.getName());
+            intent.putExtra(Constants.KEY_BEER_ID, beerId);
             startActivity(intent);
 
+        });
+
+        adapter.getClickDownloadViewObservable().subscribe(view -> {
+            String beerId = String.valueOf(view.getTag());
+            drinkBeerPresenter.drink(new DrinkBeerUpdateItem(beerId, 0));
+            finish();
         });
 
     }
@@ -129,7 +139,7 @@ public class SearchActivity extends BaseActivity implements SearchView {
     public boolean onEditorActionSearch(TextView tv, int actionId, KeyEvent keyEvent) {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
             actionSearch(tv);
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(tv.getWindowToken(),
                     InputMethodManager.RESULT_UNCHANGED_SHOWN);
             return true;
@@ -147,4 +157,18 @@ public class SearchActivity extends BaseActivity implements SearchView {
     }
 
 
+    @Override
+    public void showDrinkAdded(int quantity) {
+
+    }
+
+    @Override
+    public void refresh() {
+
+    }
+
+    @Override
+    public void showError(Object error) {
+
+    }
 }

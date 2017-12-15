@@ -1,10 +1,14 @@
 package com.github.alexpfx.udacity.beercollection.databaselib.dagger;
 
+import android.support.annotation.NonNull;
+
 import com.github.alexpfx.udacity.beercollection.BeerCollectionDataSource;
 import com.github.alexpfx.udacity.beercollection.beer.BeerLocalDataSource;
 import com.github.alexpfx.udacity.beercollection.domain.model.DrinkBeerUpdateItem;
 import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
 import com.github.alexpfx.udacity.beercollection.domain.model.collection.CollectionItemVO;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -50,21 +54,35 @@ public class DatabaseModule {
     }
 
 
+
     @Provides
     @Singleton
     BeerCollectionDataSource beerCollectionDataSource(FirebaseDatabase database, FirebaseAuth firebaseAuth) {
         return new BeerCollectionDataSource() {
             @Override
-            public void insert(DrinkBeerUpdateItem collectionItem) {
-                DatabaseReference ref = database.getReference().child(firebaseAuth.getCurrentUser().getUid()
-                ).child("collection").push().getRef();
+            public Single insert(DrinkBeerUpdateItem collectionItem) {
+                return Single.create(subs -> {
+                    DatabaseReference ref = database.getReference().child(firebaseAuth.getCurrentUser().getUid()
+                    ).child("collection").push().getRef();
 
-                Map map = new HashMap();
-                map.put("beerId", collectionItem.getBeerId());
-                map.put("quantity", collectionItem.getQuantity());
-                map.put("timestamp", ServerValue.TIMESTAMP);
-                ref.setValue(map);
+                    Map map = new HashMap();
+                    map.put("beerId", collectionItem.getBeerId());
+                    Integer quantity = collectionItem.getQuantity();
+                    map.put("quantity", quantity);
+                    map.put("timestamp", ServerValue.TIMESTAMP);
+                    ref.setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            subs.onSuccess(quantity);
 
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            subs.onError(e);
+                        }
+                    });
+                } );
             }
 
 

@@ -27,7 +27,7 @@ ext {
     rxBindingVersion = "2.0.0"
 
     lib_android_implementation = [
-            timber :  'com.jakewharton.timber:timber:4.6.0',
+            timber                   : 'com.jakewharton.timber:timber:4.6.0',
             /* iconics */
             iconicsCore              : "com.mikepenz:iconics-core:2.9.5@aar",
             materialTypeface         : 'com.mikepenz:google-material-typeface:3.0.1.2.original@aar',
@@ -35,7 +35,7 @@ ext {
             iconicTypeface           : 'com.mikepenz:material-design-iconic-typeface:2.2.0.4@aar',
             iconicViews              : "com.mikepenz:iconics-views:2.9.5@aar",
             fontawesomeTypeface      : 'com.mikepenz:fontawesome-typeface:4.7.0.2@aar',
-            typeiconsTypeface        : 'com.mikepenz:typeicons-typeface:+@aar'
+            typeiconsTypeface        : 'com.mikepenz:typeicons-typeface:2.0.7.4@aar'
     ]
 
     lib_android = [
@@ -61,6 +61,8 @@ ext {
             rxBinding             : "com.jakewharton.rxbinding2:rxbinding:${rxBindingVersion}",
 
 
+
+
     ]
 
 
@@ -71,6 +73,7 @@ ext {
 
 
     lib_database = [
+            timber          : 'com.jakewharton.timber:timber:4.6.0',
             dagger          : "com.google.dagger:dagger:${daggerVersion}",
 
             firebaseCore    : "com.google.firebase:firebase-core:${firebaseVersion}",
@@ -96,6 +99,7 @@ ext {
             dagger            : "com.google.dagger:dagger:${daggerVersion}",
 
             gson              : "com.google.code.gson:gson:${gsonVersion}"
+
 
 
     ]

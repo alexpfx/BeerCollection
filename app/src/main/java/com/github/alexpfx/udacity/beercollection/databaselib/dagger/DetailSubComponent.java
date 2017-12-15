@@ -1,6 +1,6 @@
 package com.github.alexpfx.udacity.beercollection.databaselib.dagger;
 
-import com.github.alexpfx.udacity.beercollection.detail.DetailActivity;
+import com.github.alexpfx.udacity.beercollection.detail.DetailFragment;
 
 import dagger.Subcomponent;
 
@@ -12,5 +12,6 @@ import dagger.Subcomponent;
 @Subcomponent(modules = DetailModule.class)
 public interface DetailSubComponent {
 
-    void inject (DetailActivity activity);
+//    void inject (DetailActivity activity);
+    void inject (DetailFragment fragment);
 }

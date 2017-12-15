@@ -25,5 +25,17 @@
     <string name="tooltip_beer_name">Name of the beer</string>
     <string name="tooltip_last_beer">Date of last beer of this label consumed</string>
     <string name="tooltip_quantity">Total number of beers of this label consumed </string>
+    <string name="message_you_drink_more_beers">You have drank %d more beers!</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello History Fragment</string>
+    <string name="hello_detail_fragment">Detail Fragment</string>
+    <string name="label_short_style">Short Name</string>
+    <string name="label_style">Style</string>
+    <string name="label_style_name">Style Name</string>
+    <string name="label_style_category_name">Category</string>
+    <string name="label_detail_head_beer_info">Beer Info</string>
+    <string name="label_detail_beer_name">Name</string>
+    <string name="label_detail_beer_description">Description</string>
 
 </resources>

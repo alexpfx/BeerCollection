@@ -3,7 +3,7 @@
           package="com.github.alexpfx.udacity.beercollection">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
@@ -15,12 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
-            android:launchMode="singleTop">
-        </activity>
-        <activity
             android:name=".search.SearchActivity"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:parentActivityName=".collection.MyCollectionActivity"
+            >
         </activity>
         <activity android:name=".LoginActivity">
             <intent-filter>
@@ -33,17 +31,18 @@
             android:name=".detail.DetailActivity"
             android:label="@string/title_activity_detail"
             android:launchMode="singleTop"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:parentActivityName=".collection.MyCollectionActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            >
+
         </activity>
-        <activity
-            android:name=".collection.MyCollection"
-            android:label="@string/title_activity_my_collection"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+
         <activity
             android:name=".collection.MyCollectionActivity"
             android:label="@string/title_activity_my_collection"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:parentActivityName=".LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            >
         </activity>
     </application>
 
