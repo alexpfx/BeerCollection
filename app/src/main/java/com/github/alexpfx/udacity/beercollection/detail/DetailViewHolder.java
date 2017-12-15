@@ -2,7 +2,6 @@ package com.github.alexpfx.udacity.beercollection.detail;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.github.alexpfx.udacity.beercollection.R;
@@ -35,8 +34,6 @@ public class DetailViewHolder {
     @BindView(R.id.txt_beer_description)
     TextView txtDescription;
 
-    @BindView(R.id.scroll_detail)
-    ScrollView scrollView;
 
 
     /*@BindView(R.id.img_label)
