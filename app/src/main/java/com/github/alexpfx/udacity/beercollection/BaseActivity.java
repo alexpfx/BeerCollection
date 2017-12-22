@@ -7,9 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.mikepenz.iconics.context.IconicsContextWrapper;
 
-/**
- * Created by alexandre on 15/10/17.
- */
 
 public abstract class BaseActivity extends AppCompatActivity {
 

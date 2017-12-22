@@ -7,9 +7,6 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 
-/**
- * Created by alexandre on 14/10/17.
- */
 
 @Singleton
 @Component(modules = {

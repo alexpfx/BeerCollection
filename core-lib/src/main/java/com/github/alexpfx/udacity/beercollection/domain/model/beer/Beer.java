@@ -1,25 +1,24 @@
 package com.github.alexpfx.udacity.beercollection.domain.model.beer;
 
-/**
- * Created by alexandre on 24/10/17.
- */
 
 public class Beer {
 
     private String id;
-    private String name;
-    private String description;
-    private String abv;
-    private String ibu;
-    private String srm;
     private String labelLarge;
     private String labelIcon;
     private String labelMedium;
+    private String name;
+    private String description;
     private String style;
+    private String shortStyle;
     private String styleCategory;
+    private String abv;
+    private String ibu;
+    private String organic;
+    private String srm;
+    private String srmHexColor;
     private String servingTemperature;
     private String glass;
-    private String shortStyle;
     private String brewery;
 
 
@@ -170,5 +169,21 @@ public class Beer {
                 ", shortStyle='" + shortStyle + '\'' +
                 ", brewery='" + brewery + '\'' +
                 '}';
+    }
+
+    public String getOrganic() {
+        return organic;
+    }
+
+    public void setOrganic(String organic) {
+        this.organic = organic;
+    }
+
+    public String getSrmHexColor() {
+        return srmHexColor;
+    }
+
+    public void setSrmHexColor(String srmHexColor) {
+        this.srmHexColor = srmHexColor;
     }
 }

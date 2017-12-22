@@ -5,12 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.Toolbar;
+import android.widget.ImageView;
 
 import com.github.alexpfx.udacity.beercollection.BaseActivity;
 import com.github.alexpfx.udacity.beercollection.BeerApp;
 import com.github.alexpfx.udacity.beercollection.Constants;
 import com.github.alexpfx.udacity.beercollection.R;
 import com.github.alexpfx.udacity.beercollection.ToolbarHelper;
+import com.github.alexpfx.udacity.beercollection.search.CropMiddleFirstPixelTransformation;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,6 +29,9 @@ public class DetailActivity extends BaseActivity implements DetailFragment.Liste
 
     @BindView(R.id.collapsing_toolbar)
     CollapsingToolbarLayout collapsingToolbarLayout;
+
+    @BindView(R.id.toolbar_image)
+    ImageView imgToolbar;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -44,23 +50,7 @@ public class DetailActivity extends BaseActivity implements DetailFragment.Liste
 
         ButterKnife.bind(this);
 
-        ToolbarHelper.setupToolbar(this, toolbar, false, true, false);
-
-
-
-
-
-
-//        detailViewHolder = new DetailViewHolder(getWindow().getDecorView());
-
-//        detailViewHolder.getBeerClickObservable().subscribe(view -> {
-//            Beer beer = (Beer) view.getTag();
-//
-//            DrinkBeerFragmentDialog.getInstance(beer.getId()).show(getSupportFragmentManager(),
-// "DrinkBeerFragmentDialog");
-//        });
-
-
+        ToolbarHelper.setupToolbar(this, toolbar, false, true, false, false);
     }
 
     @Override
@@ -79,6 +69,15 @@ public class DetailActivity extends BaseActivity implements DetailFragment.Liste
     @Override
     public void onTitleChanged(String title) {
         collapsingToolbarLayout.setTitle(title);
+    }
+
+    @Override
+    public void onImageChanged(String imgUrl) {
+        Picasso.with(this).load(imgUrl)
+                .resize(640, 640)
+                .transform(new CropMiddleFirstPixelTransformation())
+                .centerCrop()
+                .into(imgToolbar);
     }
 }
 

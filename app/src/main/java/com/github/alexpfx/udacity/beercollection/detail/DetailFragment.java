@@ -78,12 +78,16 @@ public class DetailFragment extends BaseFragment implements DetailView {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        listener = (Listener) context;
+        if (context instanceof Listener){
+            listener = (Listener) context;
+        }
     }
 
     @Override
     public void showBeer(Beer beer) {
         listener.onTitleChanged(beer.getName());
+        listener.onImageChanged(beer.getLabelLarge());
+
 
         detailViewHolder.setBeer(beer);
 
@@ -91,7 +95,6 @@ public class DetailFragment extends BaseFragment implements DetailView {
 
     @Override
     public void showLoadError(Throwable throwable) {
-
 
 
     }
@@ -110,5 +113,8 @@ public class DetailFragment extends BaseFragment implements DetailView {
 
     public interface Listener {
         void onTitleChanged(String title);
+        void onImageChanged(String imgUrl);
     }
+
+
 }

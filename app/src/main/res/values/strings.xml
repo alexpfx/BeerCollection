@@ -8,6 +8,7 @@
     <string name="action_dismiss">Dismiss</string>
     <string name="title_activity_detail">DetailActivity</string>
     <string name="title_activity_my_collection">MyCollection</string>
+    <string name="title_activity_search">Search for a beer</string>
     <string name="action_settings">Settings</string>
     <string name="ok">Ok</string>
     <string name="cancel">Cancel</string>
@@ -28,14 +29,27 @@
     <string name="message_you_drink_more_beers">You have drank %d more beers!</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello History Fragment</string>
+    <string name="history_fragment">Hello History Fragment</string>
     <string name="hello_detail_fragment">Detail Fragment</string>
     <string name="label_short_style">Short Name</string>
     <string name="label_style">Style</string>
     <string name="label_style_name">Style Name</string>
-    <string name="label_style_category_name">Category</string>
+    <string name="label_properties_abv">ABV</string>
     <string name="label_detail_head_beer_info">Beer Info</string>
     <string name="label_detail_beer_name">Name</string>
     <string name="label_detail_beer_description">Description</string>
+    <string name="label_characteristics">Characteristics</string>
+    <string name="label_style_category">Category</string>
+    <string name="label_properties_ibu">IBU</string>
+    <string name="label_properties_srm">SRM</string>
+    <string name="label_properties_srm_color">SRM (Color)</string>
+    <string name="label_properties_organic">Organic</string>
+    <string name="label_serving">Serving</string>
+    <string name="label_serving_temperature">Temperature</string>
+    <string name="label_serving_glass">Glass</string>
+    <string name="search">Search</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

@@ -1,37 +1,22 @@
 package com.github.alexpfx.udacity.beercollection.collection;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.support.annotation.StringRes;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.graphics.ColorUtils;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.TooltipCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.Filter;
 
-import com.github.alexpfx.udacity.beercollection.AbstractBaseAdapter;
 import com.github.alexpfx.udacity.beercollection.R;
 import com.github.alexpfx.udacity.beercollection.databaselib.dagger.PerActivity;
-import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
 import com.github.alexpfx.udacity.beercollection.domain.model.collection.CollectionItem;
-import com.github.alexpfx.udacity.beercollection.search.CropMiddleFirstPixelTransformation;
-import com.jakewharton.rxbinding2.view.RxView;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
+import com.github.alexpfx.udacity.beercollection.domain.model.collection.CollectionItemVO;
+import com.github.alexpfx.udacity.beercollection.utils.Predicate;
 
-import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
 
@@ -39,18 +24,39 @@ import io.reactivex.subjects.PublishSubject;
  * Created by alexandre on 10/11/17.
  */
 @PerActivity
-public class CollectionAdapter extends AbstractBaseAdapter<CollectionAdapter.CollectionViewHolder,
-        CollectionItem> {
+public class CollectionAdapter extends RecyclerView.Adapter<CollectionViewHolder> implements Filter.FilterListener {
+
 
     private final PublishSubject<View> clickDetailSubject = PublishSubject.create();
     private final PublishSubject<View> clickAddBeerSubject = PublishSubject.create();
     private final PublishSubject<View> clickHistorySubject = PublishSubject.create();
-    private boolean usePallete = false;
+    private List<CollectionItem> filteredItems;
+    private List<CollectionItem> items = new ArrayList<>();
+
+    private FilterBeer filterBeer;
 
 
     @Inject
     public CollectionAdapter() {
     }
+
+    @Override
+    public CollectionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_collection, parent, false);
+        return new CollectionViewHolder(view, clickDetailSubject, clickAddBeerSubject, clickHistorySubject);
+    }
+
+
+    @Override
+    public void onBindViewHolder(CollectionViewHolder holder, int position) {
+        holder.bind(filteredItems.get(position));
+    }
+
+    @Override
+    public int getItemCount() {
+        return filteredItems == null ? 0 : filteredItems.size();
+    }
+
 
     public Observable<View> getDetailClickSubject() {
         return clickDetailSubject.hide();
@@ -64,195 +70,102 @@ public class CollectionAdapter extends AbstractBaseAdapter<CollectionAdapter.Col
         return clickHistorySubject.hide();
     }
 
+    public void setItems(List<CollectionItem> items) {
+        this.items = items;
+        this.filteredItems = items;
+        filterBeer = new FilterBeer(items);
+        notifyDataSetChanged();
+    }
 
-    @Override
-    protected CollectionViewHolder createViewHolder(View view) {
-        return new CollectionViewHolder(view);
+    /**
+     * Adds a temp CollectionItemVO to the beer item and allows user to see the change on quantity immediately
+     *
+     * @param collectionItemVO
+     */
+    public void addTempItem(CollectionItemVO collectionItemVO) {
+        if (items == null) {
+            return;
+        }
+        CollectionItem item = searchItemFromItemVo(collectionItemVO);
+        if (item != null) {
+            item.add(collectionItemVO);
+            setItems(items);
+        }
+    }
+
+    private CollectionItem searchItemFromItemVo(CollectionItemVO collectionItemVO) {
+        for (CollectionItem item : items) {
+            if (item.getBeer().getId().equals(collectionItemVO.getBeerId())) {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    public void clear() {
+        items = null;
+        notifyDataSetChanged();
+    }
+
+
+    public synchronized void filter(String query) {
+        if (filterBeer == null) {
+            return;
+        }
+        filterBeer.filter(query, this);
     }
 
     @Override
-    protected View inflate(LayoutInflater inflater, ViewGroup parent) {
-        return inflater.inflate(R.layout.item_collection, parent, false);
-    }
-
-    @Override
-    public void onBindViewHolder(CollectionViewHolder holder, int position) {
-        holder.bind(getItem(position));
+    public void onFilterComplete(int i) {
+        filteredItems = filterBeer.getFilteredItems();
+        notifyDataSetChanged();
     }
 
 
+    private static class FilterBeer extends Filter {
 
-    public class CollectionViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.image_beer_label)
-        ImageView imageBeerLabel;
-        @BindView(R.id.text_beer_name)
-        TextView textBeerName;
-        @BindView(R.id.text_last_drink_date)
-        TextView textLastDrinkDate;
-        @BindView(R.id.text_quantity)
-        TextView textQuantity;
+        private List<CollectionItem> filteredItems;
+        private List<CollectionItem> items;
 
-        @BindView(R.id.btn_drink_action)
-        ImageButton btnDrink;
+        public FilterBeer(List<CollectionItem> items) {
+            this.items = items;
+        }
 
-        @BindView(R.id.layout_collecion_item)
-        ConstraintLayout layout;
-
-        @BindView(R.id.view_scrim)
-        View viewScrim;
-
-        Target target = new Target() {
-            @Override
-            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                imageBeerLabel.setImageBitmap(bitmap);
-                if (!usePallete) return;
-
-                Palette.from(bitmap).generate(palette -> {
-//                    Palette.Swatch vibrantSwatch = palette.getDarkVibrantSwatch();
-
-                    Palette.Swatch vibrantSwatch = palette.getDominantSwatch();
-
-//                    Palette.Swatch vibrantSwatch = palette.getDarkMutedSwatch();
-//                    Palette.Swatch vibrantSwatch = palette.getLightMutedSwatch();
-
-
-
-                    if (vibrantSwatch != null) {
-                        int rgbScrim = ColorUtils.setAlphaComponent(vibrantSwatch.getRgb(), (int) (255 * 0.2f));
-                        int rgbTextBackground = ColorUtils.setAlphaComponent(vibrantSwatch.getRgb(), (int) (255 *
-                                0.75f));
-
-                        int textRgb = vibrantSwatch.getBodyTextColor();
-
-//                        viewScrim.setBackgroundColor(rgbScrim);
-
-                        textBeerName.setBackgroundColor(rgbTextBackground);
-                        textBeerName.setTextColor(textRgb);
-
-                        textLastDrinkDate.setBackgroundColor(rgbTextBackground);
-                        textLastDrinkDate.setTextColor(textRgb);
-
-
-                        textQuantity.setBackgroundColor(rgbTextBackground);
-                        textQuantity.setTextColor(textRgb);
-
-
+        private List<CollectionItem> filter(Predicate<CollectionItem> predicate) {
+            List<CollectionItem> filtered = new ArrayList<>();
+            if (items != null) {
+                for (CollectionItem item : items) {
+                    if (predicate.test(item)) {
+                        filtered.add(item);
                     }
-                });
-
+                }
             }
-
-            @Override
-            public void onBitmapFailed(Drawable errorDrawable) {
-
-            }
-
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-            }
-        };
-        private Context context;
-
-        public CollectionViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-            context = itemView.getContext();
+            return filtered;
         }
 
-        private static final String TAG = "CollectionViewHolder";
-/*
-
-
-        View view = inflate(LayoutInflater.from(parent.getContext()), parent);
-        VH viewHolder = createViewHolder(view);
-        RxView.clicks(view).takeUntil(RxView.detaches(parent)).map(a -> view).subscribe(clickSubject);
-        return viewHolder;*/
-
-        public void bind(CollectionItem collectionItemVO) {
-            Beer beer = collectionItemVO.getBeer();
-
-            setupLabelView(beer);
-
-            setupBeerNameView(collectionItemVO, beer);
-
-            setupQuantityView(collectionItemVO);
-
-            setupLastDrinkDateView(collectionItemVO);
-
-            setupEvents (beer);
-
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            String searchTerm = charSequence.toString().toLowerCase();
+            List<CollectionItem> items = filter(item -> item.getBeer().getName()
+                    .toLowerCase().contains(searchTerm) || searchTerm.isEmpty());
+            return createResults(items);
         }
 
-        private void setupEvents(Beer beer) {
-            String beerId = beer.getId();
-
-            btnDrink.setTag(beerId);
-            RxView.clicks(btnDrink).map(a ->
-                    btnDrink).subscribe(clickAddBeerSubject);
-
-
-            layout.setTag(beerId);
-            RxView.clicks(layout).map(a -> layout).subscribe(clickDetailSubject);
-
-            textBeerName.setTag(beerId);
-            RxView.clicks(textBeerName).map(a -> textBeerName).subscribe(clickHistorySubject);
-
-            textLastDrinkDate.setTag(beerId);
-            RxView.clicks(textLastDrinkDate).map(a -> textLastDrinkDate).subscribe(clickHistorySubject);
-
-//            viewScrim.setTag(beerId);
-//            RxView.clicks(viewScrim).map(a -> viewScrim).subscribe(clickHistorySubject);
-
+        FilterResults createResults(List<CollectionItem> items) {
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = items;
+            return filterResults;
         }
 
-        private void setupLabelView(Beer beer) {
-            Picasso.with(context)
-                    .load(beer.getLabelLarge())
-                    .resize(512, 512)
-                    .transform(new CropMiddleFirstPixelTransformation())
-                    .placeholder(R.drawable.beerplaceholder)
-                    .centerCrop()
-                    .into(target);
-
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            filteredItems = (List<CollectionItem>) filterResults.values;
         }
 
-
-        private void setupBeerNameView(CollectionItem collectionItemVO, Beer beer) {
-            textBeerName.setText(beer.getName());
-            setTooltipText(textBeerName, R.string.tooltip_beer_name);
-
+        public List<CollectionItem> getFilteredItems() {
+            return filteredItems;
         }
-
-
-
-        private void setupLastDrinkDateView(CollectionItem collectionItem) {
-            DateFormat dateInstance = DateFormat.getDateInstance(DateFormat.SHORT);
-            CharSequence dateFormated = dateInstance.format(collectionItem.getLastDate());
-            textLastDrinkDate.setText(dateFormated);
-            setTooltipText(textLastDrinkDate, R.string.tooltip_last_beer);
-
-
-        }
-
-        private void setupQuantityView(CollectionItem collectionItem) {
-            textQuantity.setText(String.valueOf(collectionItem.countBeers()));
-            setTooltipText(textQuantity, R.string.tooltip_quantity);
-
-        }
-
-        private void setTooltipText(View view, int resId) {
-            TooltipCompat.setTooltipText(view, getString(resId));
-        }
-
-        private String getString(@StringRes int id) {
-            return context.getString(id);
-        }
-
-
     }
-
-
 }
 
 

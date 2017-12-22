@@ -6,6 +6,9 @@ import com.github.alexpfx.udacity.beercollection.domain.model.DrinkBeerUpdateIte
 
 import javax.inject.Inject;
 
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+
 /**
  * Created by alexandre on 12/11/17.
  */
@@ -14,32 +17,38 @@ public class DrinkBeerPresenterImpl implements DrinkBeerPresenter {
 
 
     private final SchedulerProvider schedulerProvider;
-    DrinkBeerView view;
+
+    private DrinkBeerView view;
+
     private DrinkBeerInteractor interactor;
 
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+
     @Inject
-    public DrinkBeerPresenterImpl(DrinkBeerView view, DrinkBeerInteractor interactor, SchedulerProvider
+    public DrinkBeerPresenterImpl(DrinkBeerInteractor interactor, SchedulerProvider
             schedulerProvider) {
-        this.view = view;
+        this.view = DrinkBeerPresenter.EMPTY;
         this.interactor = interactor;
         this.schedulerProvider = schedulerProvider;
     }
 
     @Override
     public void drink(DrinkBeerUpdateItem item) {
-        interactor.save(item).observeOn(schedulerProvider.mainThread()).subscribeOn(schedulerProvider.computation())
+        Disposable disposable = interactor.save(item).observeOn(schedulerProvider.mainThread()).subscribeOn
+                (schedulerProvider.computation())
                 .subscribe(quantity -> {
-                    view.showDrinkAdded((Integer) quantity);
-                    view.refresh();
+                    view.showDrinkAdded(item.getBeerId(), (Integer) quantity);
                 }, error -> {
                     view.showError(error);
                 });
+        compositeDisposable.add(disposable);
+
     }
 
     @Override
     public void onDestroy() {
-
-
+        compositeDisposable.dispose();
+        view = null;
     }
 
     @Override

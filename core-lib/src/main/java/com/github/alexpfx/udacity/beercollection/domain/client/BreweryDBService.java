@@ -10,9 +10,6 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 
-/**
- * Created by alexandre on 14/10/17.
- */
 
 public interface BreweryDBService {
 

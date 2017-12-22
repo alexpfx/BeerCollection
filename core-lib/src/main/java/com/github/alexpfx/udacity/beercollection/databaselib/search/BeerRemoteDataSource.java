@@ -6,9 +6,6 @@ import java.util.List;
 
 import io.reactivex.Single;
 
-/**
- * Created by alexandre on 16/10/17.
- */
 
 public interface BeerRemoteDataSource {
     Single<List<Beer>> search(String name);

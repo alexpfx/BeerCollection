@@ -8,9 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.github.alexpfx.udacity.beercollection.utils.Consumer;
 
-/**
- * Created by alexandre on 11/11/17.
- */
 
 public abstract class BaseFragment extends Fragment {
 

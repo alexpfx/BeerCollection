@@ -1,6 +1,7 @@
 package com.github.alexpfx.udacity.beercollection.databaselib.dagger;
 
 import com.github.alexpfx.udacity.beercollection.search.SearchActivity;
+import com.github.alexpfx.udacity.beercollection.search.SearchFragment;
 
 import dagger.Subcomponent;
 
@@ -12,4 +13,5 @@ import dagger.Subcomponent;
 @Subcomponent(modules = {SearchModule.class, DrinkBeerModule.class})
 public interface SearchSubComponent {
     void inject (SearchActivity mainActivity);
+    void inject (SearchFragment searchFragment);
 }

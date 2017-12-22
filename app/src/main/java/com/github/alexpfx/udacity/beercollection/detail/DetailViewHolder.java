@@ -1,7 +1,9 @@
 package com.github.alexpfx.udacity.beercollection.detail;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.alexpfx.udacity.beercollection.R;
@@ -11,6 +13,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import io.reactivex.subjects.PublishSubject;
+
+import static com.github.alexpfx.udacity.beercollection.TextViewUtils.valueOrDash;
 
 /**
  * Created by alexandre on 07/11/17.
@@ -34,29 +38,38 @@ public class DetailViewHolder {
     @BindView(R.id.txt_beer_description)
     TextView txtDescription;
 
+    @BindView(R.id.txt_ibu)
+    TextView txtIbu;
+
+    @BindView(R.id.txt_abv)
+    TextView txtAbv;
+
+    @BindView(R.id.txt_srm)
+    TextView txtSrm;
+
+//    @BindView(R.id.txt_organic)
+//    TextView txtOrganic;
+
+    @BindView(R.id.img_srm_color)
+    ImageView imgSrmColor;
+
+    @BindView(R.id.txt_serving_temperature)
+    TextView txtServingTemperature;
+
+    @BindView(R.id.txt_glass)
+    TextView txtGlass;
 
 
     /*@BindView(R.id.img_label)
     ImageView imgLabel;
-    @BindView(R.id.txt_ibu)
-    TextView txtIbu;
-    @BindView(R.id.txt_abv)
-    TextView txtAbv;
-    @BindView(R.id.txt_srm)
-    TextView txtSrm;
 
 
-    /*@BindView(R.id.txt_description)
-    TextView txtDescription;
     @BindView(R.id.txt_brewery)
     TextView txtBrewery;
 
 
 
-    @BindView(R.id.txt_serving_temperature)
-    TextView txtServingTemperature;
-    @BindView(R.id.txt_glass)
-    TextView txtGlass;
+
     @BindView(R.id.btn_drink)
     ImageButton btnDrink;*/
 
@@ -80,18 +93,23 @@ public class DetailViewHolder {
 
     public void setBeer(Beer beer) {
 
-/*        btnDrink.setTag(beer);
-        txtIbu.setText(beer.getIbu());
-        txtAbv.setText(beer.getAbv());
-        txtSrm.setText(beer.getSrm());
-        */
         txtName.setText(beer.getName());
-        txtShortStyle.setText(beer.getShortStyle());
-        txtStyleCategory.setText(beer.getStyleCategory());
-        txtStyle.setText(beer.getStyle());
-        txtDescription.setText(beer.getDescription());
+        txtDescription.setText(valueOrDash(beer.getDescription()));
 
+        txtShortStyle.setText(valueOrDash(beer.getShortStyle()));
+        txtStyleCategory.setText(valueOrDash(beer.getStyleCategory()));
+        txtStyle.setText(valueOrDash(beer.getStyle()));
 
+        txtAbv.setText(valueOrDash(beer.getAbv()));
+        txtIbu.setText(valueOrDash(beer.getIbu()));
+
+        txtSrm.setText(valueOrDash(beer.getSrm()));
+//        txtOrganic.setText(valueOrDash(beer.getOrganic()));
+
+        imgSrmColor.setBackgroundColor(getColor(beer.getSrmHexColor(), Color.TRANSPARENT));
+        txtServingTemperature.setText(valueOrDash(beer.getServingTemperature()));
+
+        txtGlass.setText(valueOrDash(beer.getGlass()));
 
 
 
@@ -99,12 +117,20 @@ public class DetailViewHolder {
 //        txtBrewery.setText();
 
 
-        txtServingTemperature.setText(beer.getServingTemperature());
-        txtGlass.setText(beer.getGlass());
+
+
 
         Picasso.with(context).load(beer.getLabelLarge()).resize(200,200).placeholder(R.drawable.beerplaceholder)
         .centerCrop().into(imgLabel);*/
 
+    }
+
+    private int getColor(String srmHexColor, int defaultColor) {
+        try {
+            return srmHexColor == null ? defaultColor : Color.parseColor("#"+srmHexColor);
+        } catch (IllegalArgumentException e) {
+            return defaultColor;
+        }
     }
 
     public void unbind() {

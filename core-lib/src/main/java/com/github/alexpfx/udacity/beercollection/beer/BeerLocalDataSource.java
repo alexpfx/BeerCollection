@@ -6,9 +6,6 @@ import java.util.List;
 
 import io.reactivex.Flowable;
 
-/**
- * Created by alexandre on 29/10/17.
- */
 
 public interface BeerLocalDataSource {
     void insert (List<Beer> beers);

@@ -97,7 +97,7 @@ public class ServiceModule {
             public Single<Beer> load(String id) {
                 return service.load(id, config.getKey()).map(Mappers.LOAD_MAPPER);
             }
-;        };
+        };
     }
 
 

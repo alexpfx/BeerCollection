@@ -1,12 +1,9 @@
 package com.github.alexpfx.udacity.beercollection.databaselib.dagger;
 
-import android.app.Activity;
-
 import com.github.alexpfx.udacity.beercollection.databaselib.search.DefaultSearchInteractor;
 import com.github.alexpfx.udacity.beercollection.databaselib.search.DefaultSearchPresenter;
 import com.github.alexpfx.udacity.beercollection.databaselib.search.SearchInteractor;
 import com.github.alexpfx.udacity.beercollection.databaselib.search.SearchPresenter;
-import com.github.alexpfx.udacity.beercollection.databaselib.search.SearchView;
 
 import dagger.Module;
 import dagger.Provides;
@@ -23,11 +20,6 @@ public class SearchModule {
 
     }
 
-    @Provides
-    @PerActivity
-    public SearchView searchView(Activity activity) {
-        return (SearchView) activity;
-    }
 
     @Provides
     @PerActivity
@@ -40,6 +32,8 @@ public class SearchModule {
     public SearchInteractor searchInteractor(DefaultSearchInteractor searchInteractor) {
         return searchInteractor;
     }
+
+
 
 
 }

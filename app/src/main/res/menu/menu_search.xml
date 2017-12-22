@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="com.github.alexpfx.udacity.beercollection.collection.MyCollectionActivity">
+    <item android:id="@+id/search"
+          android:title="@string/search"
+          app:showAsAction="always"
+          android:icon="@drawable/ic_search_white_24dp"
+          app:actionViewClass="android.widget.SearchView"/>
+
+</menu>

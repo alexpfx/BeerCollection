@@ -7,24 +7,19 @@ import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.Guideline;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.github.alexpfx.udacity.beercollection.BaseActivity;
 import com.github.alexpfx.udacity.beercollection.BeerApp;
-import com.github.alexpfx.udacity.beercollection.DrinkBeerFragmentDialog;
 import com.github.alexpfx.udacity.beercollection.R;
 import com.github.alexpfx.udacity.beercollection.ToolbarHelper;
 import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerPresenter;
-import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerView;
 import com.github.alexpfx.udacity.beercollection.detail.DetailActivity;
-import com.github.alexpfx.udacity.beercollection.domain.model.DrinkBeerUpdateItem;
 import com.github.alexpfx.udacity.beercollection.search.SearchActivity;
 
 import javax.inject.Inject;
@@ -35,7 +30,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.disposables.CompositeDisposable;
 
-public class MyCollectionActivity extends BaseActivity implements DrinkBeerView, MyCollectionFragment.Listener {
+public class MyCollectionActivity extends BaseActivity implements MyCollectionFragment.Listener {
 
     public static final String DETAIL_FRAGMENT = "detailFragment";
     private static final String TAG = "MyCollectionActivity";
@@ -44,10 +39,12 @@ public class MyCollectionActivity extends BaseActivity implements DrinkBeerView,
     DrinkBeerPresenter drinkBeerPresenter;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
     @BindView(R.id.text_toolbar_title)
     TextView textToolbarTitle;
-    @BindView(R.id.layout_collection_root)
-    View layoutRoot;
+
+
+
     @BindBool(R.bool.isMultiPane)
     boolean isMultiPane;
     @Nullable
@@ -92,20 +89,13 @@ public class MyCollectionActivity extends BaseActivity implements DrinkBeerView,
     }
 
     private void setupToolbar() {
-        ToolbarHelper.setupToolbar(this, toolbar, true, false, false);
+        ToolbarHelper.setupToolbar(this, toolbar, false, false, false, false);
         textToolbarTitle.setText(getString(R.string.activity_title_my_collection));
+
     }
 
-    private void startDialogFragment(String id) {
-        DrinkBeerFragmentDialog instance = DrinkBeerFragmentDialog.getInstance(id, new DrinkBeerFragmentDialog
-                .PositiveClickListener() {
-            @Override
-            public void onPositiveClick(Integer quant) {
-                drinkBeerPresenter.drink(new DrinkBeerUpdateItem(id, quant));
-            }
-        });
-        instance.show(getSupportFragmentManager(), "DrinkBeerDialogFragment");
-    }
+
+
 
 
     @Override
@@ -115,14 +105,7 @@ public class MyCollectionActivity extends BaseActivity implements DrinkBeerView,
 
 
     @Override
-    public void onDetail(String beerId) {
-//        DetailFragment fragment = DetailFragment.getInstance(beerId);
-//        if (isMultiPane) {
-//            replaceFragment(R.id.container_pane2, fragment, DETAIL_FRAGMENT);
-//        } else {
-//            replaceFragment(R.id.container_my_collection, fragment, DETAIL_FRAGMENT);
-//        }
-
+    public void navigateToDetail(String beerId) {
         DetailActivity.startDetail(getApplicationContext(), beerId);
     }
 
@@ -132,7 +115,7 @@ public class MyCollectionActivity extends BaseActivity implements DrinkBeerView,
     }
 
     @Override
-    public void onHistory(String beerId) {
+    public void navigateToHistory(String beerId) {
         HistoryFragment fragment = new HistoryFragment();
         if (isMultiPane) {
             replaceFragment(R.id.container_pane2, fragment, HISTORY_FRAGMENT_TAG);
@@ -154,10 +137,15 @@ public class MyCollectionActivity extends BaseActivity implements DrinkBeerView,
         return super.onOptionsItemSelected(item);
     }
 
+
+
     private void onBackStackChanged() {
         updateVisibility();
     }
 
+    /**
+     * Shows/hide the fragment by moving the Guideline.
+     */
     private void updateVisibility() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.container_pane2);
         if (fragment == null) {
@@ -178,29 +166,6 @@ public class MyCollectionActivity extends BaseActivity implements DrinkBeerView,
     }
 
 
-    @Override
-    public void onAdd(String id) {
-        Log.d(TAG, "onAdd: ");
-        startDialogFragment(id);
-    }
-
-    @Override
-    public void showDrinkAdded(int quantity) {
-        if (quantity > 0) {
-            Snackbar.make(layoutRoot, getString(R.string.message_you_drink_more_beers, quantity), Snackbar
-                    .LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
-    public void refresh() {
-
-    }
-
-    @Override
-    public void showError(Object error) {
-
-    }
 
     private void changeGuidePercent(float percent) {
         if (guideline != null) {
@@ -208,5 +173,6 @@ public class MyCollectionActivity extends BaseActivity implements DrinkBeerView,
             lp.guidePercent = percent;
         }
     }
+
 
 }

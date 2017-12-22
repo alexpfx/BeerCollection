@@ -14,6 +14,13 @@ public final class TextViewUtils {
     }
 
 
+    public static String valueOrDash(Object value){
+        if (TextUtils.isEmpty((CharSequence) value)){
+            return " - ";
+        }else {
+            return value.toString();
+        }
+    }
 
     public static void setOrHide(String label, TextView view, Object o) {
         if (o == null) {

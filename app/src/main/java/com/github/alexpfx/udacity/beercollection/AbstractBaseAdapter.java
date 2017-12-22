@@ -5,11 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.alexpfx.udacity.beercollection.utils.Predicate;
+
+import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by alexandre on 04/11/17.
- */
 
 public abstract class AbstractBaseAdapter<VH extends RecyclerView.ViewHolder, I> extends RecyclerView
         .Adapter<VH> implements BaseAdapter<I> {
@@ -35,6 +35,17 @@ public abstract class AbstractBaseAdapter<VH extends RecyclerView.ViewHolder, I>
         notifyDataSetChanged();
     }
 
+    public List<I> filter (Predicate<I> predicate){
+
+        List<I> filtered = new ArrayList<>();
+        for (I item : items) {
+            if (predicate.test(item)){
+                filtered.add(item);
+            }
+        }
+        return filtered;
+    }
+
     @Override
     public int getItemCount() {
         return items == null ? 0 : items.size();
@@ -50,7 +61,7 @@ public abstract class AbstractBaseAdapter<VH extends RecyclerView.ViewHolder, I>
 
     @Override
     public I getItem(int position) {
-        if (items == null){
+        if (items == null) {
             return null;
         }
 

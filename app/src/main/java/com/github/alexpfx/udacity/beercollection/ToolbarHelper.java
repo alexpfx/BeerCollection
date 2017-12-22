@@ -9,11 +9,13 @@ import android.support.v7.widget.Toolbar;
 
 public class ToolbarHelper {
     public static void setupToolbar(AppCompatActivity activity, Toolbar toolbar, boolean homeButtonEnabled, boolean
-            displayHomeAsUp, boolean showTitleEnabled) {
+            displayHomeAsUp, boolean showTitleEnabled, boolean showHomeEnabled) {
         activity.setSupportActionBar(toolbar);
-        activity.getSupportActionBar().setHomeButtonEnabled(homeButtonEnabled);
+        activity.getSupportActionBar().setDisplayShowHomeEnabled(showHomeEnabled);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(displayHomeAsUp);
+        activity.getSupportActionBar().setHomeButtonEnabled(homeButtonEnabled);
         activity.getSupportActionBar().setDisplayShowTitleEnabled(showTitleEnabled);
+
     }
 
 

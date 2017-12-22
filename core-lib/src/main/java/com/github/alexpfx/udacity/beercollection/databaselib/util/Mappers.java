@@ -6,6 +6,7 @@ import com.github.alexpfx.udacity.beercollection.domain.model.remote.search.Data
 import com.github.alexpfx.udacity.beercollection.domain.model.remote.search.LoadBeerResponse;
 import com.github.alexpfx.udacity.beercollection.domain.model.remote.search.SearchResponse;
 import com.github.alexpfx.udacity.beercollection.domain.model.remote.search.ServerResponse;
+import com.github.alexpfx.udacity.beercollection.domain.model.remote.search.Srm;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,7 +24,7 @@ public class Mappers {
 
     public static final Predicate<Beer> BEER_FILTER = beer -> !(
             beer.getLabelMedium() == null ||
-            beer.getName() == null ||
+                    beer.getName() == null ||
                     beer.getAbv() == null ||
                     beer.getDescription() == null ||
                     beer.getShortStyle() == null);
@@ -70,11 +71,11 @@ public class Mappers {
         beer.setAbv(item.getAbv());
         beer.setIbu(item.getIbu());
         beer.setServingTemperature(item.getServingTemperatureDisplay());
-        beer.setSrm(item.getSrm() != null ? item.getSrm().getName() : "");
         beer.setDescription(item.getDescription());
         beer.setGlass(item.getGlass() != null ? item.getGlass().getName() : "");
+        beer.setOrganic(item.getIsOrganic() != null ? item.getIsOrganic(): "");
 
-
+        setSrm (beer, item);
 
         if (item.getLabels() != null) {
             beer.setLabelIcon(item.getLabels().getIcon());
@@ -93,10 +94,18 @@ public class Mappers {
         }
 
 
-        if (item.getBreweries() != null && !item.getBreweries().isEmpty()){
+        if (item.getBreweries() != null && !item.getBreweries().isEmpty()) {
             beer.setBrewery(item.getBreweries().get(0).getName());
         }
         return beer;
+    }
+
+    private static void setSrm(Beer beer, DataItem item) {
+        if (item.getSrm() != null){
+            Srm srm = item.getSrm();
+            beer.setSrm(srm.getName());
+            beer.setSrmHexColor(srm.getHex());
+        }
     }
 
 

@@ -9,4 +9,17 @@ import com.github.alexpfx.udacity.beercollection.domain.model.DrinkBeerUpdateIte
 
 public interface DrinkBeerPresenter extends BasePresenter<DrinkBeerView>{
     void drink (DrinkBeerUpdateItem item);
+
+    DrinkBeerView EMPTY = new DrinkBeerView() {
+        @Override
+        public void showDrinkAdded(String id, int quantity) {
+
+        }
+
+
+        @Override
+        public void showError(Object error) {
+
+        }
+    };
 }

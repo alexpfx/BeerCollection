@@ -37,6 +37,13 @@ public class DrinkBeerFragmentDialog extends DialogFragment {
         return drinkBeerFragmentDialog;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        dismiss();
+        listener = null;
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -79,9 +86,8 @@ public class DrinkBeerFragmentDialog extends DialogFragment {
         @Override
         public void onNegativeClick() {
 
+
         }
-
-
     }
 
 

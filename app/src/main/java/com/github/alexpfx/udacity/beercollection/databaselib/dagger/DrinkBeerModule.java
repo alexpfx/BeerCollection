@@ -1,12 +1,9 @@
 package com.github.alexpfx.udacity.beercollection.databaselib.dagger;
 
-import android.app.Activity;
-
 import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerInteractor;
 import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerInteractorImpl;
 import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerPresenter;
 import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerPresenterImpl;
-import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerView;
 
 import dagger.Module;
 import dagger.Provides;
@@ -30,11 +27,11 @@ public class DrinkBeerModule {
         return drinkBeerInteractor;
     }
 
-    @Provides
-    @PerActivity
-    public DrinkBeerView drinkBeerView (Activity activity){
-        return (DrinkBeerView) activity;
-    }
+//    @Provides
+//    @PerActivity
+//    public DrinkBeerView drinkBeerView (Activity activity){
+//        return (DrinkBeerView) activity;
+//    }
 
 
 }

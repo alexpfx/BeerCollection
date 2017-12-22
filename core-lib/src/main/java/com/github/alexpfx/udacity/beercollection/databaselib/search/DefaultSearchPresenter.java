@@ -19,8 +19,6 @@ import io.reactivex.disposables.Disposable;
 public class DefaultSearchPresenter implements SearchPresenter {
 
 
-    public static final String SORT = "ASC";
-    public static final String ORDER = "name";
     private final SearchInteractor searchInteractor;
     private SearchView searchView;
     private SchedulerProvider schedulerProvider;
@@ -28,9 +26,8 @@ public class DefaultSearchPresenter implements SearchPresenter {
 
 
     @Inject
-    public DefaultSearchPresenter(SearchView searchView, SearchInteractor searchInteractor, SchedulerProvider
+    public DefaultSearchPresenter(SearchInteractor searchInteractor, SchedulerProvider
             schedulerProvider) {
-        this.searchView = searchView;
         this.searchInteractor = searchInteractor;
         this.schedulerProvider = schedulerProvider;
     }
@@ -66,10 +63,12 @@ public class DefaultSearchPresenter implements SearchPresenter {
         if (disposable != null)
             disposable.dispose();
 
+        searchView = null;
+
     }
 
     @Override
     public void bind(SearchView view) {
-
+        this.searchView = view;
     }
 }

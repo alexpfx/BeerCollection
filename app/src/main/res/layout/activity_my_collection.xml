@@ -8,7 +8,6 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context="com.github.alexpfx.udacity.beercollection.collection.MyCollectionActivity"
-
     >
 
 
@@ -25,9 +24,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:ico_color="@color/white"
-        app:ico_icon="typ_beer"
-        app:ico_size="48dp"
+        app:ico_color="@color/icons"
+        app:ico_icon="cmd_plus"
+        app:fabSize="normal"
+        app:ico_size="24dp"
+        app:ico_padding="4dp"
+        android:scaleType="center"
         />
 
 </android.support.design.widget.CoordinatorLayout>

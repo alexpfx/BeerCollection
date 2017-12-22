@@ -50,6 +50,7 @@ public class DefaultDetailPresenter implements DetailPresenter {
         if (subscription != null && !subscription.isDisposed()) {
             subscription.dispose();
         }
+        this.view = null;
     }
 
     @Override

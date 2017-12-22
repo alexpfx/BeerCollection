@@ -9,9 +9,6 @@ import io.reactivex.BackpressureStrategy;
 import io.reactivex.Emitter;
 import io.reactivex.Flowable;
 
-/**
- * Created by alexandre on 23/10/17.
- */
 
 public class FlowableFirebaseQueryAdapter<T> implements RxFirebaseAdapter {
 

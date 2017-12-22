@@ -7,9 +7,6 @@ import java.util.List;
 
 import io.reactivex.Single;
 
-/**
- * Created by alexandre on 09/11/17.
- */
 
 public interface BeerCollectionDataSource {
     Single insert (DrinkBeerUpdateItem item);

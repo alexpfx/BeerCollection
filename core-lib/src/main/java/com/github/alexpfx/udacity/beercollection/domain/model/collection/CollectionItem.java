@@ -31,6 +31,10 @@ public class CollectionItem {
                 '}';
     }
 
+    public void add (CollectionItemVO vo){
+        itemVOList.add(vo);
+    }
+
 
     public Beer getBeer() {
         return beer;
