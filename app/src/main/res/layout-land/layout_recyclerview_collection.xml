@@ -11,5 +11,6 @@
     app:layoutManager="android.support.v7.widget.GridLayoutManager"
     app:spanCount="3"
     tools:listitem="@layout/item_collection"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
 
     tools:showIn="@layout/fragment_my_collection"/>

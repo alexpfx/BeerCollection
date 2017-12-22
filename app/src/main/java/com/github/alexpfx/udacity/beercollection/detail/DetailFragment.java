@@ -4,7 +4,10 @@ package com.github.alexpfx.udacity.beercollection.detail;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -34,7 +37,9 @@ public class DetailFragment extends BaseFragment implements DetailView {
     private DetailViewHolder detailViewHolder;
 
 
+
     public DetailFragment() {
+        setHasOptionsMenu(true);
         // Required empty public constructor
     }
 
@@ -97,6 +102,17 @@ public class DetailFragment extends BaseFragment implements DetailView {
     public void showLoadError(Throwable throwable) {
 
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Log.d(TAG, "onOptionsItemSelected: "+getActivity());
+                NavUtils.navigateUpFromSameTask(getActivity());
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
