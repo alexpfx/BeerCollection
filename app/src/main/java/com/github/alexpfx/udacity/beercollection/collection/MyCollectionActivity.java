@@ -44,7 +44,6 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionFr
     TextView textToolbarTitle;
 
 
-
     @BindBool(R.bool.isMultiPane)
     boolean isMultiPane;
     @Nullable

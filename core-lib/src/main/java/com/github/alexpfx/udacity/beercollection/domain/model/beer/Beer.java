@@ -19,8 +19,8 @@ public class Beer {
     private String srmHexColor;
     private String servingTemperature;
     private String glass;
-    private String brewery;
-
+    private String breweryName;
+    private String breweryWebsite;
 
     public Beer(String name) {
         this.name = name;
@@ -141,12 +141,12 @@ public class Beer {
         this.shortStyle = shortStyle;
     }
 
-    public String getBrewery() {
-        return brewery;
+    public String getBreweryName() {
+        return breweryName;
     }
 
-    public void setBrewery(String brewery) {
-        this.brewery = brewery;
+    public void setBreweryName(String breweryName) {
+        this.breweryName = breweryName;
     }
 
 
@@ -167,7 +167,7 @@ public class Beer {
                 ", servingTemperature='" + servingTemperature + '\'' +
                 ", glass='" + glass + '\'' +
                 ", shortStyle='" + shortStyle + '\'' +
-                ", brewery='" + brewery + '\'' +
+                ", breweryName='" + breweryName + '\'' +
                 '}';
     }
 
@@ -185,5 +185,13 @@ public class Beer {
 
     public void setSrmHexColor(String srmHexColor) {
         this.srmHexColor = srmHexColor;
+    }
+
+    public String getBreweryWebsite() {
+        return breweryWebsite;
+    }
+
+    public void setBreweryWebsite(String breweryWebsite) {
+        this.breweryWebsite = breweryWebsite;
     }
 }

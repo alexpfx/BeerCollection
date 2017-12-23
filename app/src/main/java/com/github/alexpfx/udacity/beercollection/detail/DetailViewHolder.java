@@ -3,6 +3,7 @@ package com.github.alexpfx.udacity.beercollection.detail;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -59,37 +60,23 @@ public class DetailViewHolder {
     @BindView(R.id.txt_glass)
     TextView txtGlass;
 
-
-    /*@BindView(R.id.img_label)
-    ImageView imgLabel;
-
-
-    @BindView(R.id.txt_brewery)
+    @BindView(R.id.txt_brewery_name)
     TextView txtBrewery;
 
+    @BindView(R.id.txt_brewery_website)
+    TextView txtBreweryWebsite;
 
-
-
-    @BindView(R.id.btn_drink)
-    ImageButton btnDrink;*/
 
     private Unbinder unbinder;
-    private Context context;
 
     private PublishSubject<View> beerClickSubject = PublishSubject.create();
 
 
     public DetailViewHolder(View view) {
-        context = view.getContext();
         unbinder = ButterKnife.bind(this, view);
 
-        /*RxView.clicks(btnDrink).map(a -> btnDrink).subscribe
-                (beerClickSubject);*/
     }
 
-    /*public Observable<View> getBeerClickObservable() {
-        return beerClickSubject.hide();
-    }*/
 
     public void setBeer(Beer beer) {
 
@@ -111,17 +98,9 @@ public class DetailViewHolder {
 
         txtGlass.setText(valueOrDash(beer.getGlass()));
 
+        txtBrewery.setText(valueOrDash(beer.getBreweryName()));
+        txtBreweryWebsite.setText(valueOrDash(beer.getBreweryWebsite()));
 
-
-/*
-//        txtBrewery.setText();
-
-
-
-
-
-        Picasso.with(context).load(beer.getLabelLarge()).resize(200,200).placeholder(R.drawable.beerplaceholder)
-        .centerCrop().into(imgLabel);*/
 
     }
 
@@ -134,7 +113,6 @@ public class DetailViewHolder {
     }
 
     public void unbind() {
-
         if (unbinder != null) {
             unbinder.unbind();
         }

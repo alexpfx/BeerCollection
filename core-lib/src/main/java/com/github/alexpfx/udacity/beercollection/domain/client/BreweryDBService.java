@@ -10,7 +10,6 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 
-
 public interface BreweryDBService {
 
     String KEY = "key";
@@ -24,8 +23,8 @@ public interface BreweryDBService {
     );
 
 
-//    @GET("beer/{id}?withBreweries=Y")
-    @GET("beer/{id}/")
+    @GET("beer/{id}?withBreweries=Y")
+        //@GET("beer/{id}/")
     Single<LoadBeerResponse> load(@Path("id") String id, @Query(KEY) String key);
 
 }

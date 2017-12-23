@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.github.alexpfx.udacity.beercollection.BaseActivity;
 import com.github.alexpfx.udacity.beercollection.BeerApp;
@@ -30,12 +31,16 @@ public class DetailActivity extends BaseActivity implements DetailFragment.Liste
     @BindView(R.id.collapsing_toolbar)
     CollapsingToolbarLayout collapsingToolbarLayout;
 
+
     @BindView(R.id.toolbar_image)
     ImageView imgToolbar;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+
+    @BindView(R.id.txt_toolbar_title)
+    TextView toolbarTitle;
 
     public static void startDetail(Context context, String beerId) {
         Intent intent = new Intent(context, DetailActivity.class);
@@ -69,6 +74,7 @@ public class DetailActivity extends BaseActivity implements DetailFragment.Liste
     @Override
     public void onTitleChanged(String title) {
         collapsingToolbarLayout.setTitle(title);
+        toolbarTitle.setText(title);
     }
 
     @Override

@@ -7,14 +7,11 @@
 
     <dimen name="guideline_margin_1x">0dp</dimen>
     <dimen name="guideline_margin_2x">48dp</dimen>
-    <dimen name="guideline_margin_3x">112dp</dimen>
-    <dimen name="guideline_margin_4x">176dp</dimen>
+    <dimen name="guideline_margin_3x">96dp</dimen>
+    <dimen name="guideline_margin_4x">136dp</dimen>
 
     <dimen name="head_section_top_margin">24dp</dimen>
     <dimen name="head_section_bottom_margin">8dp</dimen>
-
-
-
 
 
 
