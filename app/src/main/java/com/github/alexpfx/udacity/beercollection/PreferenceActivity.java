@@ -2,17 +2,17 @@ package com.github.alexpfx.udacity.beercollection;
 
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PreferenceActivity extends AppCompatActivity {
+public class PreferenceActivity extends BaseActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +21,11 @@ public class PreferenceActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         ToolbarHelper.setupToolbar(this, toolbar, false, true, false, false);
+    }
+
+    @Override
+    protected void injectDependencies(BeerApp app) {
+        app.getComponent().inject(this);
     }
 
     @Override

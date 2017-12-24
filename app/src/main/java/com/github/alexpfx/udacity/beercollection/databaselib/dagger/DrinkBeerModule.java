@@ -12,7 +12,7 @@ import dagger.Provides;
  * Created by alexandre on 06/12/17.
  */
 
-@Module(includes = ActivityModule.class)
+@Module()
 public class DrinkBeerModule {
 
     @Provides

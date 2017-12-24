@@ -80,7 +80,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void injectDependencies(BeerApp app) {
-        app.getSearchSubComponent(this);
+        app.getSearchSubComponent();
     }
 
 }

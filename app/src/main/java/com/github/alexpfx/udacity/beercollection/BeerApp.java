@@ -75,9 +75,9 @@ public class BeerApp extends Application {
         return applicationComponent;
     }
 
-    public SearchSubComponent getSearchSubComponent(Activity activity) {
+    public SearchSubComponent getSearchSubComponent() {
         if (searchSubComponent == null) {
-            searchSubComponent = applicationComponent.plus(new SearchModule(), new ActivityModule(activity));
+            searchSubComponent = applicationComponent.plus(new SearchModule());
         }
         return searchSubComponent;
     }
