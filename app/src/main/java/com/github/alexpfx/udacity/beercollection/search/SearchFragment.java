@@ -150,7 +150,7 @@ public class SearchFragment extends BaseFragment implements com.github.alexpfx.u
 
     @Override
     protected void injectDependencies(BeerApp app) {
-        app.getSearchSubComponent(getActivity()).inject(this);
+        app.getSearchSubComponent().inject(this);
         searchPresenter.bind(this);
 
     }

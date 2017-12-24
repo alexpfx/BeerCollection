@@ -60,7 +60,7 @@ public class SearchActivity extends BaseActivity implements SearchFragment.Liste
 
     @Override
     protected void injectDependencies(BeerApp app) {
-        app.getSearchSubComponent(this).inject(this);
+        app.getSearchSubComponent().inject(this);
 
     }
 

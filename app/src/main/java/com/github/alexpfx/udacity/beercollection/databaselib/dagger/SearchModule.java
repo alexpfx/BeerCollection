@@ -12,7 +12,7 @@ import dagger.Provides;
  * Created by alexandre on 17/10/17.
  */
 
-@Module(includes = ActivityModule.class)
+@Module()
 public class SearchModule {
 
 
@@ -32,8 +32,6 @@ public class SearchModule {
     public SearchInteractor searchInteractor(DefaultSearchInteractor searchInteractor) {
         return searchInteractor;
     }
-
-
 
 
 }
