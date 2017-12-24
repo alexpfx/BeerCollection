@@ -11,11 +11,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import com.github.alexpfx.udacity.beercollection.BaseActivity;
 import com.github.alexpfx.udacity.beercollection.BeerApp;
+import com.github.alexpfx.udacity.beercollection.PreferenceActivity;
 import com.github.alexpfx.udacity.beercollection.R;
 import com.github.alexpfx.udacity.beercollection.ToolbarHelper;
 import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerPresenter;
@@ -132,10 +132,17 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionFr
                     supportFragmentManager.popBackStack();
                 }
                 return true;
+            case R.id.action_settings:
+                startSettingsActivity();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    private void startSettingsActivity() {
+        Intent intent = new Intent(getApplicationContext(), PreferenceActivity.class);
+        startActivity(intent);
+    }
 
 
     private void onBackStackChanged() {

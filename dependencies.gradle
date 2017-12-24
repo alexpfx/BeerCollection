@@ -49,6 +49,7 @@ ext {
             supportCardView       : "com.android.support:cardview-v7:${supportVersion}",
             supportDesign         : "com.android.support:design:${supportVersion}",
             supportPreference     : "com.android.support:preference-v7:${supportVersion}",
+            supportPreference     : "com.android.support:preference-v14:${supportVersion}",
 
             constraintLayout      : "com.android.support.constraint:constraint-layout:${constraintLayoutVersion}",
 

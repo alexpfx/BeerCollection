@@ -53,5 +53,11 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="label_detail_brewery_name">Brewery</string>
     <string name="label_detail_brewery_website">Website</string>
+    <string name="pref_title_reset_collection">Reset Collection</string>
+    <string name="pref_key_reset_collection">pref_key_reset_collection</string>
+
+    <string name="pref_summary_reset_collection">Reset all information about beers you\'ve drank.</string>
+    <string name="message_confirm_reset_collection">This action will delete all information about beers you I\'ve drank. Are you sure?</string>
+    <string name="message_confirm_reset_data">confirm reset all collection data</string>
 
 </resources>
