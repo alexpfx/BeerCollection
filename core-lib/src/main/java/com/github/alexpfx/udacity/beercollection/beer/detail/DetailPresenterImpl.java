@@ -12,7 +12,7 @@ import io.reactivex.disposables.Disposable;
  */
 
 @PerActivity
-public class DefaultDetailPresenter implements DetailPresenter {
+public class DetailPresenterImpl implements DetailPresenter {
 
     private final LoadBeerInteractor interactor;
     private final SchedulerProvider schedulerProvider;
@@ -21,7 +21,7 @@ public class DefaultDetailPresenter implements DetailPresenter {
 
 
     @Inject
-    public DefaultDetailPresenter(LoadBeerInteractor interactor, SchedulerProvider schedulerProvider) {
+    public DetailPresenterImpl(LoadBeerInteractor interactor, SchedulerProvider schedulerProvider) {
         this.interactor = interactor;
         this.schedulerProvider = schedulerProvider;
     }

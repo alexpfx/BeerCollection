@@ -1,7 +1,7 @@
 package com.github.alexpfx.udacity.beercollection.databaselib.dagger;
 
-import com.github.alexpfx.udacity.beercollection.beer.detail.DefaultDetailPresenter;
-import com.github.alexpfx.udacity.beercollection.beer.detail.DefaultLoadBeerInteractor;
+import com.github.alexpfx.udacity.beercollection.beer.detail.DetailPresenterImpl;
+import com.github.alexpfx.udacity.beercollection.beer.detail.LoadBeerInteractorImpl;
 import com.github.alexpfx.udacity.beercollection.beer.detail.DetailPresenter;
 import com.github.alexpfx.udacity.beercollection.beer.detail.DetailView;
 import com.github.alexpfx.udacity.beercollection.beer.detail.LoadBeerInteractor;
@@ -30,14 +30,14 @@ public class DetailModule {
 
     @PerActivity
     @Provides
-    DetailPresenter detailPresenter(DefaultDetailPresenter defaultDetailPresenter) {
-        defaultDetailPresenter.bind(detailView);
-        return defaultDetailPresenter;
+    DetailPresenter detailPresenter(DetailPresenterImpl detailPresenterImpl) {
+        detailPresenterImpl.bind(detailView);
+        return detailPresenterImpl;
     }
 
     @PerActivity
     @Provides
-    LoadBeerInteractor detailInteractor(DefaultLoadBeerInteractor defaultDetailInteractor) {
+    LoadBeerInteractor detailInteractor(LoadBeerInteractorImpl defaultDetailInteractor) {
         return defaultDetailInteractor;
     }
 

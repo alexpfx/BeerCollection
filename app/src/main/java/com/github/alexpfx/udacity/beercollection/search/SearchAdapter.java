@@ -44,8 +44,8 @@ public class SearchAdapter extends AbstractBaseAdapter<SearchAdapter.SeachViewHo
 
     }
 
-    public PublishSubject<View> getClickDownloadViewObservable() {
-        return clickDownloadViewObservable;
+    public Observable<View> getClickDownloadViewObservable() {
+        return clickDownloadViewObservable.hide();
     }
 
     public Observable<View> getClickDetailViewObservable() {
@@ -88,8 +88,10 @@ public class SearchAdapter extends AbstractBaseAdapter<SearchAdapter.SeachViewHo
 
     public class SeachViewHolder extends RecyclerView.ViewHolder {
         private final View itemView;
+
         @BindView(R.id.txt_beer_name)
         TextView txtBeerName;
+
         @BindView(R.id.txt_beer_style)
         TextView txtBeerStyle;
 
@@ -138,6 +140,7 @@ public class SearchAdapter extends AbstractBaseAdapter<SearchAdapter.SeachViewHo
                 view.setText(text);
             }
         }
+
 
     }
 

@@ -5,7 +5,7 @@ import com.github.alexpfx.udacity.beercollection.beer.collection.LoadCollectionP
 import com.github.alexpfx.udacity.beercollection.beer.collection.LoadCollectionPresenterImpl;
 import com.github.alexpfx.udacity.beercollection.beer.collection.MyCollectionInteractor;
 import com.github.alexpfx.udacity.beercollection.beer.collection.MyCollectionView;
-import com.github.alexpfx.udacity.beercollection.beer.detail.DefaultLoadBeerInteractor;
+import com.github.alexpfx.udacity.beercollection.beer.detail.LoadBeerInteractorImpl;
 import com.github.alexpfx.udacity.beercollection.beer.detail.LoadBeerInteractor;
 import com.github.alexpfx.udacity.beercollection.collection.MyCollectionFragment;
 
@@ -58,7 +58,7 @@ public class MyCollectionModule {
 
     @PerActivity
     @Provides
-    LoadBeerInteractor detailInteractor(DefaultLoadBeerInteractor defaultDetailInteractor) {
+    LoadBeerInteractor detailInteractor(LoadBeerInteractorImpl defaultDetailInteractor) {
         return defaultDetailInteractor;
     }
 

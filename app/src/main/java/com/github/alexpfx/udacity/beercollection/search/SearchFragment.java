@@ -146,6 +146,9 @@ public class SearchFragment extends BaseFragment implements com.github.alexpfx.u
         super.onDestroyView();
         compositeDisposable.dispose();
         unbinder.unbind();
+        drinkBeerPresenter.onDestroy();
+        searchPresenter.onDestroy();
+        adapter = null;
     }
 
     @Override
