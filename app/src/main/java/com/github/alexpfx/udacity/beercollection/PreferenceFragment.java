@@ -10,6 +10,7 @@ import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
 import com.github.alexpfx.udacity.beercollection.beer.collection.ClearCollectionPresenter;
+import com.github.alexpfx.udacity.beercollection.beer.collection.ClearCollectionView;
 
 import javax.inject.Inject;
 
@@ -20,7 +21,7 @@ import timber.log.Timber;
  * A simple {@link Fragment} subclass.
  */
 public class PreferenceFragment extends PreferenceFragmentCompat implements SharedPreferences
-        .OnSharedPreferenceChangeListener {
+        .OnSharedPreferenceChangeListener, ClearCollectionView {
 
 
     @Inject
@@ -56,12 +57,14 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Shar
 
     private void clearCollection() {
         presenter.clearCollection();
+
     }
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        injectDependencies();
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 
         setupEvents();
@@ -69,9 +72,10 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Shar
 
     }
 
-    public void injectDependencies (){
+    private void injectDependencies (){
         BeerApp app = (BeerApp) getActivity().getApplication();
         app.getMyCollectionSubComponent().inject(this);
+        presenter.bind(this);
     }
 
     private void setupEvents() {
@@ -95,7 +99,17 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Shar
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        //
 
+
+    }
+
+    @Override
+    public void showClearDataSuccessful() {
+        Timber.d("clear data successful");
+    }
+
+    @Override
+    public void showClearDataError() {
+        Timber.e("clear error");
     }
 }
