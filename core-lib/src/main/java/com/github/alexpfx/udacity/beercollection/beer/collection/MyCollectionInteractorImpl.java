@@ -14,11 +14,11 @@ import io.reactivex.Single;
  * Created by alexandre on 09/11/17.
  */
 @PerActivity
-public class DefaultMyCollectionInteractor implements MyCollectionInteractor {
+public class MyCollectionInteractorImpl implements MyCollectionInteractor {
     private BeerCollectionDataSource dataSource;
 
     @Inject
-    public DefaultMyCollectionInteractor(BeerCollectionDataSource dataSource) {
+    public MyCollectionInteractorImpl(BeerCollectionDataSource dataSource) {
         this.dataSource = dataSource;
     }
 
@@ -26,4 +26,11 @@ public class DefaultMyCollectionInteractor implements MyCollectionInteractor {
     public Single<List<CollectionItemVO>> load() {
         return dataSource.all();
     }
+
+    @Override
+    public Single clearCollectionData() {
+        return dataSource.clearCollectionData();
+    }
+
+
 }

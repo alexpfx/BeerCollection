@@ -96,4 +96,5 @@ public class BeerApp extends Application {
         return applicationComponent.plus(new MyCollectionModule(fragment), new ActivityModule(activity));
     }
 
+
 }

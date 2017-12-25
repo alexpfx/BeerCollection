@@ -25,7 +25,6 @@ public class PreferenceActivity extends BaseActivity {
 
     @Override
     protected void injectDependencies(BeerApp app) {
-        app.getComponent().inject(this);
     }
 
     @Override

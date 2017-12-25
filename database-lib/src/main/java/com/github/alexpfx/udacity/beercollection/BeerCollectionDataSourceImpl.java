@@ -99,7 +99,10 @@ public class BeerCollectionDataSourceImpl implements BeerCollectionDataSource {
         return Single.create(subscribe -> {
             DatabaseReference ref = database.getReference().child(firebaseAuth.getCurrentUser().getUid()
             ).child("collection");
-            ref.setValue(null);
+            ref.setValue(null)
+                    .addOnSuccessListener(aVoid -> subscribe.onSuccess(aVoid))
+                    .addOnFailureListener(e -> subscribe.onError(e));
+
         });
     }
 

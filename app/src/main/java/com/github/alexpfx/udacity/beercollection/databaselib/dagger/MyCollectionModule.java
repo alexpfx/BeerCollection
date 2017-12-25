@@ -1,6 +1,6 @@
 package com.github.alexpfx.udacity.beercollection.databaselib.dagger;
 
-import com.github.alexpfx.udacity.beercollection.beer.collection.DefaultMyCollectionInteractor;
+import com.github.alexpfx.udacity.beercollection.beer.collection.MyCollectionInteractorImpl;
 import com.github.alexpfx.udacity.beercollection.beer.collection.LoadCollectionPresenter;
 import com.github.alexpfx.udacity.beercollection.beer.collection.LoadCollectionPresenterImpl;
 import com.github.alexpfx.udacity.beercollection.beer.collection.MyCollectionInteractor;
@@ -44,8 +44,8 @@ public class MyCollectionModule {
 
     @Provides
     @PerActivity
-    MyCollectionInteractor myCollectionInteractor (DefaultMyCollectionInteractor defaultMyCollectionInteractor){
-        return defaultMyCollectionInteractor;
+    MyCollectionInteractor myCollectionInteractor (MyCollectionInteractorImpl myCollectionInteractorImpl){
+        return myCollectionInteractorImpl;
     }
 
     @Provides

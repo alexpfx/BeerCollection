@@ -9,6 +9,10 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
+import com.github.alexpfx.udacity.beercollection.beer.collection.ClearCollectionPresenter;
+
+import javax.inject.Inject;
+
 import timber.log.Timber;
 
 
@@ -18,6 +22,9 @@ import timber.log.Timber;
 public class PreferenceFragment extends PreferenceFragmentCompat implements SharedPreferences
         .OnSharedPreferenceChangeListener {
 
+
+    @Inject
+    ClearCollectionPresenter presenter;
 
     private Preference.OnPreferenceClickListener onResetClick = preference -> {
         Timber.d(preference.getKey());
@@ -36,13 +43,20 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Shar
         builder.setMessage(getString(R.string.message_confirm_reset_collection)).setTitle(getString(R.string
                 .message_confirm_reset_data));
 
-        builder.setPositiveButton(R.string.ok, (dialogInterface, i) -> switchPreference.setChecked(false));
+        builder.setPositiveButton(R.string.ok,
+                (dialogInterface, i) -> {
+                    switchPreference.setChecked(false);
+                    clearCollection ();
+                });
 
         builder.setNegativeButton(R.string.cancel, (dialogInterface, i) -> switchPreference.setChecked(false));
 
         builder.create().show();
     }
 
+    private void clearCollection() {
+        presenter.clearCollection();
+    }
 
 
     @Override
@@ -53,6 +67,10 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Shar
         setupEvents();
 
 
+    }
+
+    public void injectDependencies (){
+        BeerApp app = (BeerApp) getActivity().getApplication();
     }
 
     private void setupEvents() {
