@@ -4,8 +4,8 @@ import com.github.alexpfx.udacity.beercollection.Constants;
 import com.github.alexpfx.udacity.beercollection.Logger;
 import com.github.alexpfx.udacity.beercollection.beer.detail.LoadBeerInteractor;
 import com.github.alexpfx.udacity.beercollection.databaselib.dagger.PerActivity;
-import com.github.alexpfx.udacity.beercollection.domain.model.collection.CollectionItem;
 import com.github.alexpfx.udacity.beercollection.databaselib.util.SchedulerProvider;
+import com.github.alexpfx.udacity.beercollection.domain.model.collection.CollectionItem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,23 +27,21 @@ public class LoadCollectionPresenterImpl implements LoadCollectionPresenter {
 
     private final MyCollectionInteractor collectionInteractor;
     private final SchedulerProvider provider;
+    private final Logger logger;
     private MyCollectionView view;
     private Disposable subscription;
     private LoadBeerInteractor loadBeerInteractor;
-    private final Logger logger;
-
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
 
     @Inject
-    public LoadCollectionPresenterImpl(MyCollectionInteractor collectionInteractor, MyCollectionView view,
+    public LoadCollectionPresenterImpl(MyCollectionInteractor collectionInteractor,
                                        SchedulerProvider
                                                provider, LoadBeerInteractor loadBeerInteractor, Logger logger) {
 
 
         this.collectionInteractor = collectionInteractor;
         this.provider = provider;
-        this.view = view;
         this.loadBeerInteractor = loadBeerInteractor;
         this.logger = logger;
     }
@@ -56,7 +54,7 @@ public class LoadCollectionPresenterImpl implements LoadCollectionPresenter {
 
         Disposable disposable = collectionInteractor.load().timeout(Constants.TIMEOUT, TimeUnit.SECONDS).toFlowable()
                 .flatMap
-                (Flowable::fromIterable)
+                        (Flowable::fromIterable)
                 .flatMap(civo ->
                         Flowable
                                 .zip(Flowable.just(civo), loadBeerInteractor.load(civo

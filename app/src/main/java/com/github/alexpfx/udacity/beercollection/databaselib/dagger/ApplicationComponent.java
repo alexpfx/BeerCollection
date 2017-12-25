@@ -20,7 +20,7 @@ import dagger.Component;
 public interface ApplicationComponent {
     SearchSubComponent plus (SearchModule searchModule);
     DetailSubComponent plus (DetailModule detailModule);
-    MyCollectionSubComponent plus (MyCollectionModule myCollectionModule, ActivityModule activityModule);
+    MyCollectionSubComponent plus (MyCollectionModule myCollectionModule);
 
 
     void inject (LoginActivity activity);

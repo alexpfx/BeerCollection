@@ -99,7 +99,7 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionFr
 
     @Override
     protected void injectDependencies(BeerApp app) {
-        app.getMyCollectionSubComponent(this).inject(this);
+        app.getMyCollectionSubComponent().inject(this);
     }
 
 

@@ -1,13 +1,11 @@
 package com.github.alexpfx.udacity.beercollection;
 
-import android.app.Activity;
 import android.app.Application;
 import android.support.v4.app.Fragment;
 
 import com.github.alexpfx.udacity.beercollection.beer.detail.DetailView;
 import com.github.alexpfx.udacity.beercollection.collection.MyCollectionFragment;
 import com.github.alexpfx.udacity.beercollection.collection.MyCollectionSubComponent;
-import com.github.alexpfx.udacity.beercollection.databaselib.dagger.ActivityModule;
 import com.github.alexpfx.udacity.beercollection.databaselib.dagger.AndroidModule;
 import com.github.alexpfx.udacity.beercollection.databaselib.dagger.ApplicationComponent;
 import com.github.alexpfx.udacity.beercollection.databaselib.dagger.DaggerApplicationComponent;
@@ -39,17 +37,9 @@ public class BeerApp extends Application {
     public void onCreate() {
         super.onCreate();
 
-        if (BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }
-
-
-
-
-
-
-
-
 
 
         super.onCreate();
@@ -88,13 +78,10 @@ public class BeerApp extends Application {
     }
 
 
-    public MyCollectionSubComponent getMyCollectionSubComponent(Activity activity){
-        return applicationComponent.plus(new MyCollectionModule(), new ActivityModule(activity));
+    public MyCollectionSubComponent getMyCollectionSubComponent() {
+        return applicationComponent.plus(new MyCollectionModule());
     }
 
-    public MyCollectionSubComponent getMyCollectionSubComponent(Activity activity, MyCollectionFragment fragment) {
-        return applicationComponent.plus(new MyCollectionModule(fragment), new ActivityModule(activity));
-    }
 
 
 }

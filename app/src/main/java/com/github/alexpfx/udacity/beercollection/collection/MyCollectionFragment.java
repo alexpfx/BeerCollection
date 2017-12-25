@@ -173,8 +173,9 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
 
     @Override
     protected void injectDependencies(BeerApp app) {
-        app.getMyCollectionSubComponent(getActivity(), this).inject(this);
+        app.getMyCollectionSubComponent().inject(this);
         drinkBeerPresenter.bind(this);
+        presenter.bind(this);
     }
 
     @Override

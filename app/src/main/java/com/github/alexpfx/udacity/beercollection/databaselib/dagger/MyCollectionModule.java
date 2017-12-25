@@ -1,13 +1,13 @@
 package com.github.alexpfx.udacity.beercollection.databaselib.dagger;
 
-import com.github.alexpfx.udacity.beercollection.beer.collection.MyCollectionInteractorImpl;
+import com.github.alexpfx.udacity.beercollection.beer.collection.ClearCollectionPresenter;
+import com.github.alexpfx.udacity.beercollection.beer.collection.ClearCollectionPresenterImpl;
 import com.github.alexpfx.udacity.beercollection.beer.collection.LoadCollectionPresenter;
 import com.github.alexpfx.udacity.beercollection.beer.collection.LoadCollectionPresenterImpl;
 import com.github.alexpfx.udacity.beercollection.beer.collection.MyCollectionInteractor;
-import com.github.alexpfx.udacity.beercollection.beer.collection.MyCollectionView;
-import com.github.alexpfx.udacity.beercollection.beer.detail.LoadBeerInteractorImpl;
+import com.github.alexpfx.udacity.beercollection.beer.collection.MyCollectionInteractorImpl;
 import com.github.alexpfx.udacity.beercollection.beer.detail.LoadBeerInteractor;
-import com.github.alexpfx.udacity.beercollection.collection.MyCollectionFragment;
+import com.github.alexpfx.udacity.beercollection.beer.detail.LoadBeerInteractorImpl;
 
 import dagger.Module;
 import dagger.Provides;
@@ -20,40 +20,22 @@ import dagger.Provides;
 public class MyCollectionModule {
 
 
-    private MyCollectionFragment fragment;
+    public MyCollectionModule() {
 
-    public MyCollectionModule(){
-
-    }
-
-    public MyCollectionModule(MyCollectionFragment fragment) {
-        this.fragment = fragment;
-    }
-
-
-
-
-
-
-    @Provides
-    @PerActivity
-    public MyCollectionView myCollectionView(){
-        return fragment;
     }
 
 
     @Provides
     @PerActivity
-    MyCollectionInteractor myCollectionInteractor (MyCollectionInteractorImpl myCollectionInteractorImpl){
+    MyCollectionInteractor myCollectionInteractor(MyCollectionInteractorImpl myCollectionInteractorImpl) {
         return myCollectionInteractorImpl;
     }
 
     @Provides
     @PerActivity
-    LoadCollectionPresenter myCollectionPresenter(LoadCollectionPresenterImpl defaultMyCollectionPresenter){
+    LoadCollectionPresenter myCollectionPresenter(LoadCollectionPresenterImpl defaultMyCollectionPresenter) {
         return defaultMyCollectionPresenter;
     }
-
 
 
     @PerActivity
@@ -62,5 +44,10 @@ public class MyCollectionModule {
         return defaultDetailInteractor;
     }
 
+    @PerActivity
+    @Provides
+    ClearCollectionPresenter clearCollectionPresenter(ClearCollectionPresenterImpl clearCollectionPresenter) {
+        return clearCollectionPresenter;
+    }
 
 }

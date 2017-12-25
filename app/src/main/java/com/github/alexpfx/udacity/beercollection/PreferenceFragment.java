@@ -71,6 +71,7 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Shar
 
     public void injectDependencies (){
         BeerApp app = (BeerApp) getActivity().getApplication();
+        app.getMyCollectionSubComponent().inject(this);
     }
 
     private void setupEvents() {
