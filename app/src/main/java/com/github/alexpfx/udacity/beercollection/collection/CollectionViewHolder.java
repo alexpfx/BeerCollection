@@ -9,6 +9,7 @@ import android.support.v4.graphics.ColorUtils;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.TooltipCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -99,6 +100,7 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
     };
     private PublishSubject<View> clickHistorySubject;
     private boolean selected = false;
+
     private Context context;
 
 
@@ -110,19 +112,24 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
         this.clickHistorySubject = clickHistorySubject;
         ButterKnife.bind(this, itemView);
         context = itemView.getContext();
-        itemView.setSelected(selected);
+        setupEvents();
     }
 
-    public boolean isSelected() {
-        return selected;
-    }
 
-    public void setSelected(boolean selected) {
+    public synchronized void setSelected(boolean selected) {
         this.selected = selected;
+        Log.d(TAG, "setSelected: " + this.selected);
     }
 
-    public void bind(CollectionItem item) {
+
+    public synchronized void bind(CollectionItem item) {
+        itemView.setSelected(selected);
+        Log.d(TAG, "bind: "+selected);
+        Log.d(TAG, "bind: "+itemView);
+
         Beer beer = item.getBeer();
+        String id = beer.getId();
+        btnDrink.setTag(id);
 
         setupLabelView(beer);
 
@@ -132,29 +139,23 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
 
         setupLastDrinkDateView(item);
 
-        setupEvents(beer);
 
-        itemView.setSelected(Boolean.TRUE.equals(item.getTag()));
+
+
+
+//        itemView.setSelected(Boolean.TRUE.equals(item.getTag()));
     }
 
 
-    private void setupEvents(Beer beer) {
-
-        String beerId = beer.getId();
-
-        btnDrink.setTag(beerId);
+    private void setupEvents() {
         RxView.clicks(btnDrink).map(a ->
                 btnDrink).subscribe(clickAddBeerSubject);
 
+//        layout.setTag(beerId);
+//        RxView.clicks(layout).map(a -> layout).subscribe(clickDetailSubject);
 
-        layout.setTag(beerId);
-        RxView.clicks(layout).map(a -> layout).subscribe(clickDetailSubject);
 
-        textBeerName.setTag(beerId);
         RxView.clicks(textBeerName).map(a -> textBeerName).subscribe(clickHistorySubject);
-
-
-        textLastDrinkDate.setTag(beerId);
         RxView.clicks(textLastDrinkDate).map(a -> textLastDrinkDate).subscribe(clickHistorySubject);
 
 
@@ -178,6 +179,7 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
 
     private void setupBeerNameView(CollectionItem collectionItemVO, Beer beer) {
         textBeerName.setText(beer.getName());
+        textBeerName.setTag(beer.getId());
         setTooltipText(textBeerName, R.string.tooltip_beer_name);
 
     }
@@ -187,6 +189,8 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
         DateFormat dateInstance = DateFormat.getDateInstance(DateFormat.SHORT);
         CharSequence dateFormated = dateInstance.format(collectionItem.getLastDate());
         textLastDrinkDate.setText(dateFormated);
+        textLastDrinkDate.setTag(collectionItem.getBeer().getId());
+
         setTooltipText(textLastDrinkDate, R.string.tooltip_last_beer);
 
 
@@ -206,5 +210,7 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
         return context.getString(id);
     }
 
-
+    public synchronized boolean isSelected() {
+        return selected;
+    }
 }

@@ -23,7 +23,7 @@ import io.reactivex.subjects.PublishSubject;
 
 @PerActivity
 public class CollectionAdapter extends RecyclerView.Adapter<CollectionViewHolder> implements Filter.FilterListener,
-        View.OnLongClickListener {
+        View.OnLongClickListener, View.OnClickListener {
 
 
     private static final String TAG = "CollectionAdapter";
@@ -36,6 +36,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionViewHolder
     private FilterBeer filterBeer;
     /*Use to discard view events if adapter state is in selection mode*/
     private io.reactivex.functions.Predicate<View> isNotSeletionMode = view -> !selectionMode;
+    private RecyclerView recyclerView;
 
     @Inject
     public CollectionAdapter() {
@@ -45,23 +46,23 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionViewHolder
     public CollectionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_collection, parent, false);
         view.setOnLongClickListener(this);
+        view.setOnClickListener(this);
         return new CollectionViewHolder(view, clickDetailSubject, clickAddBeerSubject, clickHistorySubject);
     }
-
 
     @Override
     public void onBindViewHolder(CollectionViewHolder holder, int position) {
         CollectionItem item = filteredItems.get(position);
-
+        Log.d(TAG, "onBindViewHolder: "+holder);
         holder.bind(item);
-        holder.setSelected(Boolean.FALSE.equals(item.getTag()));
+
+
     }
 
     @Override
     public int getItemCount() {
         return filteredItems == null ? 0 : filteredItems.size();
     }
-
 
     public Observable<View> getDetailClickSubject() {
 
@@ -122,7 +123,6 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionViewHolder
         notifyDataSetChanged();
     }
 
-
     public synchronized void filter(String query) {
         if (filterBeer == null) {
             return;
@@ -139,13 +139,55 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionViewHolder
     @Override
     public boolean onLongClick(View view) {
         toggleMode();
-        Log.d(TAG, "toggleMode: " + selectionMode);
+        if (selectionMode) {
+            toggleViewSelection(view);
+        }
         return true;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (selectionMode) {
+            toggleViewSelection(view);
+        }
+        Log.d(TAG, "onClick: "+view);
+    }
+
+
+    private void toggleViewSelection(View view) {
+        CollectionViewHolder childViewHolder = (CollectionViewHolder) recyclerView.getChildViewHolder(view);
+        int childAdapterPosition = recyclerView.getChildAdapterPosition(view);
+        childViewHolder.setSelected(!childViewHolder.isSelected());
+        notifyItemChanged(childAdapterPosition);
+        Log.d(TAG, "toggleViewSelection: "+view);
+    }
+
+//    private void setViewSelection(View view, boolean selected) {
+//        CollectionViewHolder childViewHolder = (CollectionViewHolder) recyclerView.getChildViewHolder(view);
+//        int childAdapterPosition = recyclerView.getChildAdapterPosition(view);
+//        childViewHolder.setSelected(selected);
+//        notifyItemChanged(childAdapterPosition);
+//
+//    }
+
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        this.recyclerView = recyclerView;
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+        this.recyclerView = null;
     }
 
     private boolean toggleMode() {
         return selectionMode = !selectionMode;
     }
+
+
 
 
     private static class FilterBeer extends Filter {
