@@ -19,7 +19,6 @@ import android.widget.SearchView;
 import com.github.alexpfx.udacity.beercollection.BaseFragment;
 import com.github.alexpfx.udacity.beercollection.BeerApp;
 import com.github.alexpfx.udacity.beercollection.R;
-import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerPresenter;
 import com.github.alexpfx.udacity.beercollection.databaselib.search.SearchPresenter;
 import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
 
@@ -46,8 +45,6 @@ public class SearchFragment extends BaseFragment implements com.github.alexpfx.u
     SearchPresenter searchPresenter;
     @Inject
     SearchAdapter adapter;
-    @Inject
-    DrinkBeerPresenter drinkBeerPresenter;
 
     CompositeDisposable compositeDisposable = new CompositeDisposable();
 
@@ -146,7 +143,6 @@ public class SearchFragment extends BaseFragment implements com.github.alexpfx.u
         super.onDestroyView();
         compositeDisposable.dispose();
         unbinder.unbind();
-        drinkBeerPresenter.onDestroy();
         searchPresenter.onDestroy();
         adapter = null;
     }

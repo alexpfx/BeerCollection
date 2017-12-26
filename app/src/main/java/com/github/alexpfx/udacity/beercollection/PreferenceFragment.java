@@ -3,17 +3,24 @@ package com.github.alexpfx.udacity.beercollection;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
+import android.support.design.widget.Snackbar;
 import android.support.v14.preference.SwitchPreference;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.github.alexpfx.udacity.beercollection.beer.collection.ClearCollectionPresenter;
 import com.github.alexpfx.udacity.beercollection.beer.collection.ClearCollectionView;
 
 import javax.inject.Inject;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import timber.log.Timber;
 
 
@@ -22,6 +29,7 @@ import timber.log.Timber;
  */
 public class PreferenceFragment extends PreferenceFragmentCompat implements SharedPreferences
         .OnSharedPreferenceChangeListener, ClearCollectionView {
+
 
 
     @Inject
@@ -34,6 +42,7 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Shar
         startDialog(switchPreference);
         return false;
     };
+    private Unbinder unbinder;
 
     public PreferenceFragment() {
         // Required empty public constructor
@@ -60,10 +69,20 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Shar
 
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+
+        unbinder = ButterKnife.bind(this, view);
+
+        return view;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         injectDependencies();
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 
@@ -94,7 +113,7 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Shar
         super.onDestroy();
         getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
         onResetClick = null;
-
+        unbinder.unbind();
     }
 
     @Override
@@ -103,13 +122,25 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Shar
 
     }
 
+    private static final String TAG = "PreferenceFragment";
     @Override
     public void showClearDataSuccessful() {
-        Timber.d("clear data successful");
+        showSnackbarMessage(R.string.message_successful_clear_collection_data);
+
+    }
+
+
+    private void showSnackbarMessage (@StringRes int messageResId){
+        View coordinator = getActivity().findViewById(R.id.layout_coordinator);
+        if (coordinator != null){
+            Snackbar.make(coordinator, getString(messageResId), Snackbar
+                    .LENGTH_SHORT).show();
+        }
+
     }
 
     @Override
     public void showClearDataError() {
-        Timber.e("clear error");
+        showSnackbarMessage(R.string.message_error_clear_collection_data);
     }
 }

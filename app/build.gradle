@@ -30,6 +30,7 @@ android {
     //https://stackoverflow.com/questions/25103288/multiple-dex-files-define-my-package-buildconfig-cant-find-the-cause
     dexOptions {
         javaMaxHeapSize "4g"
+        preDexLibraries false
     }
 
     compileOptions {
@@ -41,6 +42,7 @@ android {
 
     packagingOptions {
         exclude 'META-INF/NOTICE' // It is not include NOTICE file
+        exclude 'META-INF/LICENSE-FIREBASE.txt'
         exclude 'META-INF/LICENSE' // It is not include LICENSE file
     }
 
@@ -93,15 +95,4 @@ dependencies {
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 
 }
-
-
-
-
-
-
-
-
-
-
-
 apply plugin: 'com.google.gms.google-services'

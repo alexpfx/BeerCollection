@@ -144,6 +144,7 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
                 }
         );
 
+
         compositeDisposable.add(disposable);
 
         disposable = adapter.getClickAddBeerSubject().subscribe(v -> {

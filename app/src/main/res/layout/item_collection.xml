@@ -9,8 +9,10 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/card_height_large"
     android:layout_margin="1dp"
-    android:background="@color/black"
-    tools:layout_editor_absoluteY="25dp">
+    tools:layout_editor_absoluteY="25dp"
+    android:padding="5dp"
+    android:foreground="@drawable/collection_state_list_drawable"
+    >
 
 
     <ImageView

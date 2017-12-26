@@ -14,6 +14,7 @@ public class CollectionItem {
 
     private List<CollectionItemVO> itemVOList;
     private Beer beer;
+    private Object tag;
 
     public CollectionItem(Beer beer, List<CollectionItemVO> itemVOList) {
         this.beer = beer;
@@ -21,6 +22,14 @@ public class CollectionItem {
     }
 
     public CollectionItem() {
+    }
+
+    public Object getTag() {
+        return tag;
+    }
+
+    public void setTag(Object tag) {
+        this.tag = tag;
     }
 
     @Override
@@ -31,7 +40,7 @@ public class CollectionItem {
                 '}';
     }
 
-    public void add (CollectionItemVO vo){
+    public void add(CollectionItemVO vo) {
         itemVOList.add(vo);
     }
 
@@ -54,9 +63,8 @@ public class CollectionItem {
     }
 
 
-
     public Date getLastDate() {
-        if (itemVOList == null){
+        if (itemVOList == null) {
             return null;
         }
         Collections.sort(itemVOList, CollectionItemVO::compareTo);
@@ -64,11 +72,11 @@ public class CollectionItem {
     }
 
     public int countBeers() {
-        if (itemVOList == null){
+        if (itemVOList == null) {
             return 0;
         }
         int count = 0;
-        for (CollectionItemVO item: itemVOList){
+        for (CollectionItemVO item : itemVOList) {
             count += item.getQuantity();
         }
         return count;

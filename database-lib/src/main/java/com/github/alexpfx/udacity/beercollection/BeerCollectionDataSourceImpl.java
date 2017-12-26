@@ -94,13 +94,17 @@ public class BeerCollectionDataSourceImpl implements BeerCollectionDataSource {
 
     }
 
+    private static final String TAG = "BeerCollectionDataSourc";
+
     @Override
     public Single clearCollectionData() {
         return Single.create(subscribe -> {
             DatabaseReference ref = database.getReference().child(firebaseAuth.getCurrentUser().getUid()
             ).child("collection");
             ref.setValue(null)
-                    .addOnSuccessListener(aVoid -> subscribe.onSuccess(aVoid))
+                    .addOnSuccessListener(aVoid -> {
+                        subscribe.onSuccess(0);
+                    })
                     .addOnFailureListener(e -> subscribe.onError(e));
 
         });

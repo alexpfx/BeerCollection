@@ -2,7 +2,6 @@ package com.github.alexpfx.udacity.beercollection.search;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -132,14 +131,6 @@ public class SearchAdapter extends AbstractBaseAdapter<SearchAdapter.SeachViewHo
 
         }
 
-        private void setOrHide(String label, TextView view, Object o) {
-            if (o == null) {
-                view.setVisibility(View.GONE);
-            } else {
-                CharSequence text = TextUtils.concat(label, ": ", o.toString());
-                view.setText(text);
-            }
-        }
 
 
     }

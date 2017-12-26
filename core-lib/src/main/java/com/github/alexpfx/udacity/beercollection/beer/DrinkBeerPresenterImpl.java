@@ -22,7 +22,7 @@ public class DrinkBeerPresenterImpl implements DrinkBeerPresenter {
 
     private DrinkBeerInteractor interactor;
 
-    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private CompositeDisposable compositeDisposable;
 
     @Inject
     public DrinkBeerPresenterImpl(DrinkBeerInteractor interactor, SchedulerProvider
@@ -34,6 +34,8 @@ public class DrinkBeerPresenterImpl implements DrinkBeerPresenter {
 
     @Override
     public void drink(DrinkBeerUpdateItem item) {
+        compositeDisposable = new CompositeDisposable();
+
         Disposable disposable = interactor.save(item).observeOn(schedulerProvider.mainThread()).subscribeOn
                 (schedulerProvider.computation())
                 .subscribe(quantity -> {
@@ -43,12 +45,13 @@ public class DrinkBeerPresenterImpl implements DrinkBeerPresenter {
                 });
         compositeDisposable.add(disposable);
 
+
     }
 
     @Override
     public void onDestroy() {
         compositeDisposable.dispose();
-        view = null;
+        this.view = DrinkBeerPresenter.EMPTY;
     }
 
     @Override

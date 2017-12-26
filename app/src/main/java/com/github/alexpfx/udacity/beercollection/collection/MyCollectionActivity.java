@@ -94,9 +94,6 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionFr
     }
 
 
-
-
-
     @Override
     protected void injectDependencies(BeerApp app) {
         app.getMyCollectionSubComponent().inject(this);
@@ -170,7 +167,6 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionFr
     private void hideSecondPane() {
         changeGuidePercent(1f);
     }
-
 
 
     private void changeGuidePercent(float percent) {

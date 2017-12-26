@@ -5,6 +5,7 @@
              xmlns:app="http://schemas.android.com/apk/res-auto"
              tools:context="com.github.alexpfx.udacity.beercollection.PreferenceFragment"
              app:layout_behavior="@string/appbar_scrolling_view_behavior"
+             android:id="@+id/layout_base_pref"
     >
 
     <!-- TODO: Update blank fragment layout -->

@@ -12,7 +12,8 @@
     <color name="colorPrimaryDark">@color/primary_dark</color>
     <color name="colorAccent">@color/accent</color>
     <color name="gradient_boundary">#8000</color>
-    <color name="scrim_color">#8c666666</color>
+    <color name="scrim_color">#5c000000</color>
+
 
 
     <!-- pallete -->
