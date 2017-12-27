@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
@@ -104,6 +105,22 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_edit:
+                toggleSelectionMode();
+                break;
+
+        }
+
+
+        return super.onOptionsItemSelected(item);
+
+
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_collection, container, false);
@@ -128,14 +145,13 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
 
     //https://stackoverflow.com/questions/36497690/how-to-handle-item-clicks-for-a-recycler-view-using-rxjava
     private void setClickListeners() {
-        Disposable disposable = adapter.getDetailClickSubject().subscribe(v -> listener.navigateToDetail
-                (getBeerIdFromTag(v)));
-
         compositeDisposable = new CompositeDisposable();
+        Disposable disposable;
 
+        disposable = adapter.getDetailViewClickObservable().subscribe(v -> navigateToDetail(v));
         compositeDisposable.add(disposable);
 
-        disposable = adapter.getClickHistorySubject().subscribe(
+        disposable = adapter.getHistoryClickObservable().subscribe(
                 v -> listener.navigateToHistory(getBeerIdFromTag(v))
                 , onError -> {
                     //TODO
@@ -143,16 +159,34 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
 
                 }
         );
-
-
         compositeDisposable.add(disposable);
 
-        disposable = adapter.getClickAddBeerSubject().subscribe(v -> {
-            showDrinkDialog(getBeerIdFromTag(v));
-        });
-
+        disposable = adapter.getAddBeerClickObservable().subscribe(v -> showDrinkDialog(getBeerIdFromTag(v)));
         compositeDisposable.add(disposable);
+
+        disposable = adapter.getItemViewClickObservable().subscribe(this::toggleSelection);
+        compositeDisposable.add(disposable);
+
     }
+
+    private void navigateToDetail(View v) {
+        Log.d(TAG, "navigateToDetail: ");
+        listener.navigateToDetail
+                (getBeerIdFromTag(v));
+    }
+
+    private void toggleSelectionMode() {
+        Log.d(TAG, "toggleSelectionMode: ");
+        adapter.setSelectable(!adapter.isSelectable());
+    }
+
+    private void toggleSelection(View v) {
+        Log.d(TAG, "toggleSelection: ");
+        int position = rcvCollection.getChildAdapterPosition(v);
+        boolean itemChecked = adapter.isItemChecked(position);
+        adapter.setItemChecked(position, !itemChecked);
+    }
+
 
     private void showDrinkDialog(String id) {
         positiveClickListener = new DrinkBeerFragmentDialog

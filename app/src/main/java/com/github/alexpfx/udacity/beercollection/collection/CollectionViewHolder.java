@@ -9,7 +9,6 @@ import android.support.v4.graphics.ColorUtils;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.TooltipCompat;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -33,6 +32,9 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
     private static final String TAG = "CollectionViewHolder";
     private final PublishSubject<View> clickDetailSubject;
     private final PublishSubject<View> clickAddBeerSubject;
+    private final PublishSubject<View> clickHistorySubject;
+    private final PublishSubject<View> clickItemViewSubject;
+
     @BindView(R.id.image_beer_label)
     ImageView imageBeerLabel;
     @BindView(R.id.text_beer_name)
@@ -98,34 +100,27 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
 
         }
     };
-    private PublishSubject<View> clickHistorySubject;
-    private boolean selected = false;
 
     private Context context;
 
 
     public CollectionViewHolder(View itemView, PublishSubject<View> clickDetailSubject, PublishSubject<View>
-            clickAddBeerSubject, PublishSubject<View> clickHistorySubject) {
+            clickAddBeerSubject, PublishSubject<View> clickHistorySubject, PublishSubject<View> clickItemViewSubject) {
         super(itemView);
         this.clickDetailSubject = clickDetailSubject;
         this.clickAddBeerSubject = clickAddBeerSubject;
         this.clickHistorySubject = clickHistorySubject;
+        this.clickItemViewSubject = clickItemViewSubject;
+
+
         ButterKnife.bind(this, itemView);
         context = itemView.getContext();
         setupEvents();
     }
 
 
-    public synchronized void setSelected(boolean selected) {
-        this.selected = selected;
-        Log.d(TAG, "setSelected: " + this.selected);
-    }
-
-
-    public synchronized void bind(CollectionItem item) {
-        itemView.setSelected(selected);
-        Log.d(TAG, "bind: "+selected);
-        Log.d(TAG, "bind: "+itemView);
+    public synchronized void bind(CollectionItem item, boolean isSelected) {
+        itemView.setSelected(isSelected);
 
         Beer beer = item.getBeer();
         String id = beer.getId();
@@ -133,36 +128,21 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
 
         setupLabelView(beer);
 
-        setupBeerNameView(item, beer);
+        setupBeerNameView(beer);
 
         setupQuantityView(item);
 
         setupLastDrinkDateView(item);
-
-
-
-
-
-//        itemView.setSelected(Boolean.TRUE.equals(item.getTag()));
     }
 
 
     private void setupEvents() {
-        RxView.clicks(btnDrink).map(a ->
-                btnDrink).subscribe(clickAddBeerSubject);
 
-//        layout.setTag(beerId);
-//        RxView.clicks(layout).map(a -> layout).subscribe(clickDetailSubject);
-
-
+        RxView.clicks(itemView).map(a -> itemView).subscribe(clickItemViewSubject);
+        RxView.clicks(imageBeerLabel).map(a -> imageBeerLabel).subscribe(clickDetailSubject);
+        RxView.clicks(btnDrink).map(a -> btnDrink).subscribe(clickAddBeerSubject);
         RxView.clicks(textBeerName).map(a -> textBeerName).subscribe(clickHistorySubject);
         RxView.clicks(textLastDrinkDate).map(a -> textLastDrinkDate).subscribe(clickHistorySubject);
-
-
-//            viewScrim.setTag(beerId);
-//            RxView.clicks(viewScrim).map(a -> viewScrim).subscribe(clickHistorySubject);
-
-
     }
 
     private void setupLabelView(Beer beer) {
@@ -177,7 +157,7 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
     }
 
 
-    private void setupBeerNameView(CollectionItem collectionItemVO, Beer beer) {
+    private void setupBeerNameView(Beer beer) {
         textBeerName.setText(beer.getName());
         textBeerName.setTag(beer.getId());
         setTooltipText(textBeerName, R.string.tooltip_beer_name);
@@ -210,7 +190,6 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
         return context.getString(id);
     }
 
-    public synchronized boolean isSelected() {
-        return selected;
-    }
 }
+
+

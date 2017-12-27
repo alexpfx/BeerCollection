@@ -12,6 +12,8 @@
     tools:layout_editor_absoluteY="25dp"
     android:padding="5dp"
     android:foreground="@drawable/collection_state_list_drawable"
+    android:splitMotionEvents="true"
+
     >
 
 
