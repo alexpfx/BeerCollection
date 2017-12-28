@@ -60,6 +60,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionViewHolder
     @Override
     public void onBindViewHolder(CollectionViewHolder holder, int position) {
         CollectionItem item = filteredItems.get(position);
+
         holder.bind(item, selectedPositions.get(position));
     }
 
@@ -171,9 +172,24 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionViewHolder
         return selectable;
     }
 
+
+
     @Override
     public void setSelectable(boolean selectable) {
         this.selectable = selectable;
+
+    }
+
+    @Override
+    public boolean hasSelection() {
+        for (int i = 0; i < selectedPositions.size(); i++) {
+            int key = selectedPositions.keyAt(i);
+            if (selectedPositions.get(key)){
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private static class FilterBeer extends Filter {

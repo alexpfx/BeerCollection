@@ -2,6 +2,7 @@ package com.github.alexpfx.udacity.beercollection.collection;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -67,8 +68,11 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     DrinkBeerPresenter drinkBeerPresenter;
 
 
+
+
     private Unbinder unbinder;
     private DrinkBeerFragmentDialog.PositiveClickListener positiveClickListener;
+    private StateListDrawable stateListDrawable;
 
 
     public MyCollectionFragment() {
@@ -87,6 +91,7 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         if (context instanceof Listener) {
             this.listener = (Listener) context;
         }
+        stateListDrawable = (StateListDrawable) getResources().getDrawable(R.drawable.state_list_edit_mode);
     }
 
     @Override
@@ -94,6 +99,8 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         super.onDetach();
         this.listener = null;
         this.positiveClickListener = null;
+        stateListDrawable = null;
+
     }
 
     @Override
@@ -105,19 +112,53 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+        inflater.inflate(R.menu.menu_my_collection, menu);
+        setupSearchView(menu);
+        showHideDeleteButton(menu);
+    }
+
+
+
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
             case R.id.action_edit:
                 toggleSelectionMode();
+                item.setChecked(isSelectMode());
+                stateListDrawable = (StateListDrawable) getResources().getDrawable(R.drawable.state_list_edit_mode);
+                int[] state = {item.isChecked()?android.R.attr.state_checked:android.R.attr.state_empty};
+                stateListDrawable.setState(state);
+                getActivity().invalidateOptionsMenu();
+                item.setIcon(stateListDrawable.getCurrent());
                 break;
+            case R.id.action_delete:
+                deleteItems();
+        }
 
+        return super.onOptionsItemSelected(item);
+    }
+    private boolean isSelectMode (){
+        Log.d(TAG, "isSelectMode: "+adapter.isSelectable());
+        return adapter.isSelectable();
+    }
+
+    private void deleteItems() {
+        if (!adapter.hasSelection()){
+            // this will not be called, since if there is no selection, the delete button is not shown.
+            return;
         }
 
 
-        return super.onOptionsItemSelected(item);
+    }
 
 
+    private void showHideDeleteButton(Menu menu) {
+        MenuItem item = menu.findItem(R.id.action_delete);
+        item.setVisible(adapter.isSelectable() && adapter.hasSelection());
     }
 
     @Override
@@ -176,14 +217,16 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     }
 
     private void toggleSelectionMode() {
-        Log.d(TAG, "toggleSelectionMode: ");
-        adapter.setSelectable(!adapter.isSelectable());
+        boolean selectable = !adapter.isSelectable();
+        adapter.setSelectable(selectable);
     }
+
 
     private void toggleSelection(View v) {
         Log.d(TAG, "toggleSelection: ");
         int position = rcvCollection.getChildAdapterPosition(v);
         boolean itemChecked = adapter.isItemChecked(position);
+        getActivity().invalidateOptionsMenu();
         adapter.setItemChecked(position, !itemChecked);
     }
 
@@ -196,6 +239,7 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
                 drinkBeerPresenter.drink(new DrinkBeerUpdateItem(id, quant));
             }
         };
+
 
         DrinkBeerFragmentDialog instance = DrinkBeerFragmentDialog.getInstance(id, positiveClickListener);
         instance.show(getActivity().getSupportFragmentManager(), "DrinkBeerDialogFragment");
@@ -261,12 +305,6 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         presenter.load();
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_my_collection, menu);
-        setupSearchView(menu);
-
-    }
 
     private void setupSearchView(Menu menu) {
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);

@@ -122,6 +122,7 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
     public synchronized void bind(CollectionItem item, boolean isSelected) {
         itemView.setSelected(isSelected);
 
+
         Beer beer = item.getBeer();
         String id = beer.getId();
         btnDrink.setTag(id);

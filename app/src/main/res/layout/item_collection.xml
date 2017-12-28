@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -9,13 +7,10 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/card_height_large"
     android:layout_margin="1dp"
-    tools:layout_editor_absoluteY="25dp"
-    android:padding="5dp"
     android:foreground="@drawable/collection_state_list_drawable"
     android:splitMotionEvents="true"
-
+    tools:layout_editor_absoluteY="25dp"
     >
-
 
     <ImageView
 

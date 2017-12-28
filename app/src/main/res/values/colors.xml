@@ -13,6 +13,7 @@
     <color name="colorAccent">@color/accent</color>
     <color name="gradient_boundary">#8000</color>
     <color name="scrim_color">#5c000000</color>
+    <color name="color_action_icon">#fff</color>
 
 
 
@@ -26,6 +27,7 @@
     <color name="secondary_text">#757575</color>
     <color name="icons">#FFFFFF</color>
     <color name="divider">#BDBDBD</color>
+
 
 </resources>
 

@@ -8,6 +8,7 @@
     android:layout_height="match_parent"
     tools:context="com.github.alexpfx.udacity.beercollection.collection.MyCollectionFragment"
     tools:showIn="@layout/activity_my_collection"
+    android:background="@color/primary_text"
     >
 
     <FrameLayout

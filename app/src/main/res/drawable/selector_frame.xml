@@ -2,10 +2,6 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <!--<item android:drawable="@color/scrim_color"/>-->
-    <item android:drawable="@drawable/scrim_background" />
     <item android:drawable="@drawable/checkbox_marked" android:gravity="top|end" />
-
-
-
 
 </layer-list>

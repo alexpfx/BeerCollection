@@ -15,5 +15,7 @@ public interface SelectableAdapter {
 
     void setSelectable(boolean selectable);
 
+    boolean hasSelection ();
+
 
 }
