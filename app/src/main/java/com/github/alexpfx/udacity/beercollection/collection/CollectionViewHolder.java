@@ -34,6 +34,7 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
     private final PublishSubject<View> clickAddBeerSubject;
     private final PublishSubject<View> clickHistorySubject;
     private final PublishSubject<View> clickItemViewSubject;
+    private final PublishSubject<View> longClickItemViewSubject;
 
     @BindView(R.id.image_beer_label)
     ImageView imageBeerLabel;
@@ -49,6 +50,9 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
     ConstraintLayout layout;
     @BindView(R.id.view_scrim)
     View viewScrim;
+
+    @BindView(R.id.overlay_view)
+    View viewOverlay;
     Target target = new Target() {
         @Override
         public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
@@ -105,12 +109,15 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
 
 
     public CollectionViewHolder(View itemView, PublishSubject<View> clickDetailSubject, PublishSubject<View>
-            clickAddBeerSubject, PublishSubject<View> clickHistorySubject, PublishSubject<View> clickItemViewSubject) {
+            clickAddBeerSubject, PublishSubject<View> clickHistorySubject, PublishSubject<View> clickItemViewSubject,
+                                PublishSubject<View> longClickItemViewSubject
+    ) {
         super(itemView);
         this.clickDetailSubject = clickDetailSubject;
         this.clickAddBeerSubject = clickAddBeerSubject;
         this.clickHistorySubject = clickHistorySubject;
         this.clickItemViewSubject = clickItemViewSubject;
+        this.longClickItemViewSubject = longClickItemViewSubject;
 
 
         ButterKnife.bind(this, itemView);
@@ -119,9 +126,13 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
     }
 
 
-    public synchronized void bind(CollectionItem item, boolean isSelected) {
+    public synchronized void bind(CollectionItem item, boolean isSelected, boolean isSelectable) {
         itemView.setSelected(isSelected);
+        viewOverlay.setClickable(isSelectable);
+        viewOverlay.setLongClickable(true);
+        viewOverlay.setBackgroundResource(isSelectable? R.drawable.collection_state_list_drawable: android.R.color.transparent);
 
+//        viewOverlay.setVisibility(isSelectable? View.VISIBLE: View.INVISIBLE);
 
         Beer beer = item.getBeer();
         String id = beer.getId();
@@ -138,13 +149,21 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
 
 
     private void setupEvents() {
+        viewOverlay.setOnLongClickListener(view -> {
+            longClickItemViewSubject.onNext(itemView);
+            return true;
+        });
 
-        RxView.clicks(itemView).map(a -> itemView).subscribe(clickItemViewSubject);
+
+        RxView.clicks(viewOverlay).map(a -> itemView).subscribe(clickItemViewSubject);
         RxView.clicks(imageBeerLabel).map(a -> imageBeerLabel).subscribe(clickDetailSubject);
         RxView.clicks(btnDrink).map(a -> btnDrink).subscribe(clickAddBeerSubject);
         RxView.clicks(textBeerName).map(a -> textBeerName).subscribe(clickHistorySubject);
         RxView.clicks(textLastDrinkDate).map(a -> textLastDrinkDate).subscribe(clickHistorySubject);
     }
+
+
+
 
     private void setupLabelView(Beer beer) {
         Picasso.with(context)

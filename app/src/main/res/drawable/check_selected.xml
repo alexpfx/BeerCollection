@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--<item android:drawable="@color/scrim_color"/>-->
+    <item
+        android:gravity="top|end"
+        android:right="4dp"
+        android:top="4dp"
+
+        >
+        <shape android:shape="rectangle">
+
+            <corners android:radius="2dp"/>
+            <size
+                android:width="40dp"
+                android:height="40dp"
+
+                />
+            <stroke
+                android:width="3dp"
+                android:color="#afff"
+                />
+            <gradient
+                android:angle="45"
+                android:endColor="#6fff"
+                android:startColor="#3fff"
+                android:type="linear"
+                />
+
+        </shape>
+    </item>
+
+    <item
+        android:drawable="@drawable/checkbox_marked"
+        android:gravity="top|end"
+        android:right="4dp"
+        android:top="4dp"/>
+
+</layer-list>

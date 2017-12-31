@@ -1,21 +1,21 @@
 package com.github.alexpfx.udacity.beercollection.collection;
 
+import android.os.Parcelable;
+
 /**
  * Created by alexandre on 26/12/17.
  */
 
-public interface SelectableAdapter {
+public interface SelectableAdapter extends Parcelable, Iterable<Boolean>{
 
 
     void setItemChecked(int position, boolean isChecked);
 
     boolean isItemChecked(int position);
 
-    boolean isSelectable();
-
-    void setSelectable(boolean selectable);
-
     boolean hasSelection ();
+
+    void clearSelectedItems ();
 
 
 }

@@ -7,9 +7,9 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/card_height_large"
     android:layout_margin="1dp"
-    android:foreground="@drawable/collection_state_list_drawable"
     android:splitMotionEvents="true"
     tools:layout_editor_absoluteY="25dp"
+
     >
 
     <ImageView
@@ -77,6 +77,25 @@
         app:layout_constraintStart_toStartOf="@+id/view_scrim"
         app:layout_constraintTop_toTopOf="@+id/view_scrim"
         tools:src="@drawable/googleg_standard_color_18"/>
+
+    <View
+        android:id="@+id/overlay_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clickable="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/collection_state_list_drawable"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        >
+
+
+    </View>
+
+
+
 
 
 </android.support.constraint.ConstraintLayout>

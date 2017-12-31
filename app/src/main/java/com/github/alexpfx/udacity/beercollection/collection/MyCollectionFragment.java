@@ -2,8 +2,8 @@ package com.github.alexpfx.udacity.beercollection.collection;
 
 import android.app.SearchManager;
 import android.content.Context;
-import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -40,6 +41,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import timber.log.Timber;
 
 public class MyCollectionFragment extends BaseFragment implements MyCollectionView, SwipeRefreshLayout
         .OnRefreshListener, DrinkBeerView {
@@ -67,12 +69,25 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     @Inject
     DrinkBeerPresenter drinkBeerPresenter;
 
-
+    ImageButton btnDelete;
+    ImageButton btnEdit;
 
 
     private Unbinder unbinder;
     private DrinkBeerFragmentDialog.PositiveClickListener positiveClickListener;
-    private StateListDrawable stateListDrawable;
+
+
+    private MenuItem.OnMenuItemClickListener actionDeleteClick = new MenuItem.OnMenuItemClickListener() {
+        @Override
+        public boolean onMenuItemClick(MenuItem menuItem) {
+            List<String> selectedItemIds = adapter.getSelectedItemIds();
+            for (String selectedItemId : selectedItemIds) {
+                Timber.d("%s will be deleted",selectedItemId);
+            }
+
+            return true;
+        }
+    };
 
 
     public MyCollectionFragment() {
@@ -91,7 +106,6 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         if (context instanceof Listener) {
             this.listener = (Listener) context;
         }
-        stateListDrawable = (StateListDrawable) getResources().getDrawable(R.drawable.state_list_edit_mode);
     }
 
     @Override
@@ -99,7 +113,6 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         super.onDetach();
         this.listener = null;
         this.positiveClickListener = null;
-        stateListDrawable = null;
 
     }
 
@@ -113,53 +126,38 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-
         inflater.inflate(R.menu.menu_my_collection, menu);
-        setupSearchView(menu);
-        showHideDeleteButton(menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
-
-
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        MenuItem action_delete = menu.findItem(R.id.action_delete);
+        action_delete.setOnMenuItemClickListener(actionDeleteClick);
+        action_delete.setVisible(isSelectMode() && hasSelectedItems());
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.action_edit:
-                toggleSelectionMode();
-                item.setChecked(isSelectMode());
-                stateListDrawable = (StateListDrawable) getResources().getDrawable(R.drawable.state_list_edit_mode);
-                int[] state = {item.isChecked()?android.R.attr.state_checked:android.R.attr.state_empty};
-                stateListDrawable.setState(state);
-                getActivity().invalidateOptionsMenu();
-                item.setIcon(stateListDrawable.getCurrent());
-                break;
+        int itemId = item.getItemId();
+        switch (itemId) {
             case R.id.action_delete:
-                deleteItems();
+                break;
         }
 
-        return super.onOptionsItemSelected(item);
+        getActivity().invalidateOptionsMenu();
+        return true;
     }
-    private boolean isSelectMode (){
-        Log.d(TAG, "isSelectMode: "+adapter.isSelectable());
+
+
+    private boolean isSelectMode() {
         return adapter.isSelectable();
     }
 
-    private void deleteItems() {
-        if (!adapter.hasSelection()){
-            // this will not be called, since if there is no selection, the delete button is not shown.
-            return;
-        }
-
-
+    private boolean hasSelectedItems() {
+        return adapter.hasSelection();
     }
 
-
-    private void showHideDeleteButton(Menu menu) {
-        MenuItem item = menu.findItem(R.id.action_delete);
-        item.setVisible(adapter.isSelectable() && adapter.hasSelection());
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -173,6 +171,7 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         setClickListeners();
 
         executeOnActivityActionBar(ab -> ab.setDisplayHomeAsUpEnabled(false));
+
 
         return view;
 
@@ -208,26 +207,47 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         disposable = adapter.getItemViewClickObservable().subscribe(this::toggleSelection);
         compositeDisposable.add(disposable);
 
+        disposable = adapter.getLongClickViewObservable().subscribe(v -> toggleSelectionMode(v));
+        compositeDisposable.add(disposable);
+
     }
 
+
     private void navigateToDetail(View v) {
-        Log.d(TAG, "navigateToDetail: ");
         listener.navigateToDetail
                 (getBeerIdFromTag(v));
     }
 
-    private void toggleSelectionMode() {
-        boolean selectable = !adapter.isSelectable();
-        adapter.setSelectable(selectable);
+    private void toggleSelectionMode(View view) {
+        adapter.clearSelectedItems();
+        adapter.setSelectable(!isSelectMode());
+        toggleSelection(view);
+        adapter.notifyDataSetChanged();
     }
 
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putParcelable("adapter", adapter.onSaveInstanceState());
+        outState.putBoolean("isSelectable", adapter.isSelectable());
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState == null) {
+            return;
+        }
+        adapter.setSelectable(savedInstanceState.getBoolean("isSelectable"));
+        adapter.onRestoreInstanceState(savedInstanceState.getParcelable("adapter"));
+    }
+
     private void toggleSelection(View v) {
-        Log.d(TAG, "toggleSelection: ");
         int position = rcvCollection.getChildAdapterPosition(v);
         boolean itemChecked = adapter.isItemChecked(position);
         getActivity().invalidateOptionsMenu();
         adapter.setItemChecked(position, !itemChecked);
+
     }
 
 
