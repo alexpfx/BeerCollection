@@ -1,5 +1,6 @@
 package com.github.alexpfx.udacity.beercollection;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -15,6 +16,11 @@ public class LoginActivity extends BaseActivity {
 
     @Inject
     FirebaseAuth firebaseAuth;
+
+    public static void startLoginActivity (Context context){
+        Intent intent = new Intent(context, LoginActivity.class);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

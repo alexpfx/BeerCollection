@@ -63,5 +63,6 @@
     <string name="message_error_clear_collection_data">Couldn\'t empty collection</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="message_successful_signout">Successful sign out</string>
 
 </resources>

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -43,6 +44,7 @@ public class DetailActivity extends BaseActivity implements DetailFragment.Liste
     TextView toolbarTitle;
 
     public static void startDetail(Context context, String beerId) {
+        Log.d(TAG, "startDetail: ");
         Intent intent = new Intent(context, DetailActivity.class);
         intent.putExtra(Constants.KEY_BEER_ID, beerId);
         context.startActivity(intent);

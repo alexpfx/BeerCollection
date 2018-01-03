@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -11,6 +12,7 @@
     tools:layout_editor_absoluteY="25dp"
 
     >
+
 
     <ImageView
 
@@ -65,6 +67,7 @@
         tools:text="Text \nText"/>
 
 
+
     <ImageButton
         android:id="@+id/btn_drink_action"
         android:layout_width="56dp"
@@ -78,23 +81,17 @@
         app:layout_constraintTop_toTopOf="@+id/view_scrim"
         tools:src="@drawable/googleg_standard_color_18"/>
 
-    <View
-        android:id="@+id/overlay_view"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:clickable="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <ImageButton
+        android:id="@+id/check_selected"
+        android:checked="true"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:text="test"
         android:background="@drawable/collection_state_list_drawable"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-
-        >
-
-
-    </View>
-
-
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 

@@ -9,6 +9,7 @@ import android.support.v4.graphics.ColorUtils;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.TooltipCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -51,8 +52,6 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.view_scrim)
     View viewScrim;
 
-    @BindView(R.id.overlay_view)
-    View viewOverlay;
     Target target = new Target() {
         @Override
         public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
@@ -128,9 +127,7 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
 
     public synchronized void bind(CollectionItem item, boolean isSelected, boolean isSelectable) {
         itemView.setSelected(isSelected);
-        viewOverlay.setClickable(isSelectable);
-        viewOverlay.setLongClickable(true);
-        viewOverlay.setBackgroundResource(isSelectable? R.drawable.collection_state_list_drawable: android.R.color.transparent);
+        Log.d(TAG, "bind: " + isSelectable);
 
 //        viewOverlay.setVisibility(isSelectable? View.VISIBLE: View.INVISIBLE);
 
@@ -149,20 +146,13 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
 
 
     private void setupEvents() {
-        viewOverlay.setOnLongClickListener(view -> {
-            longClickItemViewSubject.onNext(itemView);
-            return true;
-        });
 
-
-        RxView.clicks(viewOverlay).map(a -> itemView).subscribe(clickItemViewSubject);
+        //RxView.clicks(viewOverlay).map(a -> itemView).subscribe(clickItemViewSubject);
         RxView.clicks(imageBeerLabel).map(a -> imageBeerLabel).subscribe(clickDetailSubject);
         RxView.clicks(btnDrink).map(a -> btnDrink).subscribe(clickAddBeerSubject);
         RxView.clicks(textBeerName).map(a -> textBeerName).subscribe(clickHistorySubject);
         RxView.clicks(textLastDrinkDate).map(a -> textLastDrinkDate).subscribe(clickHistorySubject);
     }
-
-
 
 
     private void setupLabelView(Beer beer) {

@@ -2,6 +2,7 @@ package com.github.alexpfx.udacity.beercollection.collection;
 
 import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionViewHolder
     public void onBindViewHolder(CollectionViewHolder holder, int position) {
         CollectionItem item = filteredItems.get(position);
         holder.bind(item, selectables.isItemChecked(position), isSelectable());
+
     }
 
     @Override
@@ -172,6 +174,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionViewHolder
 //                .filter(isNotSeletionMode)
                 .map(v -> {
                     if (selectable) {
+                        
                         clickItemViewSubject.onNext((View) v.getParent());
                     }
                     return v;

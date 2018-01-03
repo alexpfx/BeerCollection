@@ -41,6 +41,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.subjects.PublishSubject;
 import timber.log.Timber;
 
 public class MyCollectionFragment extends BaseFragment implements MyCollectionView, SwipeRefreshLayout
@@ -69,20 +70,23 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     @Inject
     DrinkBeerPresenter drinkBeerPresenter;
 
+    PublishSubject<View> rcvItemClick = PublishSubject.create();
+    PublishSubject<View> rcvItemLongClick = PublishSubject.create();
+
+
     ImageButton btnDelete;
     ImageButton btnEdit;
 
-
     private Unbinder unbinder;
     private DrinkBeerFragmentDialog.PositiveClickListener positiveClickListener;
-
 
     private MenuItem.OnMenuItemClickListener actionDeleteClick = new MenuItem.OnMenuItemClickListener() {
         @Override
         public boolean onMenuItemClick(MenuItem menuItem) {
             List<String> selectedItemIds = adapter.getSelectedItemIds();
             for (String selectedItemId : selectedItemIds) {
-                Timber.d("%s will be deleted",selectedItemId);
+                Timber.d("%s will be deleted", selectedItemId);
+
             }
 
             return true;
@@ -166,15 +170,20 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         unbinder = ButterKnife.bind(this, view);
         swipeRefreshCollection.setOnRefreshListener(this);
 
-        rcvCollection.setAdapter(adapter);
+        setupRecycler();
 
-        setClickListeners();
+        setupEvents();
 
         executeOnActivityActionBar(ab -> ab.setDisplayHomeAsUpEnabled(false));
 
-
         return view;
 
+    }
+
+    private void setupRecycler() {
+        rcvCollection.setAdapter(adapter);
+        rcvCollection.addOnItemTouchListener(
+                new RecyclerViewTouchListener(getActivity(), rcvItemClick, rcvItemLongClick, rcvCollection));
     }
 
     @Override
@@ -184,7 +193,8 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     }
 
     //https://stackoverflow.com/questions/36497690/how-to-handle-item-clicks-for-a-recycler-view-using-rxjava
-    private void setClickListeners() {
+    private void setupEvents() {
+
         compositeDisposable = new CompositeDisposable();
         Disposable disposable;
 
@@ -194,8 +204,6 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         disposable = adapter.getHistoryClickObservable().subscribe(
                 v -> listener.navigateToHistory(getBeerIdFromTag(v))
                 , onError -> {
-                    //TODO
-                    Log.e(TAG, "setClickListeners: ", onError);
 
                 }
         );
@@ -204,12 +212,22 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         disposable = adapter.getAddBeerClickObservable().subscribe(v -> showDrinkDialog(getBeerIdFromTag(v)));
         compositeDisposable.add(disposable);
 
-        disposable = adapter.getItemViewClickObservable().subscribe(this::toggleSelection);
+
+       // disposable = adapter.getItemViewClickObservable().subscribe(this::toggleSelection);
+       // compositeDisposable.add(disposable);
+
+        //disposable = adapter.getLongClickViewObservable().subscribe(v -> toggleSelectionMode(v));
+        //compositeDisposable.add(disposable);
+
+        disposable = rcvItemLongClick.hide().subscribe(v -> {
+            toggleSelectionMode(v);
+        });
         compositeDisposable.add(disposable);
 
-        disposable = adapter.getLongClickViewObservable().subscribe(v -> toggleSelectionMode(v));
+        disposable = rcvItemClick.hide().subscribe(v -> {
+            toggleSelection(v);
+        });
         compositeDisposable.add(disposable);
-
     }
 
 

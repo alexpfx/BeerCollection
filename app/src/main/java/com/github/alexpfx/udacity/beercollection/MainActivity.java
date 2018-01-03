@@ -39,9 +39,6 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         tvUsername = findViewById(R.id.tvUserName);
 
-
-
-
     }
 
 
