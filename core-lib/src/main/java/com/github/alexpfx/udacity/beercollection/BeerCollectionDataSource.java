@@ -12,4 +12,5 @@ public interface BeerCollectionDataSource {
     Single insert (DrinkBeerUpdateItem item);
     Single<List<CollectionItemVO>> all ();
     Single clearCollectionData ();
+    Single deleteBeerFromCollection(String id);
 }

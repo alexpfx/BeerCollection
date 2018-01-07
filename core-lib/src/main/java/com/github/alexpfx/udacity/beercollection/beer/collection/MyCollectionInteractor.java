@@ -14,4 +14,5 @@ import io.reactivex.Single;
 public interface MyCollectionInteractor extends BaseInteractor{
     Single<List<CollectionItemVO>> load ();
     Single clearCollectionData ();
+    Single deleteBeer (String id);
 }

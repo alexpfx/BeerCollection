@@ -174,7 +174,6 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionViewHolder
 //                .filter(isNotSeletionMode)
                 .map(v -> {
                     if (selectable) {
-                        
                         clickItemViewSubject.onNext((View) v.getParent());
                     }
                     return v;

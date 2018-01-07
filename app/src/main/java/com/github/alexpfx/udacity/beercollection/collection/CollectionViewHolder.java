@@ -9,7 +9,6 @@ import android.support.v4.graphics.ColorUtils;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.TooltipCompat;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -27,6 +26,7 @@ import java.text.DateFormat;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnLongClick;
 import io.reactivex.subjects.PublishSubject;
 
 public class CollectionViewHolder extends RecyclerView.ViewHolder {
@@ -34,7 +34,7 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
     private final PublishSubject<View> clickDetailSubject;
     private final PublishSubject<View> clickAddBeerSubject;
     private final PublishSubject<View> clickHistorySubject;
-    private final PublishSubject<View> clickItemViewSubject;
+    private final PublishSubject<View> clickToggleSelectionSubject;
     private final PublishSubject<View> longClickItemViewSubject;
 
     @BindView(R.id.image_beer_label)
@@ -51,6 +51,9 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
     ConstraintLayout layout;
     @BindView(R.id.view_scrim)
     View viewScrim;
+
+    @BindView(R.id.btn_toggle_selection)
+    ImageButton btnToggleSelection;
 
     Target target = new Target() {
         @Override
@@ -108,14 +111,14 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
 
 
     public CollectionViewHolder(View itemView, PublishSubject<View> clickDetailSubject, PublishSubject<View>
-            clickAddBeerSubject, PublishSubject<View> clickHistorySubject, PublishSubject<View> clickItemViewSubject,
+            clickAddBeerSubject, PublishSubject<View> clickHistorySubject, PublishSubject<View> clickToggleSelectionSubject,
                                 PublishSubject<View> longClickItemViewSubject
     ) {
         super(itemView);
         this.clickDetailSubject = clickDetailSubject;
         this.clickAddBeerSubject = clickAddBeerSubject;
         this.clickHistorySubject = clickHistorySubject;
-        this.clickItemViewSubject = clickItemViewSubject;
+        this.clickToggleSelectionSubject = clickToggleSelectionSubject;
         this.longClickItemViewSubject = longClickItemViewSubject;
 
 
@@ -126,11 +129,8 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
 
 
     public synchronized void bind(CollectionItem item, boolean isSelected, boolean isSelectable) {
-        itemView.setSelected(isSelected);
-        Log.d(TAG, "bind: " + isSelectable);
-
-//        viewOverlay.setVisibility(isSelectable? View.VISIBLE: View.INVISIBLE);
-
+        btnToggleSelection.setSelected(isSelected);
+        btnToggleSelection.setVisibility(isSelectable? View.VISIBLE: View.INVISIBLE);
         Beer beer = item.getBeer();
         String id = beer.getId();
         btnDrink.setTag(id);
@@ -144,11 +144,19 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
         setupLastDrinkDateView(item);
     }
 
+    @OnLongClick(R.id.image_beer_label)
+    public boolean onImageBeerLabelLongClick(View view) {
+        longClickItemViewSubject.onNext(itemView);
+        return true;
+    }
+
 
     private void setupEvents() {
 
-        //RxView.clicks(viewOverlay).map(a -> itemView).subscribe(clickItemViewSubject);
-        RxView.clicks(imageBeerLabel).map(a -> imageBeerLabel).subscribe(clickDetailSubject);
+        //RxView.clicks(viewOverlay).map(a -> itemView).subscribe(clickToggleSelectionSubject);
+
+        //RxView.clicks(imageBeerLabel).map(a -> imageBeerLabel).subscribe(clickDetailSubject);
+        RxView.clicks(btnToggleSelection).map(a -> itemView).subscribe(clickToggleSelectionSubject);
         RxView.clicks(btnDrink).map(a -> btnDrink).subscribe(clickAddBeerSubject);
         RxView.clicks(textBeerName).map(a -> textBeerName).subscribe(clickHistorySubject);
         RxView.clicks(textLastDrinkDate).map(a -> textLastDrinkDate).subscribe(clickHistorySubject);

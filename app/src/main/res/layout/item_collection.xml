@@ -82,7 +82,7 @@
         tools:src="@drawable/googleg_standard_color_18"/>
 
     <ImageButton
-        android:id="@+id/check_selected"
+        android:id="@+id/btn_toggle_selection"
         android:checked="true"
         android:layout_width="48dp"
         android:layout_height="48dp"

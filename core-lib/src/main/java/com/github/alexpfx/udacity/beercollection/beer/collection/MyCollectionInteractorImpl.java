@@ -32,5 +32,10 @@ public class MyCollectionInteractorImpl implements MyCollectionInteractor {
         return dataSource.clearCollectionData();
     }
 
+    @Override
+    public Single deleteBeer(String id) {
+        return dataSource.deleteBeerFromCollection(id);
+    }
+
 
 }

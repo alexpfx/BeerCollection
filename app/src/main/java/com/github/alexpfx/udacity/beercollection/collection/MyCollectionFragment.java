@@ -70,12 +70,6 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     @Inject
     DrinkBeerPresenter drinkBeerPresenter;
 
-    PublishSubject<View> rcvItemClick = PublishSubject.create();
-    PublishSubject<View> rcvItemLongClick = PublishSubject.create();
-
-
-    ImageButton btnDelete;
-    ImageButton btnEdit;
 
     private Unbinder unbinder;
     private DrinkBeerFragmentDialog.PositiveClickListener positiveClickListener;
@@ -182,8 +176,6 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
 
     private void setupRecycler() {
         rcvCollection.setAdapter(adapter);
-        rcvCollection.addOnItemTouchListener(
-                new RecyclerViewTouchListener(getActivity(), rcvItemClick, rcvItemLongClick, rcvCollection));
     }
 
     @Override
@@ -213,20 +205,10 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         compositeDisposable.add(disposable);
 
 
-       // disposable = adapter.getItemViewClickObservable().subscribe(this::toggleSelection);
-       // compositeDisposable.add(disposable);
-
-        //disposable = adapter.getLongClickViewObservable().subscribe(v -> toggleSelectionMode(v));
-        //compositeDisposable.add(disposable);
-
-        disposable = rcvItemLongClick.hide().subscribe(v -> {
-            toggleSelectionMode(v);
-        });
+        disposable = adapter.getItemViewClickObservable().subscribe(this::toggleSelection);
         compositeDisposable.add(disposable);
 
-        disposable = rcvItemClick.hide().subscribe(v -> {
-            toggleSelection(v);
-        });
+        disposable = adapter.getLongClickViewObservable().subscribe(v -> toggleSelectionMode(v));
         compositeDisposable.add(disposable);
     }
 
