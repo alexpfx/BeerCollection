@@ -26,7 +26,15 @@
     <string name="tooltip_beer_name">Name of the beer</string>
     <string name="tooltip_last_beer">Date of last beer of this label consumed</string>
     <string name="tooltip_quantity">Total number of beers of this label consumed </string>
-    <string name="message_you_drink_more_beers">You have drank %d more beers!</string>
+
+    <plurals name="message_you_drink_more_beers">
+        <item quantity="one">You have drank %d more beer!</item>
+        <item quantity="other">You have drank %d more beers!</item>
+    </plurals>
+
+
+
+
     <string name="message_beer_was_deleted">Beer(s) was deleted!</string>
 
     <!-- TODO: Remove or change this placeholder text -->

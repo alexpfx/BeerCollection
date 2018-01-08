@@ -1,10 +1,10 @@
 package com.github.alexpfx.udacity.beercollection;
 
 import android.app.Application;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 
 import com.github.alexpfx.udacity.beercollection.beer.detail.DetailView;
-import com.github.alexpfx.udacity.beercollection.collection.MyCollectionFragment;
 import com.github.alexpfx.udacity.beercollection.collection.MyCollectionSubComponent;
 import com.github.alexpfx.udacity.beercollection.databaselib.dagger.AndroidModule;
 import com.github.alexpfx.udacity.beercollection.databaselib.dagger.ApplicationComponent;
@@ -41,6 +41,7 @@ public class BeerApp extends Application {
             Timber.plant(new Timber.DebugTree());
         }
 
+        startCacheCleanerService();
 
         super.onCreate();
         if (LeakCanary.isInAnalyzerProcess(this)) {
@@ -53,6 +54,12 @@ public class BeerApp extends Application {
 
 
         applicationComponent = createComponent();
+    }
+
+    private void startCacheCleanerService() {
+        Intent intent = new Intent(this, CacheCleanerIntentService.class);
+        intent.setAction(CacheCleanerIntentService.ACTION_CLEAN_OLD_CACHE_DATA);
+        startService(intent);
     }
 
     private ApplicationComponent createComponent() {

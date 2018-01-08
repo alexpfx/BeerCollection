@@ -1,24 +1,24 @@
 package com.github.alexpfx.udacity.beercollection;
 
-import android.app.IntentService;
 import android.content.Intent;
+import android.util.Log;
+
+import com.github.alexpfx.udacity.beercollection.beer.CacheCleanerPresenter;
+import com.github.alexpfx.udacity.beercollection.beer.CacheCleanerView;
+
+import java.util.concurrent.TimeUnit;
+
+import javax.inject.Inject;
 
 
-/**
- * An {@link IntentService} subclass for handling asynchronous task requests in
- * a service on a separate handler thread.
- * <p>
- * TODO: Customize class - update intent actions and extra parameters.
- */
-public class CacheCleanerIntentService extends IntentService {
-    // TODO: Rename actions, choose action names that describe tasks that this
-    // IntentService can perform, e.g. ACTION_FETCH_NEW_ITEMS
-    public static final String ACTION_FOO = "com.github.alexpfx.udacity.beercollection.action.FOO";
-    public static final String ACTION_BAZ = "com.github.alexpfx.udacity.beercollection.action.BAZ";
+public class CacheCleanerIntentService extends BaseIntentService implements CacheCleanerView{
+    public static final String ACTION_CLEAN_OLD_CACHE_DATA = "clean-old-cache-data";
 
-    // TODO: Rename parameters
-    public static final String EXTRA_PARAM1 = "com.github.alexpfx.udacity.beercollection.extra.PARAM1";
-    public static final String EXTRA_PARAM2 = "com.github.alexpfx.udacity.beercollection.extra.PARAM2";
+    private static final String TAG = "CacheCleanerIntentServi";
+
+    @Inject
+    CacheCleanerPresenter presenter;
+
 
     public CacheCleanerIntentService() {
         super("CacheCleanerIntentService");
@@ -26,35 +26,33 @@ public class CacheCleanerIntentService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if (intent != null) {
-            final String action = intent.getAction();
-            if (ACTION_FOO.equals(action)) {
-                final String param1 = intent.getStringExtra(EXTRA_PARAM1);
-                final String param2 = intent.getStringExtra(EXTRA_PARAM2);
-                handleActionFoo(param1, param2);
-            } else if (ACTION_BAZ.equals(action)) {
-                final String param1 = intent.getStringExtra(EXTRA_PARAM1);
-                final String param2 = intent.getStringExtra(EXTRA_PARAM2);
-                handleActionBaz(param1, param2);
-            }
+        String action = intent.getAction();
+        if (action.equals(ACTION_CLEAN_OLD_CACHE_DATA)){
+            cleanUpCache ();
         }
+
     }
 
-    /**
-     * Handle action Foo in the provided background thread with the provided
-     * parameters.
-     */
-    private void handleActionFoo(String param1, String param2) {
-        // TODO: Handle action Foo
-        throw new UnsupportedOperationException("Not yet implemented");
+    private void cleanUpCache() {
+        presenter.clearCache(TimeUnit.DAYS.toMillis(1));
     }
 
-    /**
-     * Handle action Baz in the provided background thread with the provided
-     * parameters.
-     */
-    private void handleActionBaz(String param1, String param2) {
-        // TODO: Handle action Baz
-        throw new UnsupportedOperationException("Not yet implemented");
+
+    @Override
+    public void showCacheCleanerStarted() {
+        Log.d(TAG, "showCacheCleanerStarted: ");
+    }
+
+    @Override
+    public void showCacheWasCleanedUp() {
+        Log.d(TAG, "showCacheWasCleanedUp: ");
+    }
+
+
+    @Override
+    public void injectDependencies(BeerApp app) {
+
+
     }
 }
+

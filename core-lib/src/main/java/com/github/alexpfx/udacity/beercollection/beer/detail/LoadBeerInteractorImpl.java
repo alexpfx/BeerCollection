@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import javax.inject.Inject;
 
 import io.reactivex.Flowable;
+import io.reactivex.Single;
 import io.reactivex.functions.Consumer;
 
 /**
@@ -39,6 +40,7 @@ public class LoadBeerInteractorImpl implements LoadBeerInteractor {
     }
 
 
+
     //https://medium.com/@iammert/offline-app-with-rxjava-2-and-room-ccd0b5c18101
     @Override
     public Flowable<Beer> load(String beerId) {
@@ -54,6 +56,13 @@ public class LoadBeerInteractorImpl implements LoadBeerInteractor {
 
         return localFlowable;
     }
+
+    @Override
+    public Single<Integer> clearCache(long elapsedTime) {
+        return local.clearCache(elapsedTime);
+    }
+
+
 
 
 }

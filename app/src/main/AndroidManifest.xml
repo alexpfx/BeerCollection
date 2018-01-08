@@ -45,9 +45,13 @@
         </activity>
         <activity
             android:name=".PreferenceActivity"
-            android:parentActivityName=".collection.MyCollectionActivity"
-            >
+            android:parentActivityName=".collection.MyCollectionActivity">
         </activity>
+
+        <service
+            android:name=".CacheCleanerIntentService"
+            android:exported="false">
+        </service>
     </application>
 
 </manifest>

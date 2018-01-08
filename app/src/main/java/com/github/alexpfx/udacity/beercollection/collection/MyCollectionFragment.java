@@ -363,7 +363,8 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     public void showDrinkAdded(String id, int quantity) {
         adapter.addTempItem(new CollectionItemVO(id, new Date().getTime(), quantity));
         if (quantity > 0) {
-            Snackbar.make(swipeRefreshCollection, getString(R.string.message_you_drink_more_beers, quantity), Snackbar
+            Snackbar.make(swipeRefreshCollection, getResources().getQuantityString(R.plurals
+                    .message_you_drink_more_beers, quantity, quantity), Snackbar
                     .LENGTH_SHORT).show();
         }
     }
@@ -387,6 +388,7 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
 
     public interface Listener {
         void navigateToDetail(String beerId);
+
         void navigateToHistory(String beerId);
     }
 
