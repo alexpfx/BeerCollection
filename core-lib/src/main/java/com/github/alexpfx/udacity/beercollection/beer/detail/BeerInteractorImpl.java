@@ -20,7 +20,7 @@ import io.reactivex.functions.Consumer;
  */
 
 @PerActivity
-public class LoadBeerInteractorImpl implements LoadBeerInteractor {
+public class BeerInteractorImpl implements BeerInteractor {
     private Logger logger = Logger.getLogger(this.getClass().getName());
 
     private BeerLocalDataSource local;
@@ -33,7 +33,7 @@ public class LoadBeerInteractorImpl implements LoadBeerInteractor {
     };
 
     @Inject
-    public LoadBeerInteractorImpl(BeerLocalDataSource local, BeerRemoteDataSource remote, SchedulerProvider schedulerProvider) {
+    public BeerInteractorImpl(BeerLocalDataSource local, BeerRemoteDataSource remote, SchedulerProvider schedulerProvider) {
         this.local = local;
         this.schedulerProvider = schedulerProvider;
         this.remote = remote;

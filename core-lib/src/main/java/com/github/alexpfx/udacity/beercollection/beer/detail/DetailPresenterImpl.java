@@ -14,14 +14,14 @@ import io.reactivex.disposables.Disposable;
 @PerActivity
 public class DetailPresenterImpl implements DetailPresenter {
 
-    private final LoadBeerInteractor interactor;
+    private final BeerInteractor interactor;
     private final SchedulerProvider schedulerProvider;
     private DetailView view;
     private Disposable subscription;
 
 
     @Inject
-    public DetailPresenterImpl(LoadBeerInteractor interactor, SchedulerProvider schedulerProvider) {
+    public DetailPresenterImpl(BeerInteractor interactor, SchedulerProvider schedulerProvider) {
         this.interactor = interactor;
         this.schedulerProvider = schedulerProvider;
     }

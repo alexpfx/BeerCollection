@@ -10,7 +10,7 @@ import io.reactivex.Single;
  * Created by alexandre on 04/11/17.
  */
 
-public interface LoadBeerInteractor extends BaseInteractor {
+public interface BeerInteractor extends BaseInteractor {
     Flowable<Beer> load(String beerId);
     Single<Integer> clearCache (long elapsedTime);
 }

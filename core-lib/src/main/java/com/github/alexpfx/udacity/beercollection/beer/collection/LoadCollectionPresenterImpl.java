@@ -2,7 +2,7 @@ package com.github.alexpfx.udacity.beercollection.beer.collection;
 
 import com.github.alexpfx.udacity.beercollection.Constants;
 import com.github.alexpfx.udacity.beercollection.Logger;
-import com.github.alexpfx.udacity.beercollection.beer.detail.LoadBeerInteractor;
+import com.github.alexpfx.udacity.beercollection.beer.detail.BeerInteractor;
 import com.github.alexpfx.udacity.beercollection.databaselib.dagger.PerActivity;
 import com.github.alexpfx.udacity.beercollection.databaselib.util.SchedulerProvider;
 import com.github.alexpfx.udacity.beercollection.domain.model.collection.CollectionItem;
@@ -26,19 +26,19 @@ public class LoadCollectionPresenterImpl implements LoadCollectionPresenter {
     private final SchedulerProvider provider;
     private final Logger logger;
     private MyCollectionView view;
-    private LoadBeerInteractor loadBeerInteractor;
+    private BeerInteractor beerInteractor;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
 
     @Inject
     public LoadCollectionPresenterImpl(MyCollectionInteractor collectionInteractor,
                                        SchedulerProvider
-                                               provider, LoadBeerInteractor loadBeerInteractor, Logger logger) {
+                                               provider, BeerInteractor beerInteractor, Logger logger) {
 
 
         this.collectionInteractor = collectionInteractor;
         this.provider = provider;
-        this.loadBeerInteractor = loadBeerInteractor;
+        this.beerInteractor = beerInteractor;
         this.logger = logger;
     }
 
@@ -53,7 +53,7 @@ public class LoadCollectionPresenterImpl implements LoadCollectionPresenter {
                         (Flowable::fromIterable)
                 .flatMap(civo ->
                         Flowable
-                                .zip(Flowable.just(civo), loadBeerInteractor.load(civo
+                                .zip(Flowable.just(civo), beerInteractor.load(civo
                                         .getBeerId()), (civo1, beer) -> new CollectionItem(beer,
                                         new ArrayList<>(Arrays.asList(civo1)))))
                 .groupBy(collectionItem -> collectionItem.getBeer().getId())
