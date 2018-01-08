@@ -9,7 +9,7 @@ import dagger.Subcomponent;
  */
 
 @PerActivity
-@Subcomponent(modules = DetailModule.class)
+@Subcomponent(modules = {DetailModule.class,  BeerModule.class})
 public interface DetailSubComponent {
 
 //    void inject (DetailActivity activity);

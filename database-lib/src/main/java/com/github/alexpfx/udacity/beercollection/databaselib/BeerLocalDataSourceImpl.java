@@ -24,9 +24,11 @@ import io.reactivex.Single;
 /**
  * Created by alexandre on 08/01/18.
  */
+
 public class BeerLocalDataSourceImpl implements BeerLocalDataSource {
     private final FirebaseDatabase database;
     private final FirebaseAuth firebaseAuth;
+
 
     public BeerLocalDataSourceImpl(FirebaseDatabase database, FirebaseAuth firebaseAuth) {
         this.database = database;

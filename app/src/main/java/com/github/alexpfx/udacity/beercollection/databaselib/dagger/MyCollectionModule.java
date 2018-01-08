@@ -8,8 +8,6 @@ import com.github.alexpfx.udacity.beercollection.beer.collection.LoadCollectionP
 import com.github.alexpfx.udacity.beercollection.beer.collection.LoadCollectionPresenterImpl;
 import com.github.alexpfx.udacity.beercollection.beer.collection.MyCollectionInteractor;
 import com.github.alexpfx.udacity.beercollection.beer.collection.MyCollectionInteractorImpl;
-import com.github.alexpfx.udacity.beercollection.beer.detail.BeerInteractor;
-import com.github.alexpfx.udacity.beercollection.beer.detail.BeerInteractorImpl;
 
 import dagger.Module;
 import dagger.Provides;
@@ -39,12 +37,6 @@ public class MyCollectionModule {
         return defaultMyCollectionPresenter;
     }
 
-
-    @PerActivity
-    @Provides
-    BeerInteractor detailInteractor(BeerInteractorImpl defaultDetailInteractor) {
-        return defaultDetailInteractor;
-    }
 
     @PerActivity
     @Provides

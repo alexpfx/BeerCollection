@@ -12,7 +12,7 @@ import dagger.Provides;
  * Created by alexandre on 06/12/17.
  */
 
-@Module()
+@Module
 public class DrinkBeerModule {
 
     @Provides
@@ -21,6 +21,7 @@ public class DrinkBeerModule {
         return drinkBeerPresenter;
     }
 
+    //TODO: mover para collection.
     @Provides
     @PerActivity
     DrinkBeerInteractor drinkBeerInteractor (DrinkBeerInteractorImpl drinkBeerInteractor){

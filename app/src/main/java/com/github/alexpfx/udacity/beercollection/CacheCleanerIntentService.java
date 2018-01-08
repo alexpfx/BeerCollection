@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 
-public class CacheCleanerIntentService extends BaseIntentService implements CacheCleanerView{
+public class CacheCleanerIntentService extends BaseIntentService implements CacheCleanerView {
     public static final String ACTION_CLEAN_OLD_CACHE_DATA = "clean-old-cache-data";
 
     private static final String TAG = "CacheCleanerIntentServi";
@@ -27,8 +27,8 @@ public class CacheCleanerIntentService extends BaseIntentService implements Cach
     @Override
     protected void onHandleIntent(Intent intent) {
         String action = intent.getAction();
-        if (action.equals(ACTION_CLEAN_OLD_CACHE_DATA)){
-            cleanUpCache ();
+        if (action.equals(ACTION_CLEAN_OLD_CACHE_DATA)) {
+            cleanUpCache();
         }
 
     }
@@ -51,9 +51,15 @@ public class CacheCleanerIntentService extends BaseIntentService implements Cach
 
     @Override
     public void injectDependencies(BeerApp app) {
+        app.getCacheCleanerSubComponent().inject(this);
+        presenter.bind(this);
+    }
 
+    @Override
+    public void onDestroy() {
 
-
+        Log.d(TAG, "onDestroy: cache");
+        super.onDestroy();
     }
 }
 

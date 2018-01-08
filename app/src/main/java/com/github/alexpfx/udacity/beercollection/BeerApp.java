@@ -2,12 +2,12 @@ package com.github.alexpfx.udacity.beercollection;
 
 import android.app.Application;
 import android.content.Intent;
-import android.support.v4.app.Fragment;
 
-import com.github.alexpfx.udacity.beercollection.beer.detail.DetailView;
 import com.github.alexpfx.udacity.beercollection.collection.MyCollectionSubComponent;
 import com.github.alexpfx.udacity.beercollection.databaselib.dagger.AndroidModule;
 import com.github.alexpfx.udacity.beercollection.databaselib.dagger.ApplicationComponent;
+import com.github.alexpfx.udacity.beercollection.databaselib.dagger.CacheCleanerModule;
+import com.github.alexpfx.udacity.beercollection.databaselib.dagger.CacheCleanerSubComponent;
 import com.github.alexpfx.udacity.beercollection.databaselib.dagger.DaggerApplicationComponent;
 import com.github.alexpfx.udacity.beercollection.databaselib.dagger.DetailModule;
 import com.github.alexpfx.udacity.beercollection.databaselib.dagger.DetailSubComponent;
@@ -73,14 +73,15 @@ public class BeerApp extends Application {
     }
 
     public SearchSubComponent getSearchSubComponent() {
+        //TODO: analisar
         if (searchSubComponent == null) {
             searchSubComponent = applicationComponent.plus(new SearchModule());
         }
         return searchSubComponent;
     }
 
-    public DetailSubComponent getDetailSubComponent(Fragment fragment) {
-        detailSubComponent = applicationComponent.plus(new DetailModule((DetailView) fragment));
+    public DetailSubComponent getDetailSubComponent() {
+        detailSubComponent = applicationComponent.plus(new DetailModule());
         return detailSubComponent;
     }
 
@@ -89,6 +90,10 @@ public class BeerApp extends Application {
         return applicationComponent.plus(new MyCollectionModule());
     }
 
+
+    public CacheCleanerSubComponent getCacheCleanerSubComponent() {
+        return applicationComponent.plus(new CacheCleanerModule());
+    }
 
 
 }

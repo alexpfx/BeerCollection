@@ -41,8 +41,10 @@ public class SearchFragment extends BaseFragment implements com.github.alexpfx.u
 
     @BindView(R.id.rcv_search_result)
     RecyclerView rcvSearchResult;
+
     @Inject
     SearchPresenter searchPresenter;
+
     @Inject
     SearchAdapter adapter;
 

@@ -1,8 +1,6 @@
 package com.github.alexpfx.udacity.beercollection.databaselib.dagger;
 
 import com.github.alexpfx.udacity.beercollection.LoginActivity;
-import com.github.alexpfx.udacity.beercollection.PreferenceActivity;
-import com.github.alexpfx.udacity.beercollection.PreferenceFragment;
 import com.github.alexpfx.udacity.beercollection.collection.MyCollectionSubComponent;
 
 import javax.inject.Singleton;
@@ -15,14 +13,16 @@ import dagger.Component;
         AndroidModule.class,
         ServiceModule.class,
         DatabaseModule.class
-
 })
 public interface ApplicationComponent {
-    SearchSubComponent plus (SearchModule searchModule);
-    DetailSubComponent plus (DetailModule detailModule);
-    MyCollectionSubComponent plus (MyCollectionModule myCollectionModule);
+    SearchSubComponent plus(SearchModule searchModule);
 
+    DetailSubComponent plus(DetailModule detailModule);
 
-    void inject (LoginActivity activity);
+    MyCollectionSubComponent plus(MyCollectionModule myCollectionModule);
+
+    CacheCleanerSubComponent plus(CacheCleanerModule cacheCleanerModule);
+
+    void inject(LoginActivity activity);
 
 }

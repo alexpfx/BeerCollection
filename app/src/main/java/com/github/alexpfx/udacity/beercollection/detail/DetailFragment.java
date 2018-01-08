@@ -77,7 +77,7 @@ public class DetailFragment extends BaseFragment implements DetailView {
 
     @Override
     protected void injectDependencies(BeerApp app) {
-        app.getDetailSubComponent(this).inject(this);
+        app.getDetailSubComponent().inject(this);
         detailPresenter.bind(this);
     }
 
