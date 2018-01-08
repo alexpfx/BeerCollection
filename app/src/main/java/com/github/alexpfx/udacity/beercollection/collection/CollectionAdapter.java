@@ -2,7 +2,6 @@ package com.github.alexpfx.udacity.beercollection.collection;
 
 import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,13 +57,33 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionViewHolder
     public void onBindViewHolder(CollectionViewHolder holder, int position) {
         CollectionItem item = filteredItems.get(position);
         holder.bind(item, selectables.isItemChecked(position), isSelectable());
+    }
 
+    public void deleteItemById (String beerId){
+        CollectionItem willBeDeleted = findItem(beerId);
+        if (willBeDeleted != null){
+            items.remove(willBeDeleted);
+        }
+        notifyDataSetChanged();
+    }
+
+
+    private CollectionItem findItem(String beerId) {
+        CollectionItem willBeDeleted;
+        for (CollectionItem item : items) {
+            if (beerId.equals(item.getBeer().getId())){
+                return item;
+            }
+        }
+        return null;
     }
 
     @Override
     public int getItemCount() {
         return filteredItems == null ? 0 : filteredItems.size();
     }
+
+
 
 
     public void setItems(List<CollectionItem> items) {
@@ -171,13 +190,6 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionViewHolder
     public Observable<View> getDetailViewClickObservable() {
         return detailClickSubject
                 /*Discard view events if adapter state is in selection mode*/
-//                .filter(isNotSeletionMode)
-                .map(v -> {
-                    if (selectable) {
-                        clickItemViewSubject.onNext((View) v.getParent());
-                    }
-                    return v;
-                })
                 .filter(isNotSeletionMode)
                 .hide();
     }

@@ -18,7 +18,7 @@ public interface DrinkBeerPresenter extends BasePresenter<DrinkBeerView>{
 
 
         @Override
-        public void showError(Object error) {
+        public void showErrorOnDrinkBeer(Object error) {
 
         }
     };

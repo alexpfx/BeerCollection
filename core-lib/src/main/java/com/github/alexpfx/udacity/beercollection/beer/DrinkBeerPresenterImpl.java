@@ -41,7 +41,7 @@ public class DrinkBeerPresenterImpl implements DrinkBeerPresenter {
                 .subscribe(quantity -> {
                     view.showDrinkAdded(item.getBeerId(), (Integer) quantity);
                 }, error -> {
-                    view.showError(error);
+                    view.showErrorOnDrinkBeer(error);
                 });
         compositeDisposable.add(disposable);
 

@@ -7,8 +7,8 @@ import com.github.alexpfx.udacity.beercollection.base.BaseView;
  */
 
 public interface DeleteBeerView extends BaseView {
-    void beerDeleted();
+    void showBeerDeleted(String beerId);
 
-    void couldNotDeleteBeer();
+    void showCouldNotDeleteBeer();
 
 }

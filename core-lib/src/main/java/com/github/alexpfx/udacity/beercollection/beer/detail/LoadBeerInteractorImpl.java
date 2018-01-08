@@ -1,12 +1,11 @@
 package com.github.alexpfx.udacity.beercollection.beer.detail;
 
 import com.github.alexpfx.udacity.beercollection.beer.BeerLocalDataSource;
-import com.github.alexpfx.udacity.beercollection.databaselib.search.BeerRemoteDataSource;
 import com.github.alexpfx.udacity.beercollection.databaselib.dagger.PerActivity;
-import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
+import com.github.alexpfx.udacity.beercollection.databaselib.search.BeerRemoteDataSource;
 import com.github.alexpfx.udacity.beercollection.databaselib.util.SchedulerProvider;
+import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
 
-import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,13 +24,9 @@ public class LoadBeerInteractorImpl implements LoadBeerInteractor {
 
     private BeerLocalDataSource local;
     private SchedulerProvider schedulerProvider;
-
     private BeerRemoteDataSource remote;
 
-    private Consumer<? super Beer> onSuccess = (Consumer<Beer>) data -> {
-        Thread.sleep(1000);
-        local.insert(Collections.singletonList(data));
-    };
+
     private Consumer<? super Throwable> onError = (Consumer<Throwable>) throwable -> {
         logger.log(Level.WARNING, "error loading from remote repository");
     };

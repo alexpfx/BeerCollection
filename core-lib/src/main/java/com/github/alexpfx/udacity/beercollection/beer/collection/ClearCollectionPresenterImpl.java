@@ -31,7 +31,7 @@ public class ClearCollectionPresenterImpl implements ClearCollectionPresenter {
     public void clearCollection() {
         interactor
                 .clearCollectionData()
-                .subscribeOn(provider.io())
+                .subscribeOn(provider.computation())
                 .observeOn(provider.mainThread())
                 .subscribe(onSuccess -> view.showClearDataSuccessful(), onError -> view.showClearDataError());
     }

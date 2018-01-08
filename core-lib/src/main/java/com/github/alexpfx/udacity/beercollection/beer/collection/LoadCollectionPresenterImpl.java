@@ -19,9 +19,6 @@ import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
-/**
- * Created by alexandre on 09/11/17.
- */
 @PerActivity
 public class LoadCollectionPresenterImpl implements LoadCollectionPresenter {
 
@@ -29,7 +26,6 @@ public class LoadCollectionPresenterImpl implements LoadCollectionPresenter {
     private final SchedulerProvider provider;
     private final Logger logger;
     private MyCollectionView view;
-    private Disposable subscription;
     private LoadBeerInteractor loadBeerInteractor;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 

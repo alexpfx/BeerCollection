@@ -133,7 +133,7 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
         btnToggleSelection.setVisibility(isSelectable? View.VISIBLE: View.INVISIBLE);
         Beer beer = item.getBeer();
         String id = beer.getId();
-        btnDrink.setTag(id);
+        itemView.setTag(id);
 
         setupLabelView(beer);
 
@@ -155,11 +155,11 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
 
         //RxView.clicks(viewOverlay).map(a -> itemView).subscribe(clickToggleSelectionSubject);
 
-        //RxView.clicks(imageBeerLabel).map(a -> imageBeerLabel).subscribe(clickDetailSubject);
+        RxView.clicks(imageBeerLabel).map(a -> itemView).subscribe(clickDetailSubject);
         RxView.clicks(btnToggleSelection).map(a -> itemView).subscribe(clickToggleSelectionSubject);
-        RxView.clicks(btnDrink).map(a -> btnDrink).subscribe(clickAddBeerSubject);
-        RxView.clicks(textBeerName).map(a -> textBeerName).subscribe(clickHistorySubject);
-        RxView.clicks(textLastDrinkDate).map(a -> textLastDrinkDate).subscribe(clickHistorySubject);
+        RxView.clicks(btnDrink).map(a -> itemView).subscribe(clickAddBeerSubject);
+        RxView.clicks(textBeerName).map(a -> itemView).subscribe(clickHistorySubject);
+        RxView.clicks(textLastDrinkDate).map(a -> itemView).subscribe(clickHistorySubject);
     }
 
 
@@ -177,7 +177,6 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
 
     private void setupBeerNameView(Beer beer) {
         textBeerName.setText(beer.getName());
-        textBeerName.setTag(beer.getId());
         setTooltipText(textBeerName, R.string.tooltip_beer_name);
 
     }
@@ -187,7 +186,6 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
         DateFormat dateInstance = DateFormat.getDateInstance(DateFormat.SHORT);
         CharSequence dateFormated = dateInstance.format(collectionItem.getLastDate());
         textLastDrinkDate.setText(dateFormated);
-        textLastDrinkDate.setTag(collectionItem.getBeer().getId());
 
         setTooltipText(textLastDrinkDate, R.string.tooltip_last_beer);
 

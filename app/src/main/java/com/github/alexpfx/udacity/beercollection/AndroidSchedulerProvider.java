@@ -22,11 +22,6 @@ public class AndroidSchedulerProvider implements SchedulerProvider {
     }
 
     @Override
-    public Scheduler io() {
-        return Schedulers.io();
-    }
-
-    @Override
     public Scheduler mainThread() {
         return AndroidSchedulers.mainThread();
     }

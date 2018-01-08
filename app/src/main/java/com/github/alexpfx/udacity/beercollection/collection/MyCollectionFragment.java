@@ -8,14 +8,12 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -25,6 +23,8 @@ import com.github.alexpfx.udacity.beercollection.DrinkBeerFragmentDialog;
 import com.github.alexpfx.udacity.beercollection.R;
 import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerPresenter;
 import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerView;
+import com.github.alexpfx.udacity.beercollection.beer.collection.DeleteBeerPresenter;
+import com.github.alexpfx.udacity.beercollection.beer.collection.DeleteBeerView;
 import com.github.alexpfx.udacity.beercollection.beer.collection.LoadCollectionPresenter;
 import com.github.alexpfx.udacity.beercollection.beer.collection.MyCollectionView;
 import com.github.alexpfx.udacity.beercollection.domain.model.DrinkBeerUpdateItem;
@@ -41,11 +41,9 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.subjects.PublishSubject;
-import timber.log.Timber;
 
 public class MyCollectionFragment extends BaseFragment implements MyCollectionView, SwipeRefreshLayout
-        .OnRefreshListener, DrinkBeerView {
+        .OnRefreshListener, DrinkBeerView, DeleteBeerView {
 
     private static final String TAG = "MyCollectionFragment";
     @BindView(R.id.rcv_collection)
@@ -70,6 +68,9 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     @Inject
     DrinkBeerPresenter drinkBeerPresenter;
 
+    @Inject
+    DeleteBeerPresenter deleteBeerPresenter;
+
 
     private Unbinder unbinder;
     private DrinkBeerFragmentDialog.PositiveClickListener positiveClickListener;
@@ -78,19 +79,24 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         @Override
         public boolean onMenuItemClick(MenuItem menuItem) {
             List<String> selectedItemIds = adapter.getSelectedItemIds();
-            for (String selectedItemId : selectedItemIds) {
-                Timber.d("%s will be deleted", selectedItemId);
-
-            }
+            deleteItems(selectedItemIds);
 
             return true;
         }
     };
 
-
     public MyCollectionFragment() {
     }
 
+    private void deleteItems(List<String> selectedItemIds) {
+        for (String selectedItemId : selectedItemIds) {
+            delete(selectedItemId);
+        }
+    }
+
+    private void delete(String beerId) {
+        deleteBeerPresenter.deleteBeer(beerId);
+    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -109,8 +115,10 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     @Override
     public void onDetach() {
         super.onDetach();
+        setSelectionMode(false);
         this.listener = null;
         this.positiveClickListener = null;
+
 
     }
 
@@ -125,6 +133,7 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_my_collection, menu);
+        setupSearchView(menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -137,13 +146,8 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
-        switch (itemId) {
-            case R.id.action_delete:
-                break;
-        }
-
         getActivity().invalidateOptionsMenu();
+
         return true;
     }
 
@@ -190,7 +194,7 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         compositeDisposable = new CompositeDisposable();
         Disposable disposable;
 
-        disposable = adapter.getDetailViewClickObservable().subscribe(v -> navigateToDetail(v));
+        disposable = adapter.getDetailViewClickObservable().subscribe(this::navigateToDetail);
         compositeDisposable.add(disposable);
 
         disposable = adapter.getHistoryClickObservable().subscribe(
@@ -201,7 +205,8 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         );
         compositeDisposable.add(disposable);
 
-        disposable = adapter.getAddBeerClickObservable().subscribe(v -> showDrinkDialog(getBeerIdFromTag(v)));
+        disposable = adapter.getAddBeerClickObservable().subscribe(v -> showDrinkDialog(getBeerIdFromTag(v))
+        );
         compositeDisposable.add(disposable);
 
 
@@ -219,10 +224,15 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     }
 
     private void toggleSelectionMode(View view) {
-        adapter.clearSelectedItems();
-        adapter.setSelectable(!isSelectMode());
+        setSelectionMode(!isSelectMode());
         toggleSelection(view);
         adapter.notifyDataSetChanged();
+
+    }
+
+    private void setSelectionMode(boolean selectionMode) {
+        adapter.clearSelectedItems();
+        adapter.setSelectable(selectionMode);
     }
 
 
@@ -274,6 +284,7 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     protected void injectDependencies(BeerApp app) {
         app.getMyCollectionSubComponent().inject(this);
         drinkBeerPresenter.bind(this);
+        deleteBeerPresenter.bind(this);
         presenter.bind(this);
     }
 
@@ -359,16 +370,24 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
 
 
     @Override
-    public void showError(Object error) {
+    public void showErrorOnDrinkBeer(Object error) {
+
+    }
+
+    @Override
+    public void showBeerDeleted(String beerId) {
+        adapter.clearSelectedItems();
+        adapter.deleteItemById(beerId);
+    }
+
+    @Override
+    public void showCouldNotDeleteBeer() {
 
     }
 
     public interface Listener {
         void navigateToDetail(String beerId);
-
         void navigateToHistory(String beerId);
-
-//        void onAdd(String id);
     }
 
 

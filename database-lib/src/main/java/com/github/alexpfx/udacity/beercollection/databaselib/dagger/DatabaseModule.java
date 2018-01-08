@@ -1,28 +1,19 @@
 package com.github.alexpfx.udacity.beercollection.databaselib.dagger;
 
-import android.support.annotation.NonNull;
-
 import com.github.alexpfx.udacity.beercollection.BeerCollectionDataSource;
 import com.github.alexpfx.udacity.beercollection.BeerCollectionDataSourceImpl;
 import com.github.alexpfx.udacity.beercollection.beer.BeerLocalDataSource;
-import com.github.alexpfx.udacity.beercollection.domain.model.DrinkBeerUpdateItem;
 import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
-import com.github.alexpfx.udacity.beercollection.domain.model.collection.CollectionItemVO;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Singleton;
 
@@ -30,7 +21,6 @@ import dagger.Module;
 import dagger.Provides;
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
-import io.reactivex.Single;
 
 /**
  * Created by alexandre on 17/10/17.
@@ -55,7 +45,6 @@ public class DatabaseModule {
     }
 
 
-
     @Provides
     @Singleton
     BeerCollectionDataSource beerCollectionDataSource(FirebaseDatabase database, FirebaseAuth firebaseAuth) {
@@ -74,10 +63,21 @@ public class DatabaseModule {
                 }
 
                 for (Beer beer : data) {
-                    if (beer == null) continue;
-                    database.getReference().child(firebaseAuth.getCurrentUser().getUid()).child("beers")
+                    if (beer == null) {
+                        continue;
+                    }
+                    DatabaseReference userReference = database.getReference().child(firebaseAuth.getCurrentUser()
+                            .getUid());
+
+                    userReference.child("beers")
                             .child(beer.getId())
                             .setValue(beer);
+
+                    /* adds a timestamp that denotes the last update, allowing cleaning the cache after information
+                    expires */
+                    userReference.child("beers-last-update").child(beer.getId())
+                            .setValue(Collections.singletonMap("timestamp", ServerValue.TIMESTAMP));
+
                 }
             }
 
