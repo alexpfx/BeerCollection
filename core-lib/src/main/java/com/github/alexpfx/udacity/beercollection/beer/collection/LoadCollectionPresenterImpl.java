@@ -46,7 +46,6 @@ public class LoadCollectionPresenterImpl implements LoadCollectionPresenter {
     @Override
     public void load() {
         view.showLoading();
-        logger.d("load");
 
         Disposable disposable = collectionInteractor.load().timeout(Constants.TIMEOUT, TimeUnit.SECONDS).toFlowable()
                 .flatMap
@@ -82,6 +81,7 @@ public class LoadCollectionPresenterImpl implements LoadCollectionPresenter {
 
 
     private void handleError(Throwable onError) {
+        onError.printStackTrace();
         view.hideLoading();
         view.showErrorLoadingCollection(onError.getMessage());
     }

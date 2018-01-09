@@ -63,7 +63,7 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     Listener listener;
 
     @Inject
-    LoadCollectionPresenter presenter;
+    LoadCollectionPresenter loadCollectionPresenter;
 
     @Inject
     DrinkBeerPresenter drinkBeerPresenter;
@@ -185,7 +185,7 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     @Override
     public void onResume() {
         super.onResume();
-        presenter.load();
+        loadCollectionPresenter.load();
     }
 
     //https://stackoverflow.com/questions/36497690/how-to-handle-item-clicks-for-a-recycler-view-using-rxjava
@@ -285,7 +285,7 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         app.getMyCollectionSubComponent().inject(this);
         drinkBeerPresenter.bind(this);
         deleteBeerPresenter.bind(this);
-        presenter.bind(this);
+        loadCollectionPresenter.bind(this);
     }
 
     @Override
@@ -333,7 +333,7 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
 
     @Override
     public void onRefresh() {
-        presenter.load();
+        loadCollectionPresenter.load();
     }
 
 

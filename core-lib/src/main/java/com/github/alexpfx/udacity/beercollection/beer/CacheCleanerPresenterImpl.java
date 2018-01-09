@@ -36,8 +36,6 @@ public class CacheCleanerPresenterImpl implements CacheCleanerPresenter {
     @Override
     public void clearCache(long elapsedTimeLimit) {
         view.showCacheCleanerStarted ();
-        interactor.clearCache(elapsedTimeLimit).subscribe(number -> {
-            view.showCacheWasCleanedUp ();
-        });
+        interactor.clearCache(elapsedTimeLimit).subscribe(aVoid -> view.showCacheWasCleanedUp ());
     }
 }

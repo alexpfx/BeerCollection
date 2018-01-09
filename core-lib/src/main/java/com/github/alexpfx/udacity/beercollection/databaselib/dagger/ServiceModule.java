@@ -14,6 +14,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import dagger.internal.Preconditions;
 import io.reactivex.Single;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -84,6 +85,7 @@ public class ServiceModule {
     @Singleton
     @Provides
     public BeerRemoteDataSource remoteBeerDataSource(BreweryDbConfig config, BreweryDBService service) {
+        Preconditions.checkNotNull(service, "service cannot be null");
         return new BeerRemoteDataSource() {
 
 

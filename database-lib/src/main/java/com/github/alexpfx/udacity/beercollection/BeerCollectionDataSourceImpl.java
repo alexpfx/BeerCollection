@@ -56,10 +56,9 @@ public class BeerCollectionDataSourceImpl implements BeerCollectionDataSource {
 
     @Override
     public Single<List<CollectionItemVO>> all() {
-        return Single.<List<CollectionItemVO>>create(emitter -> {
+        return Single.create(source -> {
             DatabaseReference ref = database.getReference().child(firebaseAuth.getCurrentUser().getUid()).child
                     (COLLECTION_CHILD);
-
             List<CollectionItemVO> items = new ArrayList<>();
 
 
@@ -75,13 +74,13 @@ public class BeerCollectionDataSourceImpl implements BeerCollectionDataSource {
                         CollectionItemVO valuex = child.getValue(CollectionItemVO.class);
                         items.add(valuex);
                     }
-                    emitter.onSuccess(items);
+                    source.onSuccess(items);
                     myCollection.removeEventListener(this);
                 }
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
-                    emitter.onError(new RuntimeException(databaseError.getMessage()));
+                    source.onError(new RuntimeException(databaseError.getMessage()));
                     myCollection.removeEventListener(this);
                 }
             };
@@ -98,9 +97,7 @@ public class BeerCollectionDataSourceImpl implements BeerCollectionDataSource {
             DatabaseReference ref = database.getReference().child(firebaseAuth.getCurrentUser().getUid()
             ).child("collection");
             ref.setValue(null)
-                    .addOnSuccessListener(aVoid -> {
-                        emitter.onSuccess(0);
-                    })
+                    .addOnSuccessListener(aVoid -> emitter.onSuccess(0))
                     .addOnFailureListener(emitter::onError);
 
         });

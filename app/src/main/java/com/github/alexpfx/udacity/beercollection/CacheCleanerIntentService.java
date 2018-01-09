@@ -34,7 +34,7 @@ public class CacheCleanerIntentService extends BaseIntentService implements Cach
     }
 
     private void cleanUpCache() {
-        presenter.clearCache(TimeUnit.DAYS.toMillis(1));
+        presenter.clearCache(TimeUnit.HOURS.toMillis(Constants.CACHE_EXPIRATION));
     }
 
 

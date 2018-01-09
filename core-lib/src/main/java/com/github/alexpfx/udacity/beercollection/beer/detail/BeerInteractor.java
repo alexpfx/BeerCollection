@@ -12,5 +12,5 @@ import io.reactivex.Single;
 
 public interface BeerInteractor extends BaseInteractor {
     Flowable<Beer> load(String beerId);
-    Single<Integer> clearCache (long elapsedTime);
+    Single<Void> clearCache (long elapsedTime);
 }

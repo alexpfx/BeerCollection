@@ -9,8 +9,9 @@ public class Constants {
     public static final String KEY_BEER_ID = "KEY_BEER_KEY";
 
 
-    public static final int TIMEOUT = 10;
+    public static final int TIMEOUT = 30;
 
 
     public static final String KEY_BEER_NAME = "";
+    public static final long CACHE_EXPIRATION = 5;
 }

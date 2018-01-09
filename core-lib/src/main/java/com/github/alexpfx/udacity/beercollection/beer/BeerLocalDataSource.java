@@ -4,14 +4,20 @@ import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
 
 import java.util.List;
 
-import io.reactivex.Flowable;
+import io.reactivex.FlowableEmitter;
+import io.reactivex.Maybe;
 import io.reactivex.Single;
 
 
 public interface BeerLocalDataSource {
     void insert(List<Beer> beers);
 
-    Flowable<Beer> load(String id);
+    void insert(Beer beer);
 
-    Single<Integer> clearCache(long elapsedTime);
+
+    void load(String id, FlowableEmitter<Beer> emitter);
+
+    Maybe<Beer> load(String id);
+
+    Single<Void> clearCache(long elapsedTime);
 }
