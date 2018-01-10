@@ -1,6 +1,8 @@
-package com.github.alexpfx.udacity.beercollection.databaselib.dagger;
+package com.github.alexpfx.udacity.beercollection.dagger;
 
 import android.app.Activity;
+
+import com.github.alexpfx.udacity.beercollection.databaselib.dagger.PerActivity;
 
 import dagger.Module;
 import dagger.Provides;

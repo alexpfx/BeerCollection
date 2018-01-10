@@ -7,13 +7,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.github.alexpfx.udacity.beercollection.PreferenceActivity">
+    tools:context="com.github.alexpfx.udacity.beercollection.preference.PreferenceActivity">
 
     <include layout="@layout/layout_toolbar"/>
 
     <fragment
         android:id="@+id/preference_fragment"
-        android:name="com.github.alexpfx.udacity.beercollection.PreferenceFragment"
+        android:name="com.github.alexpfx.udacity.beercollection.preference.PreferenceFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"

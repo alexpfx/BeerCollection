@@ -1,4 +1,4 @@
-package com.github.alexpfx.udacity.beercollection.databaselib.dagger;
+package com.github.alexpfx.udacity.beercollection.dagger;
 
 import com.github.alexpfx.udacity.beercollection.beer.collection.ClearCollectionPresenter;
 import com.github.alexpfx.udacity.beercollection.beer.collection.ClearCollectionPresenterImpl;
@@ -8,6 +8,7 @@ import com.github.alexpfx.udacity.beercollection.beer.collection.LoadCollectionP
 import com.github.alexpfx.udacity.beercollection.beer.collection.LoadCollectionPresenterImpl;
 import com.github.alexpfx.udacity.beercollection.beer.collection.MyCollectionInteractor;
 import com.github.alexpfx.udacity.beercollection.beer.collection.MyCollectionInteractorImpl;
+import com.github.alexpfx.udacity.beercollection.databaselib.dagger.PerActivity;
 
 import dagger.Module;
 import dagger.Provides;

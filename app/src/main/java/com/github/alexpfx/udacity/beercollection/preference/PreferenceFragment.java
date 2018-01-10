@@ -1,4 +1,4 @@
-package com.github.alexpfx.udacity.beercollection;
+package com.github.alexpfx.udacity.beercollection.preference;
 
 
 import android.content.SharedPreferences;
@@ -14,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.alexpfx.udacity.beercollection.BeerApp;
+import com.github.alexpfx.udacity.beercollection.R;
 import com.github.alexpfx.udacity.beercollection.beer.collection.ClearCollectionPresenter;
 import com.github.alexpfx.udacity.beercollection.beer.collection.ClearCollectionView;
 

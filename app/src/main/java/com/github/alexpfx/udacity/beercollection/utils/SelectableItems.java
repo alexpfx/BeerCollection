@@ -1,4 +1,4 @@
-package com.github.alexpfx.udacity.beercollection.collection;
+package com.github.alexpfx.udacity.beercollection.utils;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -9,9 +9,6 @@ import java.util.Iterator;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 
-/**
- * Created by alexandre on 30/12/17.
- */
 
 public class SelectableItems implements SelectableAdapter, Iterable<Boolean> {
 

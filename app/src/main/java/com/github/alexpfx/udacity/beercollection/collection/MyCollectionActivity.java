@@ -15,9 +15,9 @@ import android.widget.TextView;
 
 import com.github.alexpfx.udacity.beercollection.BaseActivity;
 import com.github.alexpfx.udacity.beercollection.BeerApp;
-import com.github.alexpfx.udacity.beercollection.PreferenceActivity;
+import com.github.alexpfx.udacity.beercollection.preference.PreferenceActivity;
 import com.github.alexpfx.udacity.beercollection.R;
-import com.github.alexpfx.udacity.beercollection.ToolbarHelper;
+import com.github.alexpfx.udacity.beercollection.utils.ToolbarUtils;
 import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerPresenter;
 import com.github.alexpfx.udacity.beercollection.detail.DetailActivity;
 import com.github.alexpfx.udacity.beercollection.search.SearchActivity;
@@ -88,7 +88,7 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionFr
     }
 
     private void setupToolbar() {
-        ToolbarHelper.setupToolbar(this, toolbar, false, false, false, false);
+        ToolbarUtils.setupToolbar(this, toolbar, false, false, false, false);
         textToolbarTitle.setText(getString(R.string.activity_title_my_collection));
 
     }

@@ -10,7 +10,7 @@ import com.github.alexpfx.udacity.beercollection.BaseActivity;
 import com.github.alexpfx.udacity.beercollection.BeerApp;
 import com.github.alexpfx.udacity.beercollection.Constants;
 import com.github.alexpfx.udacity.beercollection.R;
-import com.github.alexpfx.udacity.beercollection.ToolbarHelper;
+import com.github.alexpfx.udacity.beercollection.utils.ToolbarUtils;
 import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerPresenter;
 import com.github.alexpfx.udacity.beercollection.detail.DetailActivity;
 import com.github.alexpfx.udacity.beercollection.detail.DetailFragment;
@@ -51,7 +51,7 @@ public class SearchActivity extends BaseActivity implements SearchFragment.Liste
         ButterKnife.bind(this);
 
         if (savedInstanceState == null) {
-            ToolbarHelper.setupToolbar(this, toolbar, false, true, false, false);
+            ToolbarUtils.setupToolbar(this, toolbar, false, true, false, false);
             textToolbarTitle.setText(getString(R.string.title_activity_search));
 
         }

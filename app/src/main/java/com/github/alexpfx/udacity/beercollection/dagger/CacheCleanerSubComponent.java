@@ -1,6 +1,7 @@
-package com.github.alexpfx.udacity.beercollection.databaselib.dagger;
+package com.github.alexpfx.udacity.beercollection.dagger;
 
-import com.github.alexpfx.udacity.beercollection.CacheCleanerIntentService;
+import com.github.alexpfx.udacity.beercollection.cache.CacheCleanerIntentService;
+import com.github.alexpfx.udacity.beercollection.databaselib.dagger.PerActivity;
 
 import dagger.Subcomponent;
 

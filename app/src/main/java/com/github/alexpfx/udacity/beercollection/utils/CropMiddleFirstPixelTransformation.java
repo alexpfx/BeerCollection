@@ -1,4 +1,4 @@
-package com.github.alexpfx.udacity.beercollection.search;
+package com.github.alexpfx.udacity.beercollection.utils;
 
 import android.graphics.Bitmap;
 

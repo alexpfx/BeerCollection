@@ -1,8 +1,11 @@
-package com.github.alexpfx.udacity.beercollection;
+package com.github.alexpfx.udacity.beercollection.cache;
 
 import android.content.Intent;
 import android.util.Log;
 
+import com.github.alexpfx.udacity.beercollection.BaseIntentService;
+import com.github.alexpfx.udacity.beercollection.BeerApp;
+import com.github.alexpfx.udacity.beercollection.Constants;
 import com.github.alexpfx.udacity.beercollection.beer.CacheCleanerPresenter;
 import com.github.alexpfx.udacity.beercollection.beer.CacheCleanerView;
 

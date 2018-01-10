@@ -1,9 +1,7 @@
 package com.github.alexpfx.udacity.beercollection.detail;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,7 +13,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import io.reactivex.subjects.PublishSubject;
 
-import static com.github.alexpfx.udacity.beercollection.TextViewUtils.valueOrDash;
+import static com.github.alexpfx.udacity.beercollection.utils.TextViewUtils.valueOrDash;
 
 /**
  * Created by alexandre on 07/11/17.

@@ -1,4 +1,4 @@
-package com.github.alexpfx.udacity.beercollection;
+package com.github.alexpfx.udacity.beercollection.utils;
 
 import android.text.TextUtils;
 import android.view.View;

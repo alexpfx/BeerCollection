@@ -13,8 +13,8 @@ import com.github.alexpfx.udacity.beercollection.BaseActivity;
 import com.github.alexpfx.udacity.beercollection.BeerApp;
 import com.github.alexpfx.udacity.beercollection.Constants;
 import com.github.alexpfx.udacity.beercollection.R;
-import com.github.alexpfx.udacity.beercollection.ToolbarHelper;
-import com.github.alexpfx.udacity.beercollection.search.CropMiddleFirstPixelTransformation;
+import com.github.alexpfx.udacity.beercollection.utils.ToolbarUtils;
+import com.github.alexpfx.udacity.beercollection.utils.CropMiddleFirstPixelTransformation;
 import com.github.alexpfx.udacity.beercollection.utils.NotificationUtils;
 import com.squareup.picasso.Picasso;
 
@@ -60,7 +60,7 @@ public class DetailActivity extends BaseActivity implements DetailFragment.Liste
 
         ButterKnife.bind(this);
 
-        ToolbarHelper.setupToolbar(this, toolbar, false, true, false, false);
+        ToolbarUtils.setupToolbar(this, toolbar, false, true, false, false);
     }
 
     @Override

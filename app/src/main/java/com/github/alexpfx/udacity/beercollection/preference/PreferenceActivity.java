@@ -1,9 +1,14 @@
-package com.github.alexpfx.udacity.beercollection;
+package com.github.alexpfx.udacity.beercollection.preference;
 
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+
+import com.github.alexpfx.udacity.beercollection.BaseActivity;
+import com.github.alexpfx.udacity.beercollection.BeerApp;
+import com.github.alexpfx.udacity.beercollection.R;
+import com.github.alexpfx.udacity.beercollection.utils.ToolbarUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,7 +25,7 @@ public class PreferenceActivity extends BaseActivity {
         setContentView(R.layout.activity_preference);
         ButterKnife.bind(this);
 
-        ToolbarHelper.setupToolbar(this, toolbar, false, true, false, false);
+        ToolbarUtils.setupToolbar(this, toolbar, false, true, false, false);
     }
 
     @Override

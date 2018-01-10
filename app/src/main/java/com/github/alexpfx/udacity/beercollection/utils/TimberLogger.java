@@ -1,4 +1,6 @@
-package com.github.alexpfx.udacity.beercollection;
+package com.github.alexpfx.udacity.beercollection.utils;
+
+import com.github.alexpfx.udacity.beercollection.Logger;
 
 import timber.log.Timber;
 

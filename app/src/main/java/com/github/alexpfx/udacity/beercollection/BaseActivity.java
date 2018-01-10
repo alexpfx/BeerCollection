@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.firebase.ui.auth.AuthUI;
+import com.github.alexpfx.udacity.beercollection.login.LoginActivity;
 import com.mikepenz.iconics.context.IconicsContextWrapper;
 
 

@@ -1,6 +1,8 @@
-package com.github.alexpfx.udacity.beercollection.databaselib.dagger;
+package com.github.alexpfx.udacity.beercollection.dagger;
 
-import com.github.alexpfx.udacity.beercollection.LoginActivity;
+import com.github.alexpfx.udacity.beercollection.databaselib.dagger.DatabaseModule;
+import com.github.alexpfx.udacity.beercollection.databaselib.dagger.ServiceModule;
+import com.github.alexpfx.udacity.beercollection.login.LoginActivity;
 import com.github.alexpfx.udacity.beercollection.collection.MyCollectionSubComponent;
 
 import javax.inject.Singleton;

@@ -12,6 +12,8 @@ import com.github.alexpfx.udacity.beercollection.databaselib.dagger.PerActivity;
 import com.github.alexpfx.udacity.beercollection.domain.model.collection.CollectionItem;
 import com.github.alexpfx.udacity.beercollection.domain.model.collection.CollectionItemVO;
 import com.github.alexpfx.udacity.beercollection.utils.Predicate;
+import com.github.alexpfx.udacity.beercollection.utils.SelectableAdapter;
+import com.github.alexpfx.udacity.beercollection.utils.SelectableItems;
 
 import java.util.ArrayList;
 import java.util.List;

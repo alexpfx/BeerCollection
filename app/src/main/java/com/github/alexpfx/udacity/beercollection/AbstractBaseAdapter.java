@@ -5,9 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.alexpfx.udacity.beercollection.utils.Predicate;
-
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -33,17 +30,6 @@ public abstract class AbstractBaseAdapter<VH extends RecyclerView.ViewHolder, I>
     public void setItems(List<I> items) {
         this.items = items;
         notifyDataSetChanged();
-    }
-
-    public List<I> filter (Predicate<I> predicate){
-
-        List<I> filtered = new ArrayList<>();
-        for (I item : items) {
-            if (predicate.test(item)){
-                filtered.add(item);
-            }
-        }
-        return filtered;
     }
 
     @Override

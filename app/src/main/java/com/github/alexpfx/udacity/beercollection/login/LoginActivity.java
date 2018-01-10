@@ -1,9 +1,12 @@
-package com.github.alexpfx.udacity.beercollection;
+package com.github.alexpfx.udacity.beercollection.login;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.github.alexpfx.udacity.beercollection.BaseActivity;
+import com.github.alexpfx.udacity.beercollection.BeerApp;
+import com.github.alexpfx.udacity.beercollection.R;
 import com.github.alexpfx.udacity.beercollection.collection.MyCollectionActivity;
 import com.github.alexpfx.udacity.beercollection.databaselib.util.FirebaseUtils;
 import com.google.firebase.auth.FirebaseAuth;

@@ -13,6 +13,7 @@ import com.github.alexpfx.udacity.beercollection.AbstractBaseAdapter;
 import com.github.alexpfx.udacity.beercollection.R;
 import com.github.alexpfx.udacity.beercollection.databaselib.dagger.PerActivity;
 import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
+import com.github.alexpfx.udacity.beercollection.utils.CropMiddleFirstPixelTransformation;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.squareup.picasso.Picasso;
 

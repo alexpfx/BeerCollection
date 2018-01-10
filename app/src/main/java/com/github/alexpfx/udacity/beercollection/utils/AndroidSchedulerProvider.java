@@ -1,4 +1,4 @@
-package com.github.alexpfx.udacity.beercollection;
+package com.github.alexpfx.udacity.beercollection.utils;
 
 import com.github.alexpfx.udacity.beercollection.databaselib.util.SchedulerProvider;
 

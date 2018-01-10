@@ -1,12 +1,12 @@
-package com.github.alexpfx.udacity.beercollection.databaselib.dagger;
+package com.github.alexpfx.udacity.beercollection.dagger;
 
 import android.content.Context;
 import android.content.res.Resources;
 
-import com.github.alexpfx.udacity.beercollection.AndroidSchedulerProvider;
+import com.github.alexpfx.udacity.beercollection.utils.AndroidSchedulerProvider;
 import com.github.alexpfx.udacity.beercollection.BeerApp;
 import com.github.alexpfx.udacity.beercollection.Logger;
-import com.github.alexpfx.udacity.beercollection.TimberLogger;
+import com.github.alexpfx.udacity.beercollection.utils.TimberLogger;
 import com.github.alexpfx.udacity.beercollection.databaselib.util.SchedulerProvider;
 
 import javax.inject.Singleton;

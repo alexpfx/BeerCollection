@@ -1,4 +1,4 @@
-package com.github.alexpfx.udacity.beercollection;
+package com.github.alexpfx.udacity.beercollection.drink;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -8,6 +8,9 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.NumberPicker;
+
+import com.github.alexpfx.udacity.beercollection.Constants;
+import com.github.alexpfx.udacity.beercollection.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

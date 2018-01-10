@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.github.alexpfx.udacity.beercollection.BaseFragment;
 import com.github.alexpfx.udacity.beercollection.BeerApp;
-import com.github.alexpfx.udacity.beercollection.DrinkBeerFragmentDialog;
+import com.github.alexpfx.udacity.beercollection.drink.DrinkBeerFragmentDialog;
 import com.github.alexpfx.udacity.beercollection.R;
 import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerPresenter;
 import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerView;

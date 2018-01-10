@@ -1,5 +1,6 @@
-package com.github.alexpfx.udacity.beercollection.databaselib.dagger;
+package com.github.alexpfx.udacity.beercollection.dagger;
 
+import com.github.alexpfx.udacity.beercollection.databaselib.dagger.PerActivity;
 import com.github.alexpfx.udacity.beercollection.databaselib.search.DefaultSearchInteractor;
 import com.github.alexpfx.udacity.beercollection.databaselib.search.DefaultSearchPresenter;
 import com.github.alexpfx.udacity.beercollection.databaselib.search.SearchInteractor;
