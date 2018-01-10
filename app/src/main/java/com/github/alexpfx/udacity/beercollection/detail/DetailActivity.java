@@ -15,6 +15,7 @@ import com.github.alexpfx.udacity.beercollection.Constants;
 import com.github.alexpfx.udacity.beercollection.R;
 import com.github.alexpfx.udacity.beercollection.ToolbarHelper;
 import com.github.alexpfx.udacity.beercollection.search.CropMiddleFirstPixelTransformation;
+import com.github.alexpfx.udacity.beercollection.utils.NotificationUtils;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -48,6 +49,8 @@ public class DetailActivity extends BaseActivity implements DetailFragment.Liste
         Intent intent = new Intent(context, DetailActivity.class);
         intent.putExtra(Constants.KEY_BEER_ID, beerId);
         context.startActivity(intent);
+        //TODO mover local correto.
+        NotificationUtils.showUserThatABeerFromHisCollectionWasUpdated(context, 2, "cerveja atualizada!");
     }
 
     @Override

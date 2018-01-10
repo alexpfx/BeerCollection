@@ -31,8 +31,10 @@
         <item quantity="one">You have drank %d more beer!</item>
         <item quantity="other">You have drank %d more beers!</item>
     </plurals>
-
-
+    <plurals name="notification_title_beer_updates">
+        <item quantity="one">A beer in your collection had his details updated.</item>
+        <item quantity="other">Beers in your collection has his details updated.</item>
+    </plurals>
 
 
     <string name="message_beer_was_deleted">Beer(s) was deleted!</string>
@@ -73,5 +75,6 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="message_successful_signout">Successful sign out</string>
+    <string name="main_notification_channel_name">Channel</string>
 
 </resources>
