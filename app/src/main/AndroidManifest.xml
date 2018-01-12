@@ -52,6 +52,26 @@
             android:name=".cache.CacheCleanerIntentService"
             android:exported="false">
         </service>
+
+
+        <receiver android:name=".collection.widget.CollectionWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_provider_info"/>
+        </receiver>
+
+
+        <service
+            android:name=".collection.widget.CollectionRemoteViewService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
+
+        <service android:name=".collection.widget.UpdateWidgetIntentService"/>
+
+
+
     </application>
 
 </manifest>

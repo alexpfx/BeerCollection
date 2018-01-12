@@ -76,5 +76,7 @@
     <string name="delete">Delete</string>
     <string name="message_successful_signout">Successful sign out</string>
     <string name="main_notification_channel_name">Channel</string>
+    <string name="layout_label_last">Last</string>
+    <string name="widget_label_total">Total</string>
 
 </resources>

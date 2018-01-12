@@ -1,5 +1,6 @@
 package com.github.alexpfx.udacity.beercollection.collection;
 
+import com.github.alexpfx.udacity.beercollection.collection.widget.CollectionRemoteViewFactory;
 import com.github.alexpfx.udacity.beercollection.dagger.BeerModule;
 import com.github.alexpfx.udacity.beercollection.dagger.DrinkBeerModule;
 import com.github.alexpfx.udacity.beercollection.dagger.MyCollectionModule;
@@ -21,4 +22,6 @@ public interface MyCollectionSubComponent {
     void inject(MyCollectionFragment fragment);
 
     void inject(PreferenceFragment fragment);
+
+    void inject(CollectionRemoteViewFactory factory);
 }

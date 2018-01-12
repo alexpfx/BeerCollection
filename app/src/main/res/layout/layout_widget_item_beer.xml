@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <TextView
+        android:id="@+id/widget_text_beer_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        tools:text="Heineken"
+        />
+
+    <TextView
+        android:id="@+id/widget_lbl_last"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/widget_text_beer_name"
+        android:text="@string/layout_label_last"
+        />
+
+
+    <TextView
+        android:id="@+id/widget_text_last_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/widget_text_beer_name"
+        android:layout_toEndOf="@id/widget_lbl_last"
+        tools:text="2010-05-23"
+        />
+
+
+    <TextView
+        android:id="@+id/widget_lbl_total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/widget_text_beer_name"
+        android:layout_toStartOf="@id/widget_text_quantity"
+        android:text="@string/widget_label_total"
+
+        />
+
+    <TextView
+        android:id="@+id/widget_text_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/widget_text_beer_name"
+        tools:text="101"
+
+        />
+
+
+</RelativeLayout>
