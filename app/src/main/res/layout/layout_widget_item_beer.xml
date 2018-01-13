@@ -8,52 +8,45 @@
 
     <TextView
         android:id="@+id/widget_text_beer_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         tools:text="Heineken"
+        style="@style/WidgetItemListHeader"
         />
 
     <TextView
         android:id="@+id/widget_lbl_last"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@id/widget_text_beer_name"
         android:text="@string/layout_label_last"
+        style="@style/WidgetItemListLabel"
         />
 
 
     <TextView
         android:id="@+id/widget_text_last_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_below="@id/widget_text_beer_name"
         android:layout_toEndOf="@id/widget_lbl_last"
         tools:text="2010-05-23"
+        style="@style/WidgetItemListContent"
         />
 
 
     <TextView
         android:id="@+id/widget_lbl_total"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_below="@id/widget_text_beer_name"
         android:layout_toStartOf="@id/widget_text_quantity"
         android:text="@string/widget_label_total"
-
+        style="@style/WidgetItemListLabel"
         />
 
     <TextView
         android:id="@+id/widget_text_quantity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_below="@id/widget_text_beer_name"
         tools:text="101"
-
+        style="@style/WidgetItemListContent"
         />
 
 
