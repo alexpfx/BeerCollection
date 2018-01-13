@@ -10,11 +10,12 @@ import com.github.alexpfx.udacity.beercollection.BaseActivity;
 import com.github.alexpfx.udacity.beercollection.BeerApp;
 import com.github.alexpfx.udacity.beercollection.Constants;
 import com.github.alexpfx.udacity.beercollection.R;
-import com.github.alexpfx.udacity.beercollection.utils.ToolbarUtils;
 import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerPresenter;
+import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerView;
 import com.github.alexpfx.udacity.beercollection.detail.DetailActivity;
 import com.github.alexpfx.udacity.beercollection.detail.DetailFragment;
 import com.github.alexpfx.udacity.beercollection.domain.model.DrinkBeerUpdateItem;
+import com.github.alexpfx.udacity.beercollection.utils.ToolbarUtils;
 import com.mikepenz.iconics.context.IconicsLayoutInflater2;
 
 import javax.inject.Inject;
@@ -26,7 +27,7 @@ import butterknife.ButterKnife;
 /**
  * Adicionar indicador de loading
  */
-public class SearchActivity extends BaseActivity implements SearchFragment.Listener, DetailFragment.Listener {
+public class SearchActivity extends BaseActivity implements SearchFragment.Listener, DetailFragment.Listener, DrinkBeerView {
     private static final String TAG = "SearchActivity";
 
 
@@ -43,6 +44,8 @@ public class SearchActivity extends BaseActivity implements SearchFragment.Liste
     DrinkBeerPresenter drinkBeerPresenter;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         LayoutInflaterCompat.setFactory2(getLayoutInflater(), new IconicsLayoutInflater2(getDelegate()));
@@ -53,7 +56,6 @@ public class SearchActivity extends BaseActivity implements SearchFragment.Liste
         if (savedInstanceState == null) {
             ToolbarUtils.setupToolbar(this, toolbar, false, true, false, false);
             textToolbarTitle.setText(getString(R.string.title_activity_search));
-
         }
 
     }
@@ -67,6 +69,7 @@ public class SearchActivity extends BaseActivity implements SearchFragment.Liste
     @Override
     protected void injectDependencies(BeerApp app) {
         app.getSearchSubComponent().inject(this);
+//        drinkBeerPresenter.bind(this);
 
     }
 
@@ -77,7 +80,6 @@ public class SearchActivity extends BaseActivity implements SearchFragment.Liste
         intent.putExtra(Constants.KEY_BEER_ID, id);
         setIntent(intent);
 
-
         if (isMultiPane) {
             DetailFragment detailFragment = new DetailFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.container_pane2, detailFragment).commit();
@@ -85,14 +87,10 @@ public class SearchActivity extends BaseActivity implements SearchFragment.Liste
             DetailActivity.startDetail(this, id);
         }
 
-
     }
 
-    @Override
-    public void onDownload(String id) {
-        drinkBeerPresenter.drink(new DrinkBeerUpdateItem(id, 0));
-        finish();
-    }
+
+
 
     @Override
     public void onTitleChanged(String title) {
@@ -103,5 +101,24 @@ public class SearchActivity extends BaseActivity implements SearchFragment.Liste
     @Override
     public void onImageChanged(String imgUrl) {
         //When DetailFragment is inside SearchActivity it doesn't changes the toolbar image.
+    }
+
+
+    @Override
+    public void onDownload(String id, String name) {
+        drinkBeerPresenter.drink(new DrinkBeerUpdateItem(id, 0));
+    }
+
+
+    @Override
+    public void showDrinkAdded(String id, int quantity) {
+
+
+
+    }
+
+    @Override
+    public void showErrorOnDrinkBeer(Object error) {
+
     }
 }

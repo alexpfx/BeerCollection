@@ -1,6 +1,7 @@
 package com.github.alexpfx.udacity.beercollection.collection.widget;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
@@ -19,9 +20,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
-/**
- * Created by alexandre on 12/01/18.
- */
 
 public class CollectionRemoteViewFactory implements RemoteViewsService.RemoteViewsFactory, MyCollectionView {
 
@@ -44,15 +42,12 @@ public class CollectionRemoteViewFactory implements RemoteViewsService.RemoteVie
         beerApp.getComponent().plus(new MyCollectionModule()).inject(this);
         loadCollectionPresenter.bind(this);
         waitForData = new CountDownLatch(1);
-        Log.d(TAG, "onCreate: ");
     }
 
     @Override
     public void onDataSetChanged() {
         loadCollectionPresenter.load();
-        Log.d(TAG, "onDataSetChanged: ");
         waitData();
-        Log.d(TAG, "onDataSetChanged: ");
     }
 
     private void waitData() {
@@ -76,12 +71,11 @@ public class CollectionRemoteViewFactory implements RemoteViewsService.RemoteVie
 
     @Override
     public RemoteViews getViewAt(int position) {
-        Log.d(TAG, "getViewAt: ");
         CollectionItem item = items.get(position);
 
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.layout_widget_item_beer);
 
-        remoteViews.setTextViewText(R.id.widget_text_beer_name, item.getBeer().getName());
+        remoteViews.setTextViewText(R.id.widget_text_beer_name, TextUtils.concat(String.valueOf(position+1),"º " ,item.getBeer().getName()));
 
         DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context);
         remoteViews.setTextViewText(R.id.widget_text_last_date, dateFormat.format(item.getLastDate()));

@@ -112,8 +112,10 @@ public class SearchFragment extends BaseFragment implements com.github.alexpfx.u
 
     private void setupEvents() {
         Disposable disposable = adapter.getClickDownloadViewObservable().subscribe(view -> {
-            String beerId = (String) view.getTag();
-            listener.onDownload(beerId);
+            String beerId = (String) view.getTag(R.id.tag_beer_id);
+            String beerName = (String) view.getTag(R.id.tag_beer_name);
+
+            listener.onDownload(beerId, beerName);
 
         });
         compositeDisposable.add(disposable);
@@ -193,7 +195,7 @@ public class SearchFragment extends BaseFragment implements com.github.alexpfx.u
 
     public interface Listener {
         void onDetail(String id);
-        void onDownload (String id);
+        void onDownload (String id, String name);
 
 
     }

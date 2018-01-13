@@ -40,18 +40,14 @@ public class DrinkBeerPresenterImpl implements DrinkBeerPresenter {
                 (schedulerProvider.computation())
                 .subscribe(quantity -> {
                     view.showDrinkAdded(item.getBeerId(), (Integer) quantity);
-                }, error -> {
-                    view.showErrorOnDrinkBeer(error);
-                });
+                }, error -> view.showErrorOnDrinkBeer(error));
         compositeDisposable.add(disposable);
-
-
     }
 
     @Override
     public void onDestroy() {
         compositeDisposable.dispose();
-        this.view = DrinkBeerPresenter.EMPTY;
+        this.view = null;
     }
 
     @Override

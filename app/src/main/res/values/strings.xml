@@ -78,5 +78,10 @@
     <string name="main_notification_channel_name">Channel</string>
     <string name="layout_label_last">Last</string>
     <string name="widget_label_total">Total</string>
+    <string name="title_favorite_beers">Favorite Beers</string>
+
+    <item type="id" name="tag_beer_name"/>
+    <item type="id" name="tag_beer_id"/>
+
 
 </resources>

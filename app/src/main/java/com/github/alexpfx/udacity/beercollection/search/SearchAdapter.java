@@ -109,29 +109,29 @@ public class SearchAdapter extends AbstractBaseAdapter<SearchAdapter.SeachViewHo
             ButterKnife.bind(this, itemView);
 
             RxView.clicks(itemView).map(a -> itemView).subscribe(clickDetailViewObservable);
-            RxView.clicks(btnDownload).map(a -> btnDownload).subscribe(clickDownloadViewObservable);
+            RxView.clicks(btnDownload).map(a -> itemView).subscribe(clickDownloadViewObservable);
             context = new WeakReference<>(itemView.getContext());
             this.itemView = itemView;
         }
 
 
         public void bind(Beer beer) {
-            itemView.setTag(beer.getId());
-            btnDownload.setTag(beer.getId());
+            String beerName = beer.getName();
 
+            itemView.setTag(R.id.tag_beer_id, beer.getId());
+            itemView.setTag(R.id.tag_beer_name, beerName);
 
-            txtBeerName.setText(beer.getName());
+            txtBeerName.setText(beerName);
             txtBeerStyle.setText(beer.getStyle());
 
             Picasso.with(context.get()).load(beer.getLabelIcon())
-                    .resize(320, 320)
+                    .resize(256, 256)
                     .transform(new CropMiddleFirstPixelTransformation())
                     .transform(new CropCircleTransformation())
                     .centerCrop()
                     .into(imgBeerLabel);
 
         }
-
 
 
     }

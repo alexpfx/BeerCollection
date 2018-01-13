@@ -78,7 +78,7 @@ public class BeerLocalDataSourceImpl implements BeerLocalDataSource {
                 Beer beer = dataSnapshot.getValue(Beer.class);
                 if (beer != null) {
                     emitter.onNext(beer);
-                }else{
+                } else {
                 }
             }
 
@@ -130,6 +130,10 @@ public class BeerLocalDataSourceImpl implements BeerLocalDataSource {
     @Override
     public Single<Void> clearCache(long elapsedTime) {
         return Single.create(emitter -> {
+            if (firebaseAuth == null || firebaseAuth.getCurrentUser() == null) {
+                return;
+            }
+
             DatabaseReference userRef = database.getReference().child(firebaseAuth.getCurrentUser().getUid());
 
             DatabaseReference lastUpdateRef = userRef

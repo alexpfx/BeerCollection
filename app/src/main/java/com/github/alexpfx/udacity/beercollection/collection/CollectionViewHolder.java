@@ -17,7 +17,6 @@ import android.widget.TextView;
 import com.github.alexpfx.udacity.beercollection.R;
 import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
 import com.github.alexpfx.udacity.beercollection.domain.model.collection.CollectionItem;
-import com.github.alexpfx.udacity.beercollection.utils.CropMiddleFirstPixelTransformation;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -62,6 +61,7 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
             boolean usePallete = false;
             if (!usePallete) return;
 
+            //TODO
             Palette.from(bitmap).generate(palette -> {
 //                    Palette.Swatch vibrantSwatch = palette.getDarkVibrantSwatch();
 
@@ -131,6 +131,7 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
     public synchronized void bind(CollectionItem item, boolean isSelected, boolean isSelectable) {
         btnToggleSelection.setSelected(isSelected);
         btnToggleSelection.setVisibility(isSelectable? View.VISIBLE: View.INVISIBLE);
+
         Beer beer = item.getBeer();
         String id = beer.getId();
         itemView.setTag(id);
@@ -166,9 +167,10 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
     private void setupLabelView(Beer beer) {
         Picasso.with(context)
                 .load(beer.getLabelLarge())
-                .resize(512, 512)
-                .transform(new CropMiddleFirstPixelTransformation())
-                .placeholder(R.drawable.beerplaceholder)
+                .placeholder(R.drawable.ic_warning_black_24dp)
+                .error(R.drawable.ic_error_outline_black_24dp)
+                .resize(2000, 2000)
+//                .transform(new CropMiddleFirstPixelTransformation())
                 .centerCrop()
                 .into(target);
 

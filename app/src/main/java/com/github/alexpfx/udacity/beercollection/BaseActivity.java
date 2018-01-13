@@ -9,10 +9,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.firebase.ui.auth.AuthUI;
 import com.github.alexpfx.udacity.beercollection.login.LoginActivity;
 import com.mikepenz.iconics.context.IconicsContextWrapper;
+
+import java.lang.reflect.Field;
 
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -60,4 +63,51 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract void injectDependencies(BeerApp app);
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        fixInputMethod(this);
+    }
+
+
+    /**
+     * Fix memory leak coming from Android Source code.
+     *
+     * https://issuetracker.google.com/issues/37043700#comment17
+     *
+     * fixInputMethod
+     *
+     * @author androidmalin
+     * @param context Context
+     */
+    public static void fixInputMethod(Context context) {
+        if (context == null) return;
+        InputMethodManager inputMethodManager = null;
+        try {
+            inputMethodManager = (InputMethodManager) context.getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        } catch (Throwable th) {
+            th.printStackTrace();
+        }
+        if (inputMethodManager == null) return;
+        String[] strArr = new String[]{"mCurRootView", "mServedView", "mNextServedView"};
+        for (int i = 0; i < 3; i++) {
+            try {
+                Field declaredField = inputMethodManager.getClass().getDeclaredField(strArr[i]);
+                if (declaredField == null) continue;
+                if (!declaredField.isAccessible()) {
+                    declaredField.setAccessible(true);
+                }
+                Object obj = declaredField.get(inputMethodManager);
+                if (obj == null || !(obj instanceof View)) continue;
+                View view = (View) obj;
+                if (view.getContext() == context) {
+                    declaredField.set(inputMethodManager, null);
+                } else {
+                    return;
+                }
+            } catch (Throwable th) {
+                th.printStackTrace();
+            }
+        }
+    }
 }

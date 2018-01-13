@@ -28,7 +28,6 @@ public class DetailPresenterImpl implements DetailPresenter {
 
     @Override
     public void load(String beerId) {
-        System.out.println("detailView " + view);
         subscription = interactor
                 .load(beerId)
                 .subscribeOn(schedulerProvider.computation())
@@ -37,10 +36,9 @@ public class DetailPresenterImpl implements DetailPresenter {
                         next -> view.showBeer(next),
                         error -> {
                             error.printStackTrace();
-                            System.out.println("error!");
                             view.showLoadError(error);
                         }, () -> {
-                            System.out.println("onComplete ");
+                            //TODO
                         });
     }
 
@@ -59,5 +57,3 @@ public class DetailPresenterImpl implements DetailPresenter {
     }
 }
 
-//beerWrapper -> view.showBeer(beerWrapper.getData()),
-//        view::showLoadError
