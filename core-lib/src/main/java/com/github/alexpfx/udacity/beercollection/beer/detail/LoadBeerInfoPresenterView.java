@@ -7,7 +7,7 @@ import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
  * Created by alexandre on 04/11/17.
  */
 
-public interface DetailView extends BaseView {
-    void showBeer (Beer beer);
+public interface LoadBeerInfoPresenterView extends BaseView {
+    void showBeerInfo(Beer beer);
     void showLoadError (Throwable throwable);
 }

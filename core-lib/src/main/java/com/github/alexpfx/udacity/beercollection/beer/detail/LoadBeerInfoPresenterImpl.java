@@ -12,16 +12,16 @@ import io.reactivex.disposables.Disposable;
  */
 
 @PerActivity
-public class DetailPresenterImpl implements DetailPresenter {
+public class LoadBeerInfoPresenterImpl implements LoadBeerInfoPresenter {
 
     private final BeerInteractor interactor;
     private final SchedulerProvider schedulerProvider;
-    private DetailView view;
+    private LoadBeerInfoPresenterView view;
     private Disposable subscription;
 
 
     @Inject
-    public DetailPresenterImpl(BeerInteractor interactor, SchedulerProvider schedulerProvider) {
+    public LoadBeerInfoPresenterImpl(BeerInteractor interactor, SchedulerProvider schedulerProvider) {
         this.interactor = interactor;
         this.schedulerProvider = schedulerProvider;
     }
@@ -33,7 +33,7 @@ public class DetailPresenterImpl implements DetailPresenter {
                 .subscribeOn(schedulerProvider.computation())
                 .observeOn(schedulerProvider.mainThread())
                 .subscribe(
-                        next -> view.showBeer(next),
+                        next -> view.showBeerInfo(next),
                         error -> {
                             error.printStackTrace();
                             view.showLoadError(error);
@@ -52,7 +52,7 @@ public class DetailPresenterImpl implements DetailPresenter {
     }
 
     @Override
-    public void bind(DetailView view) {
+    public void bind(LoadBeerInfoPresenterView view) {
         this.view = view;
     }
 }

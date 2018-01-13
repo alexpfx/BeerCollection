@@ -1,7 +1,7 @@
 package com.github.alexpfx.udacity.beercollection.dagger;
 
-import com.github.alexpfx.udacity.beercollection.beer.detail.DetailPresenter;
-import com.github.alexpfx.udacity.beercollection.beer.detail.DetailPresenterImpl;
+import com.github.alexpfx.udacity.beercollection.beer.detail.LoadBeerInfoPresenter;
+import com.github.alexpfx.udacity.beercollection.beer.detail.LoadBeerInfoPresenterImpl;
 import com.github.alexpfx.udacity.beercollection.databaselib.dagger.PerActivity;
 
 import dagger.Module;
@@ -17,7 +17,7 @@ public class DetailModule {
 
     @PerActivity
     @Provides
-    DetailPresenter detailPresenter(DetailPresenterImpl detailPresenterImpl) {
+    LoadBeerInfoPresenter detailPresenter(LoadBeerInfoPresenterImpl detailPresenterImpl) {
         return detailPresenterImpl;
     }
 

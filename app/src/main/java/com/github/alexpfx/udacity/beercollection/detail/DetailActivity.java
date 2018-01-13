@@ -21,10 +21,10 @@ import com.squareup.picasso.Picasso;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DetailActivity extends BaseActivity implements DetailFragment.Listener {
+public class DetailActivity extends BaseActivity implements LoadBeerInfoPresenterFragment.Listener {
     private static final String TAG = "DetailActivity";
 
-//    DetailPresenter detailPresenter;
+//    LoadBeerInfoPresenter loadBeerInfoPresenter;
 
 //    private DetailViewHolder detailViewHolder;
 
@@ -72,7 +72,7 @@ public class DetailActivity extends BaseActivity implements DetailFragment.Liste
     @Override
     protected void onPause() {
         super.onPause();
-//        detailPresenter.onDestroy();
+//        loadBeerInfoPresenter.onDestroy();
 //        detailViewHolder.unbind();
     }
 

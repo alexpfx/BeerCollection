@@ -13,7 +13,7 @@ import com.github.alexpfx.udacity.beercollection.R;
 import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerPresenter;
 import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerView;
 import com.github.alexpfx.udacity.beercollection.detail.DetailActivity;
-import com.github.alexpfx.udacity.beercollection.detail.DetailFragment;
+import com.github.alexpfx.udacity.beercollection.detail.LoadBeerInfoPresenterFragment;
 import com.github.alexpfx.udacity.beercollection.domain.model.DrinkBeerUpdateItem;
 import com.github.alexpfx.udacity.beercollection.utils.ToolbarUtils;
 import com.mikepenz.iconics.context.IconicsLayoutInflater2;
@@ -27,7 +27,7 @@ import butterknife.ButterKnife;
 /**
  * Adicionar indicador de loading
  */
-public class SearchActivity extends BaseActivity implements SearchFragment.Listener, DetailFragment.Listener, DrinkBeerView {
+public class SearchActivity extends BaseActivity implements SearchFragment.Listener, LoadBeerInfoPresenterFragment.Listener, DrinkBeerView {
     private static final String TAG = "SearchActivity";
 
 
@@ -81,7 +81,7 @@ public class SearchActivity extends BaseActivity implements SearchFragment.Liste
         setIntent(intent);
 
         if (isMultiPane) {
-            DetailFragment detailFragment = new DetailFragment();
+            LoadBeerInfoPresenterFragment detailFragment = new LoadBeerInfoPresenterFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.container_pane2, detailFragment).commit();
         } else {
             DetailActivity.startDetail(this, id);
@@ -94,13 +94,13 @@ public class SearchActivity extends BaseActivity implements SearchFragment.Liste
 
     @Override
     public void onTitleChanged(String title) {
-        //When DetailFragment is inside SearchA ctivity it doesn't changes the activity title.
+        //When LoadBeerInfoPresenterFragment is inside SearchA ctivity it doesn't changes the activity title.
 
     }
 
     @Override
     public void onImageChanged(String imgUrl) {
-        //When DetailFragment is inside SearchActivity it doesn't changes the toolbar image.
+        //When LoadBeerInfoPresenterFragment is inside SearchActivity it doesn't changes the toolbar image.
     }
 
 

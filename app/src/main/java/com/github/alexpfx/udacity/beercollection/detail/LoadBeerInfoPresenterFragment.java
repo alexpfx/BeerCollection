@@ -15,8 +15,8 @@ import com.github.alexpfx.udacity.beercollection.BaseFragment;
 import com.github.alexpfx.udacity.beercollection.BeerApp;
 import com.github.alexpfx.udacity.beercollection.Constants;
 import com.github.alexpfx.udacity.beercollection.R;
-import com.github.alexpfx.udacity.beercollection.beer.detail.DetailPresenter;
-import com.github.alexpfx.udacity.beercollection.beer.detail.DetailView;
+import com.github.alexpfx.udacity.beercollection.beer.detail.LoadBeerInfoPresenter;
+import com.github.alexpfx.udacity.beercollection.beer.detail.LoadBeerInfoPresenterView;
 import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
 
 import javax.inject.Inject;
@@ -24,12 +24,12 @@ import javax.inject.Inject;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DetailFragment extends BaseFragment implements DetailView {
+public class LoadBeerInfoPresenterFragment extends BaseFragment implements LoadBeerInfoPresenterView {
 
-    private static final String TAG = "DetailFragment";
+    private static final String TAG = "LoadBeerInfoPresenterFragment";
 
     @Inject
-    DetailPresenter detailPresenter;
+    LoadBeerInfoPresenter loadBeerInfoPresenter;
 //    private DetailViewHolder detailViewHolder;
 
 
@@ -38,7 +38,7 @@ public class DetailFragment extends BaseFragment implements DetailView {
 
 
 
-    public DetailFragment() {
+    public LoadBeerInfoPresenterFragment() {
         setHasOptionsMenu(true);
         // Required empty public constructor
     }
@@ -70,7 +70,7 @@ public class DetailFragment extends BaseFragment implements DetailView {
 //        });
 
         String beerId = getActivityIntent().getStringExtra(Constants.KEY_BEER_ID);
-        detailPresenter.load(beerId);
+        loadBeerInfoPresenter.load(beerId);
         return view;
 
     }
@@ -78,7 +78,7 @@ public class DetailFragment extends BaseFragment implements DetailView {
     @Override
     protected void injectDependencies(BeerApp app) {
         app.getDetailSubComponent().inject(this);
-        detailPresenter.bind(this);
+        loadBeerInfoPresenter.bind(this);
     }
 
     @Override
@@ -90,7 +90,7 @@ public class DetailFragment extends BaseFragment implements DetailView {
     }
 
     @Override
-    public void showBeer(Beer beer) {
+    public void showBeerInfo(Beer beer) {
         listener.onTitleChanged(beer.getName());
         listener.onImageChanged(beer.getLabelLarge());
 
@@ -119,7 +119,7 @@ public class DetailFragment extends BaseFragment implements DetailView {
     @Override
     public void onPause() {
         super.onPause();
-        detailPresenter.onDestroy();
+        loadBeerInfoPresenter.onDestroy();
     }
 
     @Override
