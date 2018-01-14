@@ -1,7 +1,9 @@
 package com.github.alexpfx.udacity.beercollection.dagger;
 
-import com.github.alexpfx.udacity.beercollection.beer.detail.BeerInteractor;
-import com.github.alexpfx.udacity.beercollection.beer.detail.BeerInteractorImpl;
+import com.github.alexpfx.udacity.beercollection.beer.beer.BeerInteractor;
+import com.github.alexpfx.udacity.beercollection.beer.beer.BeerInteractorImpl;
+import com.github.alexpfx.udacity.beercollection.beer.beer.LoadBeerInfoPresenter;
+import com.github.alexpfx.udacity.beercollection.beer.beer.LoadBeerInfoPresenterImpl;
 import com.github.alexpfx.udacity.beercollection.databaselib.dagger.PerActivity;
 
 import dagger.Module;
@@ -14,6 +16,12 @@ public class BeerModule {
     @Provides
     BeerInteractor beerInteractor(BeerInteractorImpl beerInteractor) {
         return beerInteractor;
+    }
+
+    @PerActivity
+    @Provides
+    LoadBeerInfoPresenter detailPresenter(LoadBeerInfoPresenterImpl detailPresenterImpl) {
+        return detailPresenterImpl;
     }
 
 

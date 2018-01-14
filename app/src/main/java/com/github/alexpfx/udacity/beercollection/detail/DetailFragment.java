@@ -15,8 +15,8 @@ import com.github.alexpfx.udacity.beercollection.BaseFragment;
 import com.github.alexpfx.udacity.beercollection.BeerApp;
 import com.github.alexpfx.udacity.beercollection.Constants;
 import com.github.alexpfx.udacity.beercollection.R;
-import com.github.alexpfx.udacity.beercollection.beer.detail.LoadBeerInfoPresenter;
-import com.github.alexpfx.udacity.beercollection.beer.detail.LoadBeerInfoPresenterView;
+import com.github.alexpfx.udacity.beercollection.beer.beer.LoadBeerInfoPresenter;
+import com.github.alexpfx.udacity.beercollection.beer.beer.LoadBeerInfoPresenterView;
 import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
 
 import javax.inject.Inject;
@@ -24,9 +24,9 @@ import javax.inject.Inject;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LoadBeerInfoPresenterFragment extends BaseFragment implements LoadBeerInfoPresenterView {
+public class DetailFragment extends BaseFragment implements LoadBeerInfoPresenterView {
 
-    private static final String TAG = "LoadBeerInfoPresenterFragment";
+    private static final String TAG = "DetailFragment";
 
     @Inject
     LoadBeerInfoPresenter loadBeerInfoPresenter;
@@ -38,7 +38,7 @@ public class LoadBeerInfoPresenterFragment extends BaseFragment implements LoadB
 
 
 
-    public LoadBeerInfoPresenterFragment() {
+    public DetailFragment() {
         setHasOptionsMenu(true);
         // Required empty public constructor
     }

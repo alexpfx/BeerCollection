@@ -1,4 +1,4 @@
-package com.github.alexpfx.udacity.beercollection.beer.detail;
+package com.github.alexpfx.udacity.beercollection.beer.beer;
 
 import com.github.alexpfx.udacity.beercollection.base.BaseView;
 import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;

@@ -169,7 +169,7 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
                 .load(beer.getLabelLarge())
                 .placeholder(R.drawable.ic_warning_black_24dp)
                 .error(R.drawable.ic_error_outline_black_24dp)
-                .resize(2000, 2000)
+                .resize(320, 320)
 //                .transform(new CropMiddleFirstPixelTransformation())
                 .centerCrop()
                 .into(target);

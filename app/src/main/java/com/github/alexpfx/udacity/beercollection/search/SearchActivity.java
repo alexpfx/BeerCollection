@@ -2,8 +2,10 @@ package com.github.alexpfx.udacity.beercollection.search;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.github.alexpfx.udacity.beercollection.BaseActivity;
@@ -12,9 +14,12 @@ import com.github.alexpfx.udacity.beercollection.Constants;
 import com.github.alexpfx.udacity.beercollection.R;
 import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerPresenter;
 import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerView;
+import com.github.alexpfx.udacity.beercollection.beer.beer.LoadBeerInfoPresenter;
+import com.github.alexpfx.udacity.beercollection.beer.beer.LoadBeerInfoPresenterView;
 import com.github.alexpfx.udacity.beercollection.detail.DetailActivity;
-import com.github.alexpfx.udacity.beercollection.detail.LoadBeerInfoPresenterFragment;
+import com.github.alexpfx.udacity.beercollection.detail.DetailFragment;
 import com.github.alexpfx.udacity.beercollection.domain.model.DrinkBeerUpdateItem;
+import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
 import com.github.alexpfx.udacity.beercollection.utils.ToolbarUtils;
 import com.mikepenz.iconics.context.IconicsLayoutInflater2;
 
@@ -27,7 +32,8 @@ import butterknife.ButterKnife;
 /**
  * Adicionar indicador de loading
  */
-public class SearchActivity extends BaseActivity implements SearchFragment.Listener, LoadBeerInfoPresenterFragment.Listener, DrinkBeerView {
+public class SearchActivity extends BaseActivity implements SearchFragment.Listener, DetailFragment.Listener,
+        DrinkBeerView, LoadBeerInfoPresenterView {
     private static final String TAG = "SearchActivity";
 
 
@@ -43,7 +49,8 @@ public class SearchActivity extends BaseActivity implements SearchFragment.Liste
     @Inject
     DrinkBeerPresenter drinkBeerPresenter;
 
-
+    @Inject
+    LoadBeerInfoPresenter loadBeerInfoPresenter;
 
 
     @Override
@@ -61,18 +68,19 @@ public class SearchActivity extends BaseActivity implements SearchFragment.Liste
     }
 
     @Override
+    protected void injectDependencies(BeerApp app) {
+        app.getSearchSubComponent().inject(this);
+
+        drinkBeerPresenter.bind(this);
+        loadBeerInfoPresenter.bind(this);
+
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         drinkBeerPresenter.onDestroy();
     }
-
-    @Override
-    protected void injectDependencies(BeerApp app) {
-        app.getSearchSubComponent().inject(this);
-//        drinkBeerPresenter.bind(this);
-
-    }
-
 
     @Override
     public void onDetail(String id) {
@@ -81,26 +89,12 @@ public class SearchActivity extends BaseActivity implements SearchFragment.Liste
         setIntent(intent);
 
         if (isMultiPane) {
-            LoadBeerInfoPresenterFragment detailFragment = new LoadBeerInfoPresenterFragment();
+            DetailFragment detailFragment = new DetailFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.container_pane2, detailFragment).commit();
         } else {
             DetailActivity.startDetail(this, id);
         }
 
-    }
-
-
-
-
-    @Override
-    public void onTitleChanged(String title) {
-        //When LoadBeerInfoPresenterFragment is inside SearchA ctivity it doesn't changes the activity title.
-
-    }
-
-    @Override
-    public void onImageChanged(String imgUrl) {
-        //When LoadBeerInfoPresenterFragment is inside SearchActivity it doesn't changes the toolbar image.
     }
 
 
@@ -111,14 +105,40 @@ public class SearchActivity extends BaseActivity implements SearchFragment.Liste
 
 
     @Override
-    public void showDrinkAdded(String id, int quantity) {
-
-
-
+    public void showDrinkAdded(String beerId, int quantity) {
+        loadBeerInfoPresenter.load(beerId);
     }
 
     @Override
     public void showErrorOnDrinkBeer(Object error) {
 
+    }
+
+    @Override
+    public void showBeerInfo(Beer beer) {
+        Snackbar.make(getBaseContentView(), getString(R.string.message_beer_added_collection, beer.getName()),
+                Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showLoadError(Throwable throwable) {
+        Log.e(TAG, "showLoadError: ", throwable);
+
+        /*If reaches here it indicates that for any reason the beer info cannot be loaded, even if the beer has been
+        added tho collection, so it
+         shows the message without show the name of the beer. */
+        Snackbar.make(getBaseContentView(), getString(R.string.message_beer_added_collection, ""), Snackbar
+                .LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onTitleChanged(String title) {
+        //When DetailFragment is inside SearchActivity ctivity it doesn't changes the activity title.
+
+    }
+
+    @Override
+    public void onImageChanged(String imgUrl) {
+        //When DetailFragment is inside SearchActivity it doesn't changes the toolbar image.
     }
 }

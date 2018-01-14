@@ -360,8 +360,8 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     }
 
     @Override
-    public void showDrinkAdded(String id, int quantity) {
-        adapter.addTempItem(new CollectionItemVO(id, new Date().getTime(), quantity));
+    public void showDrinkAdded(String beerId, int quantity) {
+        adapter.addTempItem(new CollectionItemVO(beerId, new Date().getTime(), quantity));
         if (quantity > 0) {
             Snackbar.make(swipeRefreshCollection, getResources().getQuantityString(R.plurals
                     .message_you_drink_more_beers, quantity, quantity), Snackbar

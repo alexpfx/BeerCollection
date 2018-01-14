@@ -124,6 +124,7 @@ public class SearchAdapter extends AbstractBaseAdapter<SearchAdapter.SeachViewHo
             txtBeerName.setText(beerName);
             txtBeerStyle.setText(beer.getStyle());
 
+
             Picasso.with(context.get()).load(beer.getLabelIcon())
                     .resize(256, 256)
                     .transform(new CropMiddleFirstPixelTransformation())

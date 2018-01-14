@@ -2,7 +2,7 @@ package com.github.alexpfx.udacity.beercollection.beer.collection;
 
 import com.github.alexpfx.udacity.beercollection.Constants;
 import com.github.alexpfx.udacity.beercollection.Logger;
-import com.github.alexpfx.udacity.beercollection.beer.detail.BeerInteractor;
+import com.github.alexpfx.udacity.beercollection.beer.beer.BeerInteractor;
 import com.github.alexpfx.udacity.beercollection.databaselib.dagger.PerActivity;
 import com.github.alexpfx.udacity.beercollection.databaselib.util.SchedulerProvider;
 import com.github.alexpfx.udacity.beercollection.domain.model.collection.CollectionItem;

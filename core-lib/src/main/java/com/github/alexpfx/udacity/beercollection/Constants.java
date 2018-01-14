@@ -11,7 +11,6 @@ public class Constants {
 
     public static final int TIMEOUT = 30;
 
-
-    public static final String KEY_BEER_NAME = "";
     public static final long CACHE_EXPIRATION = 5;
+
 }

@@ -7,6 +7,6 @@ import com.github.alexpfx.udacity.beercollection.base.BaseView;
  */
 
 public interface DrinkBeerView extends BaseView{
-    void showDrinkAdded(String id, int quantity);
+    void showDrinkAdded(String beerId, int quantity);
     void showErrorOnDrinkBeer(Object error);
 }
