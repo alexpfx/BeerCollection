@@ -33,10 +33,9 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Shar
         .OnSharedPreferenceChangeListener, ClearCollectionView {
 
 
-
+    private static final String TAG = "PreferenceFragment";
     @Inject
     ClearCollectionPresenter presenter;
-
     private Preference.OnPreferenceClickListener onResetClick = preference -> {
         Timber.d(preference.getKey());
         SwitchPreference switchPreference = (SwitchPreference) preference;
@@ -58,7 +57,7 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Shar
         builder.setPositiveButton(R.string.ok,
                 (dialogInterface, i) -> {
                     switchPreference.setChecked(false);
-                    clearCollection ();
+                    clearCollection();
                 });
 
         builder.setNegativeButton(R.string.cancel, (dialogInterface, i) -> switchPreference.setChecked(false));
@@ -69,16 +68,6 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Shar
     private void clearCollection() {
         presenter.clearCollection();
 
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        View view = super.onCreateView(inflater, container, savedInstanceState);
-
-        unbinder = ButterKnife.bind(this, view);
-
-        return view;
     }
 
     @Override
@@ -93,10 +82,10 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Shar
 
     }
 
-    private void injectDependencies (){
+    private void injectDependencies() {
         BeerApp app = (BeerApp) getActivity().getApplication();
         app.getMyCollectionSubComponent().inject(this);
-        presenter.bind(this);
+        presenter.init(this);
     }
 
     private void setupEvents() {
@@ -111,11 +100,29 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Shar
     }
 
     @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder = ButterKnife.bind(this, view);
+        return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
         onResetClick = null;
-        unbinder.unbind();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        presenter.unLoad();
     }
 
     @Override
@@ -124,7 +131,6 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Shar
 
     }
 
-    private static final String TAG = "PreferenceFragment";
     @Override
     public void showClearDataSuccessful() {
         showSnackbarMessage(R.string.message_successful_clear_collection_data);
@@ -132,9 +138,9 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Shar
     }
 
 
-    private void showSnackbarMessage (@StringRes int messageResId){
+    private void showSnackbarMessage(@StringRes int messageResId) {
         View coordinator = getActivity().findViewById(R.id.layout_coordinator);
-        if (coordinator != null){
+        if (coordinator != null) {
             Snackbar.make(coordinator, getString(messageResId), Snackbar
                     .LENGTH_SHORT).show();
         }

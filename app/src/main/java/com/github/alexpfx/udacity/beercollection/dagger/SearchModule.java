@@ -20,8 +20,6 @@ public class SearchModule {
 
     }
 
-
-
     @Provides
     @PerActivity
     public SearchPresenter searchPresenter(DefaultSearchPresenter searchPresenter) {

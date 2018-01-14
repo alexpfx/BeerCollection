@@ -40,7 +40,7 @@ public class CollectionRemoteViewFactory implements RemoteViewsService.RemoteVie
     public void onCreate() {
         BeerApp beerApp = (BeerApp) context.getApplicationContext();
         beerApp.getComponent().plus(new MyCollectionModule()).inject(this);
-        loadCollectionPresenter.bind(this);
+        loadCollectionPresenter.init(this);
         waitForData = new CountDownLatch(1);
     }
 

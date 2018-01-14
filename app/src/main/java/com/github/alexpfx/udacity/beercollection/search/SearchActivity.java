@@ -71,16 +71,19 @@ public class SearchActivity extends BaseActivity implements SearchFragment.Liste
     protected void injectDependencies(BeerApp app) {
         app.getSearchSubComponent().inject(this);
 
-        drinkBeerPresenter.bind(this);
-        loadBeerInfoPresenter.bind(this);
+        drinkBeerPresenter.init(this);
+        loadBeerInfoPresenter.init(this);
 
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        drinkBeerPresenter.onDestroy();
+        drinkBeerPresenter.unLoad();
+        loadBeerInfoPresenter.unLoad();
     }
+
+
 
     @Override
     public void onDetail(String id) {

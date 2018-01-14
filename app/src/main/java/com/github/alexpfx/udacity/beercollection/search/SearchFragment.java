@@ -5,7 +5,6 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,9 +31,6 @@ import butterknife.Unbinder;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class SearchFragment extends BaseFragment implements com.github.alexpfx.udacity.beercollection.databaselib
         .search.SearchView {
 
@@ -60,41 +56,15 @@ public class SearchFragment extends BaseFragment implements com.github.alexpfx.u
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_search, menu);
-        setupSearchView(menu);
-
-    }
-
-    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         listener = (Listener) context;
     }
 
-
-    private void setupSearchView(Menu menu) {
-        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
-
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
-        searchView.setFocusable(true);
-        searchView.setIconified(false);
-        searchView.requestFocus();
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                searchPresenter.search(s);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-
-                return false;
-            }
-        });
+    @Override
+    protected void injectDependencies(BeerApp app) {
+        app.getSearchSubComponent().inject(this);
+        searchPresenter.init(this);
 
     }
 
@@ -108,6 +78,13 @@ public class SearchFragment extends BaseFragment implements com.github.alexpfx.u
         setupEvents();
 
         return view;
+    }
+
+    private void initializeRecyclerView() {
+        rcvSearchResult.setAdapter(adapter);
+        LinearLayoutManager layout = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        rcvSearchResult.setLayoutManager(layout);
+        rcvSearchResult.addItemDecoration(new DividerItemDecoration(getContext(), layout.getOrientation()));
     }
 
     private void setupEvents() {
@@ -127,34 +104,49 @@ public class SearchFragment extends BaseFragment implements com.github.alexpfx.u
         compositeDisposable.add(disposable);
     }
 
-
-
-    private void initializeRecyclerView() {
-        rcvSearchResult.setAdapter(adapter);
-        LinearLayoutManager layout = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        rcvSearchResult.setLayoutManager(layout);
-        rcvSearchResult.addItemDecoration(new DividerItemDecoration(getContext(), layout.getOrientation()));
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        rcvSearchResult.setAdapter(null);
+        unbinder.unbind();
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+        searchPresenter.unLoad();
+        compositeDisposable.dispose();
         listener = null;
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        compositeDisposable.dispose();
-        unbinder.unbind();
-        searchPresenter.onDestroy();
-        adapter = null;
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_search, menu);
+        setupSearchView(menu);
+
     }
 
-    @Override
-    protected void injectDependencies(BeerApp app) {
-        app.getSearchSubComponent().inject(this);
-        searchPresenter.bind(this);
+    private void setupSearchView(Menu menu) {
+        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+        searchView.setFocusable(true);
+        searchView.setIconified(false);
+        searchView.requestFocus();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                searchPresenter.search(s);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
 
     }
 
@@ -195,7 +187,8 @@ public class SearchFragment extends BaseFragment implements com.github.alexpfx.u
 
     public interface Listener {
         void onDetail(String id);
-        void onDownload (String id, String name);
+
+        void onDownload(String id, String name);
 
 
     }

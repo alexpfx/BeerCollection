@@ -27,7 +27,6 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
     private static final String TAG = "CollectionViewHolder";
     private final PublishSubject<View> clickDetailSubject;
     private final PublishSubject<View> clickAddBeerSubject;
-    private final PublishSubject<View> clickHistorySubject;
     private final PublishSubject<View> clickToggleSelectionSubject;
     private final PublishSubject<View> longClickItemViewSubject;
 
@@ -60,7 +59,6 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         this.clickDetailSubject = clickDetailSubject;
         this.clickAddBeerSubject = clickAddBeerSubject;
-        this.clickHistorySubject = clickHistorySubject;
         this.clickToggleSelectionSubject = clickToggleSelectionSubject;
         this.longClickItemViewSubject = longClickItemViewSubject;
 
@@ -77,8 +75,6 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
         RxView.clicks(imageBeerLabel).map(a -> itemView).subscribe(clickDetailSubject);
         RxView.clicks(btnToggleSelection).map(a -> itemView).subscribe(clickToggleSelectionSubject);
         RxView.clicks(btnDrink).map(a -> itemView).subscribe(clickAddBeerSubject);
-        RxView.clicks(textBeerName).map(a -> itemView).subscribe(clickHistorySubject);
-        RxView.clicks(textLastDrinkDate).map(a -> itemView).subscribe(clickHistorySubject);
     }
 
     public synchronized void bind(CollectionItem item, boolean isSelected, boolean isSelectable) {
@@ -105,11 +101,13 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
     }
 
     private void setupLabelView(Beer beer) {
+
+        int targetHeight = 256;
         Picasso.with(context)
                 .load(beer.getLabelLarge())
                 .placeholder(R.drawable.beerplaceholder)
                 .error(R.drawable.ic_warning_white)
-                .resize(320, 320)
+                .resize(targetHeight, targetHeight)
 //                .transform(new CropMiddleFirstPixelTransformation())
                 .centerCrop()
                 .into(imageBeerLabel);

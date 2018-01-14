@@ -13,4 +13,6 @@ public class Constants {
 
     public static final long CACHE_EXPIRATION = 5;
 
+    public static final int DEFAULT_MAX_SEARCH_RESULTS = 10;
+
 }

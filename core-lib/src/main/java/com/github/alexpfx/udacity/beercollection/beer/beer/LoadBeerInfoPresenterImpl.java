@@ -5,6 +5,7 @@ import com.github.alexpfx.udacity.beercollection.databaselib.util.SchedulerProvi
 
 import javax.inject.Inject;
 
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 /**
@@ -17,7 +18,7 @@ public class LoadBeerInfoPresenterImpl implements LoadBeerInfoPresenter {
     private final BeerInteractor interactor;
     private final SchedulerProvider schedulerProvider;
     private LoadBeerInfoPresenterView view;
-    private Disposable subscription;
+    private CompositeDisposable compositeDisposable;
 
 
     @Inject
@@ -28,7 +29,7 @@ public class LoadBeerInfoPresenterImpl implements LoadBeerInfoPresenter {
 
     @Override
     public void load(String beerId) {
-        subscription = interactor
+        Disposable disposable = interactor
                 .load(beerId)
                 .subscribeOn(schedulerProvider.computation())
                 .observeOn(schedulerProvider.mainThread())
@@ -40,20 +41,19 @@ public class LoadBeerInfoPresenterImpl implements LoadBeerInfoPresenter {
                         }, () -> {
                             //TODO
                         });
-    }
 
-
-    @Override
-    public void onDestroy() {
-        if (subscription != null && !subscription.isDisposed()) {
-            subscription.dispose();
-        }
-        this.view = null;
     }
 
     @Override
-    public void bind(LoadBeerInfoPresenterView view) {
+    public void init(LoadBeerInfoPresenterView view) {
         this.view = view;
+        compositeDisposable = new CompositeDisposable();
+    }
+
+    @Override
+    public void unLoad() {
+        this.view = null;
+        compositeDisposable.dispose();
     }
 }
 

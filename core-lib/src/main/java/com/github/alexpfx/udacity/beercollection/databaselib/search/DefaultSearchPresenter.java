@@ -1,5 +1,6 @@
 package com.github.alexpfx.udacity.beercollection.databaselib.search;
 
+import com.github.alexpfx.udacity.beercollection.Constants;
 import com.github.alexpfx.udacity.beercollection.databaselib.dagger.PerActivity;
 import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
 import com.github.alexpfx.udacity.beercollection.databaselib.util.Mappers;
@@ -39,6 +40,7 @@ public class DefaultSearchPresenter implements SearchPresenter {
 
         disposable = searchInteractor.searchBeers(query).cache().toFlowable().flatMapIterable(list -> list)
                 .filter(Mappers.BEER_FILTER)
+                .take(Constants.DEFAULT_MAX_SEARCH_RESULTS)
                 .toList()
                 .subscribeOn(schedulerProvider.computation())
                 .observeOn(schedulerProvider.mainThread())
@@ -55,11 +57,12 @@ public class DefaultSearchPresenter implements SearchPresenter {
                         error -> searchView.showSearchError()
                 );
 
+
     }
 
 
     @Override
-    public void onDestroy() {
+    public void unLoad() {
         if (disposable != null)
             disposable.dispose();
 
@@ -68,7 +71,7 @@ public class DefaultSearchPresenter implements SearchPresenter {
     }
 
     @Override
-    public void bind(SearchView view) {
+    public void init(SearchView view) {
         this.searchView = view;
     }
 }

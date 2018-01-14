@@ -23,11 +23,6 @@ import butterknife.ButterKnife;
 public class DetailActivity extends BaseActivity implements DetailFragment.Listener {
     private static final String TAG = "DetailActivity";
 
-//    LoadBeerInfoPresenter loadBeerInfoPresenter;
-
-//    private DetailViewHolder detailViewHolder;
-
-
 
     @BindView(R.id.collapsing_toolbar)
     CollapsingToolbarLayout collapsingToolbarLayout;
@@ -66,13 +61,6 @@ public class DetailActivity extends BaseActivity implements DetailFragment.Liste
 
     }
 
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-//        loadBeerInfoPresenter.onDestroy();
-//        detailViewHolder.unbind();
-    }
 
     @Override
     public void onTitleChanged(String title) {

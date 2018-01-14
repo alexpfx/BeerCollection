@@ -7,6 +7,9 @@ import com.github.alexpfx.udacity.beercollection.databaselib.util.SchedulerProvi
 
 import javax.inject.Inject;
 
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+
 @PerActivity
 public class CacheCleanerPresenterImpl implements CacheCleanerPresenter {
 
@@ -15,6 +18,7 @@ public class CacheCleanerPresenterImpl implements CacheCleanerPresenter {
 
     private BeerInteractor interactor;
     private SchedulerProvider provider;
+    private CompositeDisposable compositeDisposable;
 
     @Inject
     public CacheCleanerPresenterImpl(BeerInteractor interactor, SchedulerProvider provider) {
@@ -23,19 +27,26 @@ public class CacheCleanerPresenterImpl implements CacheCleanerPresenter {
     }
 
     @Override
-    public void onDestroy() {
-
-
+    public void init(CacheCleanerView view) {
+        this.view = view;
+        compositeDisposable = new CompositeDisposable();
     }
 
     @Override
-    public void bind(CacheCleanerView view) {
-        this.view = view;
+    public void unLoad() {
+        this.view = null;
+        compositeDisposable.dispose();
+
     }
 
     @Override
     public void clearCache(long elapsedTimeLimit) {
-        view.showCacheCleanerStarted ();
-        interactor.clearCache(elapsedTimeLimit).subscribe(aVoid -> view.showCacheWasCleanedUp ());
+        view.showCacheCleanerStarted();
+        Disposable disposable = interactor.clearCache(elapsedTimeLimit).subscribe(aVoid -> view.showCacheWasCleanedUp
+                ());
+
+        compositeDisposable.add(disposable);
+
+
     }
 }

@@ -30,23 +30,14 @@ public class DetailFragment extends BaseFragment implements LoadBeerInfoPresente
 
     @Inject
     LoadBeerInfoPresenter loadBeerInfoPresenter;
-//    private DetailViewHolder detailViewHolder;
 
 
     private Listener listener;
     private DetailViewHolder detailViewHolder;
 
 
-
     public DetailFragment() {
         setHasOptionsMenu(true);
-        // Required empty public constructor
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        detailViewHolder.unbind();
     }
 
     @Override
@@ -56,19 +47,6 @@ public class DetailFragment extends BaseFragment implements LoadBeerInfoPresente
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
         detailViewHolder = new DetailViewHolder(view);
 
-
-//        detailViewHolder = new DetailViewHolder(view);
-//        executeOnActivityActionBar(ab -> ab.setDisplayHomeAsUpEnabled(true));
-//        executeOnActivityActionBar(ab -> ab.setDisplayShowTitleEnabled(true));
-
-
-//        detailViewHolder.getBeerClickObservable().subscribe(view -> {
-//            Beer beer = (Beer) view.getTag();
-//
-//            DrinkBeerFragmentDialog.getInstance(beer.getId()).show(getSupportFragmentManager(),
-// "DrinkBeerFragmentDialog");
-//        });
-
         String beerId = getActivityIntent().getStringExtra(Constants.KEY_BEER_ID);
         loadBeerInfoPresenter.load(beerId);
         return view;
@@ -76,17 +54,43 @@ public class DetailFragment extends BaseFragment implements LoadBeerInfoPresente
     }
 
     @Override
-    protected void injectDependencies(BeerApp app) {
-        app.getDetailSubComponent().inject(this);
-        loadBeerInfoPresenter.bind(this);
+    public void onDestroyView() {
+        super.onDestroyView();
+        detailViewHolder.unbind();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        loadBeerInfoPresenter.unLoad();
+        listener = null;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Log.d(TAG, "onOptionsItemSelected: " + getActivity());
+                NavUtils.navigateUpFromSameTask(getActivity());
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof Listener){
+
+        if (context instanceof Listener) {
             listener = (Listener) context;
         }
+
+    }
+
+    @Override
+    protected void injectDependencies(BeerApp app) {
+        app.getDetailSubComponent().inject(this);
+        loadBeerInfoPresenter.init(this);
     }
 
     @Override
@@ -105,31 +109,9 @@ public class DetailFragment extends BaseFragment implements LoadBeerInfoPresente
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                Log.d(TAG, "onOptionsItemSelected: "+getActivity());
-                NavUtils.navigateUpFromSameTask(getActivity());
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        loadBeerInfoPresenter.onDestroy();
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        listener = null;
-    }
-
     public interface Listener {
         void onTitleChanged(String title);
+
         void onImageChanged(String imgUrl);
     }
 

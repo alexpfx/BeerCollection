@@ -17,7 +17,6 @@ import com.github.alexpfx.udacity.beercollection.utils.CropMiddleFirstPixelTrans
 import com.jakewharton.rxbinding2.view.RxView;
 import com.squareup.picasso.Picasso;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,8 +100,7 @@ public class SearchAdapter extends AbstractBaseAdapter<SearchAdapter.SeachViewHo
         @BindView((R.id.btn_download))
         ImageButton btnDownload;
 
-
-        private WeakReference<Context> context;
+        private Context context;
 
         public SeachViewHolder(View itemView) {
             super(itemView);
@@ -110,7 +108,7 @@ public class SearchAdapter extends AbstractBaseAdapter<SearchAdapter.SeachViewHo
 
             RxView.clicks(itemView).map(a -> itemView).subscribe(clickDetailViewObservable);
             RxView.clicks(btnDownload).map(a -> itemView).subscribe(clickDownloadViewObservable);
-            context = new WeakReference<>(itemView.getContext());
+            this.context = itemView.getContext();
             this.itemView = itemView;
         }
 
@@ -125,7 +123,7 @@ public class SearchAdapter extends AbstractBaseAdapter<SearchAdapter.SeachViewHo
             txtBeerStyle.setText(beer.getStyle());
 
 
-            Picasso.with(context.get()).load(beer.getLabelIcon())
+            Picasso.with(context).load(beer.getLabelIcon())
                     .resize(256, 256)
                     .placeholder(R.drawable.beerplaceholder)
                     .error(R.drawable.ic_error_outline_white)
@@ -135,6 +133,7 @@ public class SearchAdapter extends AbstractBaseAdapter<SearchAdapter.SeachViewHo
                     .into(imgBeerLabel);
 
         }
+
 
 
     }

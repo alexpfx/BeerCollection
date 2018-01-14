@@ -18,7 +18,6 @@ import com.github.alexpfx.udacity.beercollection.dagger.SearchSubComponent;
 import com.github.alexpfx.udacity.beercollection.databaselib.dagger.ServiceModule;
 import com.github.alexpfx.udacity.beercollection.domain.model.remote.config.BreweryDbConfig;
 import com.squareup.leakcanary.AndroidExcludedRefs;
-import com.squareup.leakcanary.ExcludedRefs;
 import com.squareup.leakcanary.LeakCanary;
 
 import timber.log.Timber;
@@ -58,11 +57,15 @@ public class BeerApp extends Application {
         if (LeakCanary.isInAnalyzerProcess(this)) {
             return;
         }
-        ExcludedRefs excludedRefs = AndroidExcludedRefs.createAndroidDefaults()
-                .instanceField("android.view.Choreographer$FrameDisplayEventReceiver",
-                        "mMessageQueue").build();
 
-        LeakCanary.refWatcher(this).excludedRefs(excludedRefs).buildAndInstall();
+
+        LeakCanary.refWatcher(this).excludedRefs(AndroidExcludedRefs.createAppDefaults()
+                .build())
+                .buildAndInstall();
+
+
+
+
     }
 
     private void startCacheCleanerService() {

@@ -20,7 +20,7 @@ public class LoginActivity extends BaseActivity {
     @Inject
     FirebaseAuth firebaseAuth;
 
-    public static void startLoginActivity (Context context){
+    public static void startLoginActivity(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
         context.startActivity(intent);
     }
@@ -47,6 +47,11 @@ public class LoginActivity extends BaseActivity {
     }
 
     @Override
+    protected void injectDependencies(BeerApp app) {
+        app.getComponent().inject(this);
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
@@ -54,10 +59,5 @@ public class LoginActivity extends BaseActivity {
         } else {
             finish();
         }
-    }
-
-    @Override
-    protected void injectDependencies(BeerApp app) {
-        app.getComponent().inject(this);
     }
 }

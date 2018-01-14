@@ -1,6 +1,9 @@
 package com.github.alexpfx.udacity.beercollection.collection;
 
+import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +19,8 @@ import com.github.alexpfx.udacity.beercollection.utils.SelectableAdapter;
 import com.github.alexpfx.udacity.beercollection.utils.SelectableItems;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -27,6 +32,9 @@ import io.reactivex.subjects.PublishSubject;
 public class CollectionAdapter extends RecyclerView.Adapter<CollectionViewHolder> implements Filter.FilterListener {
 
     private static final String TAG = "CollectionAdapter";
+    public static final String SELECTABLES_STATE_KEY = "selectablesStateKey";
+    public static final String RECYCLER_STATE_KEY = "recyclerStateKey";
+    private static final String RECYCLER_POSITION_KEY = "recyclerPositionkey";
     private final PublishSubject<View> detailClickSubject = PublishSubject.create();
     private final PublishSubject<View> addBeerClickSubject = PublishSubject.create();
     private final PublishSubject<View> historyClickSubject = PublishSubject.create();
@@ -43,6 +51,20 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionViewHolder
     private io.reactivex.functions.Predicate<View> isNotSeletionMode = view -> !selectable;
     private io.reactivex.functions.Predicate<View> isSeletionMode = view -> selectable;
     private SelectableAdapter selectables = new SelectableItems();
+    private Comparator<? super CollectionItem> comparable = (Comparator<CollectionItem>) (o1, o2) -> {
+        if (o1.getLastDate() == null && o1.getLastDate() == null) {
+            return 0;
+        }
+        if (o1.getLastDate() == null) {
+            return 1;
+        }
+        if (o1.getLastDate() == null) {
+            return -1;
+        }
+
+        return o2.getLastDate().compareTo(o1.getLastDate());
+    };
+    private RecyclerView recyclerView;
 
     @Inject
     public CollectionAdapter() {
@@ -61,41 +83,56 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionViewHolder
         holder.bind(item, selectables.isItemChecked(position), isSelectable());
     }
 
-    public void deleteItemById (String beerId){
+    @Override
+    public int getItemCount() {
+        return filteredItems == null ? 0 : filteredItems.size();
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        this.recyclerView = recyclerView;
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+        this.recyclerView = null;
+    }
+
+    public boolean isSelectable() {
+        return selectable;
+    }
+
+    public void setSelectable(boolean selectable) {
+        this.selectable = selectable;
+
+    }
+
+    public void deleteItemById(String beerId) {
         CollectionItem willBeDeleted = findItem(beerId);
-        if (willBeDeleted != null){
+        if (willBeDeleted != null) {
             items.remove(willBeDeleted);
+            setItems(items);
         }
         notifyDataSetChanged();
     }
 
-
     private CollectionItem findItem(String beerId) {
-        CollectionItem willBeDeleted;
         for (CollectionItem item : items) {
-            if (beerId.equals(item.getBeer().getId())){
+            if (beerId.equals(item.getBeer().getId())) {
                 return item;
             }
         }
         return null;
     }
 
-    @Override
-    public int getItemCount() {
-        return filteredItems == null ? 0 : filteredItems.size();
-    }
-
-
-
-
     public void setItems(List<CollectionItem> items) {
+        Collections.sort(items, comparable);
         this.items = items;
         this.filteredItems = items;
         filterBeer = new FilterBeer(items);
 
         notifyDataSetChanged();
     }
-
 
     public List<String> getSelectedItemIds() {
         int i = 0;
@@ -107,7 +144,6 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionViewHolder
         }
         return list;
     }
-
 
     /**
      * Adds a temp CollectionItemVO to the beer item and allows user to see the change on quantity immediately
@@ -121,7 +157,8 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionViewHolder
         CollectionItem item = searchItemFromItemVo(collectionItemVO);
         if (item != null) {
             item.add(collectionItemVO);
-            setItems(items);
+            notifyDataSetChanged();
+//            setItems(items);
         }
     }
 
@@ -162,16 +199,6 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionViewHolder
         return selectables.isItemChecked(position);
     }
 
-    public boolean isSelectable() {
-        return selectable;
-    }
-
-
-    public void setSelectable(boolean selectable) {
-        this.selectable = selectable;
-
-    }
-
     public boolean hasSelection() {
         return selectables.hasSelection();
     }
@@ -181,11 +208,36 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionViewHolder
     }
 
     public Parcelable onSaveInstanceState() {
-        return selectables;
+        LinearLayoutManager layoutManager = getLinearLayoutManager();
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(SELECTABLES_STATE_KEY, selectables);
+        bundle.putParcelable(RECYCLER_STATE_KEY, layoutManager.onSaveInstanceState());
+        int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
+
+        bundle.putInt(RECYCLER_POSITION_KEY, lastVisibleItemPosition);
+
+        return bundle;
     }
 
-    public void onRestoreInstanceState(Parcelable parcelable) {
-        this.selectables = (SelectableAdapter) parcelable;
+
+
+    private LinearLayoutManager getLinearLayoutManager (){
+        return (LinearLayoutManager) recyclerView.getLayoutManager();
+    }
+
+    final Handler handler = new Handler();
+
+    public void onRestoreInstanceState(Parcelable state) {
+        if (state instanceof Bundle){
+            LinearLayoutManager layoutManager = getLinearLayoutManager();
+
+            Bundle newState = (Bundle) state;
+            this.selectables = (SelectableAdapter) newState.get(SELECTABLES_STATE_KEY);
+            layoutManager.onRestoreInstanceState(newState.getParcelable(RECYCLER_STATE_KEY));
+
+
+        }
 
     }
 
@@ -218,7 +270,6 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionViewHolder
         return longClickItemViewSubject.hide();
     }
 
-
     private static class FilterBeer extends Filter {
 
         private List<CollectionItem> filteredItems;
@@ -226,6 +277,14 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionViewHolder
 
         public FilterBeer(List<CollectionItem> items) {
             this.items = items;
+        }
+
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            String searchTerm = charSequence.toString().toLowerCase();
+            List<CollectionItem> items = filter(item -> item.getBeer().getName()
+                    .toLowerCase().contains(searchTerm) || searchTerm.isEmpty());
+            return createResults(items);
         }
 
         private List<CollectionItem> filter(Predicate<CollectionItem> predicate) {
@@ -238,14 +297,6 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionViewHolder
                 }
             }
             return filtered;
-        }
-
-        @Override
-        protected FilterResults performFiltering(CharSequence charSequence) {
-            String searchTerm = charSequence.toString().toLowerCase();
-            List<CollectionItem> items = filter(item -> item.getBeer().getName()
-                    .toLowerCase().contains(searchTerm) || searchTerm.isEmpty());
-            return createResults(items);
         }
 
         FilterResults createResults(List<CollectionItem> items) {
@@ -263,7 +314,6 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionViewHolder
             return filteredItems;
         }
     }
-
 
 }
 

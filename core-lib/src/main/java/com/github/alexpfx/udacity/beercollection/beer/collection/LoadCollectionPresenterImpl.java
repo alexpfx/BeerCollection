@@ -25,9 +25,10 @@ public class LoadCollectionPresenterImpl implements LoadCollectionPresenter {
     private final MyCollectionInteractor collectionInteractor;
     private final SchedulerProvider provider;
     private final Logger logger;
+    private CompositeDisposable compositeDisposable;
     private MyCollectionView view;
     private BeerInteractor beerInteractor;
-    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+
 
 
     @Inject
@@ -46,6 +47,7 @@ public class LoadCollectionPresenterImpl implements LoadCollectionPresenter {
     @Override
     public void load() {
         view.showLoading();
+
 
         Disposable disposable = collectionInteractor.load().timeout(Constants.TIMEOUT, TimeUnit.SECONDS).toFlowable()
                 .flatMap
@@ -87,12 +89,15 @@ public class LoadCollectionPresenterImpl implements LoadCollectionPresenter {
     }
 
     @Override
-    public void onDestroy() {
-        compositeDisposable.dispose();
+    public void init(MyCollectionView view) {
+        this.view = view;
+        compositeDisposable = new CompositeDisposable();
     }
 
     @Override
-    public void bind(MyCollectionView view) {
-        this.view = view;
+    public void unLoad() {
+        compositeDisposable.dispose();
+        view = null;
+
     }
 }

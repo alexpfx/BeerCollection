@@ -25,8 +25,7 @@ public class DrinkBeerFragmentDialog extends DialogFragment {
     private Listener listener;
 
 
-
-    public static DrinkBeerFragmentDialog getInstance (String beerId, Listener listener){
+    public static DrinkBeerFragmentDialog getInstance(String beerId, Listener listener) {
         DrinkBeerFragmentDialog instance = getInstance(beerId);
         instance.listener = listener;
         return instance;
@@ -63,13 +62,13 @@ public class DrinkBeerFragmentDialog extends DialogFragment {
         inputQuantity.setMaxValue(10);
 
         builder.setPositiveButton(R.string.ok, (dialogInterface, id) -> {
-            if (listener != null){
+            if (listener != null) {
                 listener.onPositiveClick(inputQuantity.getValue());
             }
         });
 
         builder.setNegativeButton(R.string.cancel, (dialogInterface, i) -> {
-            if (listener != null){
+            if (listener != null) {
                 listener.onNegativeClick();
             }
         });
@@ -85,7 +84,7 @@ public class DrinkBeerFragmentDialog extends DialogFragment {
         void onNegativeClick();
     }
 
-    public static abstract class PositiveClickListener implements Listener{
+    public static abstract class PositiveClickListener implements Listener {
         @Override
         public void onNegativeClick() {
 

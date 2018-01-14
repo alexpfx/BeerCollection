@@ -3,7 +3,6 @@ package com.github.alexpfx.udacity.beercollection.collection;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.Guideline;
@@ -15,12 +14,12 @@ import android.widget.TextView;
 
 import com.github.alexpfx.udacity.beercollection.BaseActivity;
 import com.github.alexpfx.udacity.beercollection.BeerApp;
-import com.github.alexpfx.udacity.beercollection.preference.PreferenceActivity;
 import com.github.alexpfx.udacity.beercollection.R;
-import com.github.alexpfx.udacity.beercollection.utils.ToolbarUtils;
 import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerPresenter;
 import com.github.alexpfx.udacity.beercollection.detail.DetailActivity;
+import com.github.alexpfx.udacity.beercollection.preference.PreferenceActivity;
 import com.github.alexpfx.udacity.beercollection.search.SearchActivity;
+import com.github.alexpfx.udacity.beercollection.utils.ToolbarUtils;
 
 import javax.inject.Inject;
 
@@ -28,7 +27,6 @@ import butterknife.BindBool;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.disposables.CompositeDisposable;
 
 public class MyCollectionActivity extends BaseActivity implements MyCollectionFragment.Listener {
 
@@ -49,7 +47,7 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionFr
     @Nullable
     @BindView(R.id.guideline)
     Guideline guideline;
-    CompositeDisposable compositeDisposable = new CompositeDisposable();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +71,6 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionFr
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        compositeDisposable.dispose();
     }
 
     @Override
@@ -83,7 +80,7 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionFr
 
     @OnClick(R.id.fab)
     public void onFabClick() {
-        Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
+        Intent intent = new Intent(this, SearchActivity.class);
         startActivity(intent);
     }
 
@@ -105,20 +102,6 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionFr
         DetailActivity.startDetail(getApplicationContext(), beerId);
     }
 
-    public void replaceFragment(@IdRes int resId, Fragment fragment, String tag) {
-        getSupportFragmentManager().beginTransaction().addToBackStack(tag).replace(resId, fragment,
-                tag).commit();
-    }
-
-    @Override
-    public void navigateToHistory(String beerId) {
-        HistoryFragment fragment = new HistoryFragment();
-        if (isMultiPane) {
-            replaceFragment(R.id.container_pane2, fragment, HISTORY_FRAGMENT_TAG);
-        } else {
-            replaceFragment(R.id.container_my_collection, fragment, HISTORY_FRAGMENT_TAG);
-        }
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -55,13 +55,13 @@ public class CacheCleanerIntentService extends BaseIntentService implements Cach
     @Override
     public void injectDependencies(BeerApp app) {
         app.getCacheCleanerSubComponent().inject(this);
-        presenter.bind(this);
+        presenter.init(this);
     }
 
     @Override
     public void onDestroy() {
 
-        Log.d(TAG, "onDestroy: cache");
+        Log.d(TAG, "unLoad: cache");
         super.onDestroy();
     }
 }
