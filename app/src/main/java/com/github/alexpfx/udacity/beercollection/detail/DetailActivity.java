@@ -83,6 +83,8 @@ public class DetailActivity extends BaseActivity implements DetailFragment.Liste
     @Override
     public void onImageChanged(String imgUrl) {
         Picasso.with(this).load(imgUrl)
+                .placeholder(R.drawable.beerplaceholder)
+                .error(R.drawable.ic_warning_white)
                 .resize(640, 640)
                 .transform(new CropMiddleFirstPixelTransformation())
                 .centerCrop()

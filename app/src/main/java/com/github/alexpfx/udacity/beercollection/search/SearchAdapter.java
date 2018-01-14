@@ -127,6 +127,8 @@ public class SearchAdapter extends AbstractBaseAdapter<SearchAdapter.SeachViewHo
 
             Picasso.with(context.get()).load(beer.getLabelIcon())
                     .resize(256, 256)
+                    .placeholder(R.drawable.beerplaceholder)
+                    .error(R.drawable.ic_error_outline_white)
                     .transform(new CropMiddleFirstPixelTransformation())
                     .transform(new CropCircleTransformation())
                     .centerCrop()
