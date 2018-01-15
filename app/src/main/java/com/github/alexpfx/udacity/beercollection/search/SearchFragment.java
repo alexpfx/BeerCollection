@@ -1,19 +1,18 @@
 package com.github.alexpfx.udacity.beercollection.search;
 
 
-import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
 
 import com.github.alexpfx.udacity.beercollection.BaseFragment;
 import com.github.alexpfx.udacity.beercollection.BeerApp;
@@ -27,6 +26,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -35,20 +35,17 @@ public class SearchFragment extends BaseFragment implements com.github.alexpfx.u
         .search.SearchView {
 
 
+    private static final String TAG = "SearchFragment";
     @BindView(R.id.rcv_search_result)
     RecyclerView rcvSearchResult;
-
     @Inject
     SearchPresenter searchPresenter;
-
     @Inject
     SearchAdapter adapter;
-
+    @BindView(R.id.edt_search_query)
+    TextInputEditText edtSearchQuery;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
-
     Listener listener;
-
-
     private Unbinder unbinder;
 
     public SearchFragment() {
@@ -73,6 +70,7 @@ public class SearchFragment extends BaseFragment implements com.github.alexpfx.u
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         unbinder = ButterKnife.bind(this, view);
+
         initializeRecyclerView();
 
         setupEvents();
@@ -105,6 +103,21 @@ public class SearchFragment extends BaseFragment implements com.github.alexpfx.u
     }
 
     @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+
+        if (savedInstanceState != null) {
+
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+
+
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         rcvSearchResult.setAdapter(null);
@@ -117,37 +130,6 @@ public class SearchFragment extends BaseFragment implements com.github.alexpfx.u
         searchPresenter.unLoad();
         compositeDisposable.dispose();
         listener = null;
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_search, menu);
-        setupSearchView(menu);
-
-    }
-
-    private void setupSearchView(Menu menu) {
-        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
-
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
-        searchView.setFocusable(true);
-        searchView.setIconified(false);
-        searchView.requestFocus();
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                searchPresenter.search(s);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                return false;
-            }
-        });
-
     }
 
     @Override
@@ -185,6 +167,14 @@ public class SearchFragment extends BaseFragment implements com.github.alexpfx.u
         adapter.clear();
     }
 
+    @OnClick(R.id.button_search)
+    public void onSearchClick(View view) {
+        String query = edtSearchQuery.getText().toString();
+        if (!query.isEmpty()) {
+            searchPresenter.search(query);
+        }
+    }
+
     public interface Listener {
         void onDetail(String id);
 
@@ -207,5 +197,6 @@ public class SearchFragment extends BaseFragment implements com.github.alexpfx.u
 //        drinkBeerPresenter.drink(new DrinkBeerUpdateItem(beerId, 0));
 //        finish();
 //    });
+
 
 }

@@ -76,6 +76,9 @@ public class SearchActivity extends BaseActivity implements SearchFragment.Liste
 
     }
 
+
+
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

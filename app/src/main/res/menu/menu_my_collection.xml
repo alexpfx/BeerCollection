@@ -2,13 +2,6 @@
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="com.github.alexpfx.udacity.beercollection.collection.MyCollectionActivity">
-    <item android:id="@+id/search"
-          android:title="@string/search"
-          app:showAsAction="ifRoom"
-          android:icon="@drawable/ic_search_white_24dp"
-          android:orderInCategory="4"
-          app:actionViewClass="android.widget.SearchView"/>
-
 
     <item android:id="@+id/action_cancel_edit"
           android:title="@string/delete"
@@ -24,6 +17,13 @@
           android:icon="@drawable/ic_delete_black_24dp"
         />
 
+
+    <item android:id="@+id/search"
+          android:title="@string/search"
+          app:showAsAction="ifRoom"
+          android:icon="@drawable/ic_search_white_24dp"
+          android:orderInCategory="1"
+          app:actionViewClass="android.widget.SearchView"/>
 
 
     <item

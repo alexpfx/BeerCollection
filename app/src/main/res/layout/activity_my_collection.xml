@@ -13,9 +13,7 @@
 
     <include layout="@layout/layout_toolbar"/>
 
-    <include
-        layout="@layout/content_my_collection"
-        />
+    <include layout="@layout/content_my_collection"/>
 
 
     <android.support.design.widget.FloatingActionButton
@@ -24,12 +22,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
+        android:scaleType="center"
+        app:fabSize="normal"
         app:ico_color="@color/icons"
         app:ico_icon="cmd_plus"
-        app:fabSize="normal"
-        app:ico_size="24dp"
         app:ico_padding="4dp"
-        android:scaleType="center"
+        app:ico_size="24dp"
         />
 
 </android.support.design.widget.CoordinatorLayout>

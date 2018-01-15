@@ -11,10 +11,7 @@
 
     <include layout="@layout/layout_toolbar"/>
 
-
-    <include
-        android:id="@+id/content_search"
-        layout="@layout/content_search_activity"/>
+    <include layout="@layout/content_search_activity"/>
 
 
 </android.support.design.widget.CoordinatorLayout>
