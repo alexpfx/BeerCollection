@@ -16,14 +16,18 @@
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toStartOf="@id/button_search"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+
+        >
 
         <android.support.design.widget.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/edt_search_query"
             android:hint="@string/label_search_beer_name"
+            android:maxLines="1"
             />
+
 
 
     </android.support.design.widget.TextInputLayout>

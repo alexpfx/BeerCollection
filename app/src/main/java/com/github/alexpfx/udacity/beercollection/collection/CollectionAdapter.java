@@ -1,7 +1,6 @@
 package com.github.alexpfx.udacity.beercollection.collection;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -226,7 +225,6 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionViewHolder
         return (LinearLayoutManager) recyclerView.getLayoutManager();
     }
 
-    final Handler handler = new Handler();
 
     public void onRestoreInstanceState(Parcelable state) {
         if (state instanceof Bundle){

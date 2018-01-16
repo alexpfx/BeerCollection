@@ -100,6 +100,8 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionFr
     @Override
     public void navigateToDetail(String beerId) {
         DetailActivity.startDetail(getApplicationContext(), beerId);
+
+
     }
 
 

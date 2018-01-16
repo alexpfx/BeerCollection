@@ -15,4 +15,5 @@ public class Constants {
 
     public static final int DEFAULT_MAX_SEARCH_RESULTS = 10;
 
+    public static final long QUERY_DEBONCE_TIME = 500;
 }

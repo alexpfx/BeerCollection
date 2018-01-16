@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,11 +15,14 @@ import android.view.ViewGroup;
 
 import com.github.alexpfx.udacity.beercollection.BaseFragment;
 import com.github.alexpfx.udacity.beercollection.BeerApp;
+import com.github.alexpfx.udacity.beercollection.Constants;
 import com.github.alexpfx.udacity.beercollection.R;
 import com.github.alexpfx.udacity.beercollection.databaselib.search.SearchPresenter;
 import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
+import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -28,6 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
@@ -44,6 +47,7 @@ public class SearchFragment extends BaseFragment implements com.github.alexpfx.u
     SearchAdapter adapter;
     @BindView(R.id.edt_search_query)
     TextInputEditText edtSearchQuery;
+
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     Listener listener;
     private Unbinder unbinder;
@@ -73,6 +77,7 @@ public class SearchFragment extends BaseFragment implements com.github.alexpfx.u
 
         initializeRecyclerView();
 
+
         setupEvents();
 
         return view;
@@ -86,6 +91,14 @@ public class SearchFragment extends BaseFragment implements com.github.alexpfx.u
     }
 
     private void setupEvents() {
+        /*Searchs if */
+        RxTextView.textChanges(edtSearchQuery)
+                .filter(charSequence -> charSequence.length() >= 3)
+                .debounce(Constants.QUERY_DEBONCE_TIME, TimeUnit.MILLISECONDS)
+                .map(CharSequence::toString)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::performSearch);
+
         Disposable disposable = adapter.getClickDownloadViewObservable().subscribe(view -> {
             String beerId = (String) view.getTag(R.id.tag_beer_id);
             String beerName = (String) view.getTag(R.id.tag_beer_name);
@@ -143,13 +156,14 @@ public class SearchFragment extends BaseFragment implements com.github.alexpfx.u
 
     @Override
     public void showNoResults(String query) {
+        /*
         Snackbar snack = Snackbar.make(getActivity().findViewById(R.id.layout_search), getString(R.string
                         .message_no_results) + " "
                         + query,
                 Snackbar.LENGTH_LONG);
         snack.setAction(getString(R.string.action_dismiss), view -> snack.dismiss());
         snack.show();
-
+        */
     }
 
     @Override
@@ -171,8 +185,12 @@ public class SearchFragment extends BaseFragment implements com.github.alexpfx.u
     public void onSearchClick(View view) {
         String query = edtSearchQuery.getText().toString();
         if (!query.isEmpty()) {
-            searchPresenter.search(query);
+            performSearch (query);
         }
+    }
+
+    private void performSearch(String query) {
+        searchPresenter.search(query);
     }
 
     public interface Listener {

@@ -6,11 +6,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_collecion_item"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/card_height_large"
+    android:layout_height="@dimen/card_height_gigant"
     android:layout_margin="1dp"
     android:splitMotionEvents="true"
     tools:layout_editor_absoluteY="25dp"
-
     >
 
 
@@ -67,7 +66,6 @@
         tools:text="Text \nText"/>
 
 
-
     <ImageButton
         android:id="@+id/btn_drink_action"
         android:layout_width="56dp"
@@ -83,16 +81,15 @@
 
     <ImageButton
         android:id="@+id/btn_toggle_selection"
-        android:checked="true"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
-        android:text="test"
         android:background="@drawable/collection_state_list_drawable"
+        android:checked="true"
+        android:text="test"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toTopOf="parent"/>
 
 
 </android.support.constraint.ConstraintLayout>

@@ -102,7 +102,7 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
 
     private void setupLabelView(Beer beer) {
 
-        int targetHeight = 256;
+        int targetHeight = 320;
         Picasso.with(context)
                 .load(beer.getLabelLarge())
                 .placeholder(R.drawable.beerplaceholder)
