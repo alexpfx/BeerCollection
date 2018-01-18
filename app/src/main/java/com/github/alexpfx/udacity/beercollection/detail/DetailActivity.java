@@ -13,7 +13,6 @@ import com.github.alexpfx.udacity.beercollection.BeerApp;
 import com.github.alexpfx.udacity.beercollection.Constants;
 import com.github.alexpfx.udacity.beercollection.R;
 import com.github.alexpfx.udacity.beercollection.utils.CropMiddleFirstPixelTransformation;
-import com.github.alexpfx.udacity.beercollection.utils.NotificationUtils;
 import com.github.alexpfx.udacity.beercollection.utils.ToolbarUtils;
 import com.squareup.picasso.Picasso;
 
@@ -38,12 +37,10 @@ public class DetailActivity extends BaseActivity implements DetailFragment.Liste
     @BindView(R.id.txt_toolbar_title)
     TextView toolbarTitle;
 
-    public static void startDetail(Context context, String beerId) {
+    public static Intent startIntent(Context context, String beerId) {
         Intent intent = new Intent(context, DetailActivity.class);
         intent.putExtra(Constants.KEY_BEER_ID, beerId);
-        context.startActivity(intent);
-        //TODO mover local correto.
-        NotificationUtils.showUserThatABeerFromHisCollectionWasUpdated(context, 2, "cerveja atualizada!");
+        return intent;
     }
 
     @Override
@@ -58,6 +55,7 @@ public class DetailActivity extends BaseActivity implements DetailFragment.Liste
 
     @Override
     protected void injectDependencies(BeerApp app) {
+        
 
     }
 

@@ -48,6 +48,8 @@ public class DetailFragment extends BaseFragment implements LoadBeerInfoPresente
         detailViewHolder = new DetailViewHolder(view);
 
         String beerId = getActivityIntent().getStringExtra(Constants.KEY_BEER_ID);
+
+        Log.d(TAG, "onCreateView: "+beerId);
         loadBeerInfoPresenter.load(beerId);
         return view;
 

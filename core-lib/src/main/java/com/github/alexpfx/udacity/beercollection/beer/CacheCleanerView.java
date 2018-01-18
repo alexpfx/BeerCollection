@@ -7,7 +7,7 @@ import com.github.alexpfx.udacity.beercollection.base.BaseView;
  */
 
 public interface CacheCleanerView extends BaseView {
-    void showCacheCleanerStarted();
+    void whenClearCacheRoutineStarts();
 
-    void showCacheWasCleanedUp();
+    void whenClearCacheRoutineEnds(int removed);
 }

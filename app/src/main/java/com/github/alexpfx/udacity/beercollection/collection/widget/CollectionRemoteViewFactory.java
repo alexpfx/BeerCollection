@@ -1,12 +1,14 @@
 package com.github.alexpfx.udacity.beercollection.collection.widget;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.github.alexpfx.udacity.beercollection.BeerApp;
+import com.github.alexpfx.udacity.beercollection.Constants;
 import com.github.alexpfx.udacity.beercollection.R;
 import com.github.alexpfx.udacity.beercollection.beer.collection.LoadCollectionPresenter;
 import com.github.alexpfx.udacity.beercollection.beer.collection.MyCollectionView;
@@ -75,11 +77,18 @@ public class CollectionRemoteViewFactory implements RemoteViewsService.RemoteVie
 
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.layout_widget_item_beer);
 
-        remoteViews.setTextViewText(R.id.widget_text_beer_name, TextUtils.concat(String.valueOf(position+1),"º " ,item.getBeer().getName()));
+        remoteViews.setTextViewText(R.id.widget_text_beer_name, TextUtils.concat(String.valueOf(position + 1), "º ",
+                item.getBeer().getName()));
 
         DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context);
         remoteViews.setTextViewText(R.id.widget_text_last_date, dateFormat.format(item.getLastDate()));
         remoteViews.setTextViewText(R.id.widget_text_quantity, String.valueOf(item.countBeers()));
+
+
+        Intent fillInIntent = new Intent();
+
+        fillInIntent.putExtra(Constants.KEY_BEER_ID, item.getBeer().getId());
+        remoteViews.setOnClickFillInIntent(R.id.widget_item_beer, fillInIntent);
 
         return remoteViews;
     }
@@ -103,6 +112,7 @@ public class CollectionRemoteViewFactory implements RemoteViewsService.RemoteVie
     public boolean hasStableIds() {
         return false;
     }
+
 
     @Override
     public void showUserCollection(List<CollectionItem> items) {

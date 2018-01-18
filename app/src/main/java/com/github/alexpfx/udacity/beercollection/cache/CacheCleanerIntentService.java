@@ -1,23 +1,27 @@
 package com.github.alexpfx.udacity.beercollection.cache;
 
 import android.content.Intent;
-import android.util.Log;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.github.alexpfx.udacity.beercollection.BaseIntentService;
 import com.github.alexpfx.udacity.beercollection.BeerApp;
 import com.github.alexpfx.udacity.beercollection.Constants;
+import com.github.alexpfx.udacity.beercollection.R;
 import com.github.alexpfx.udacity.beercollection.beer.CacheCleanerPresenter;
 import com.github.alexpfx.udacity.beercollection.beer.CacheCleanerView;
+import com.github.alexpfx.udacity.beercollection.utils.NotificationUtils;
 
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
+import timber.log.Timber;
+
 
 public class CacheCleanerIntentService extends BaseIntentService implements CacheCleanerView {
     public static final String ACTION_CLEAN_OLD_CACHE_DATA = "clean-old-cache-data";
-
-    private static final String TAG = "CacheCleanerIntentServi";
 
     @Inject
     CacheCleanerPresenter presenter;
@@ -28,29 +32,29 @@ public class CacheCleanerIntentService extends BaseIntentService implements Cach
     }
 
     @Override
-    protected void onHandleIntent(Intent intent) {
-        String action = intent.getAction();
-        if (action.equals(ACTION_CLEAN_OLD_CACHE_DATA)) {
-            cleanUpCache();
+    public void whenClearCacheRoutineStarts() {
+        Timber.d("Starting cache cleaning");
+
+    }
+
+
+    @Override
+    public void whenClearCacheRoutineEnds(int removed) {
+        Timber.d("Cache routine ends: removed: %d", removed);
+        if (removed == 0) {
+            return;
         }
+        SharedPreferences defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences
+                (getApplicationContext());
+        boolean shouldShowNotification = defaultSharedPreferences.getBoolean(getString(R.string
+                        .pref_key_send_notification_when_cache_cleared_key), false);
 
+        Timber.d("should show notification: %b", shouldShowNotification);
+
+        if (shouldShowNotification) {
+            NotificationUtils.showInfoAboutCacheCleanerProcess(getApplicationContext(), removed);
+        }
     }
-
-    private void cleanUpCache() {
-        presenter.clearCache(TimeUnit.HOURS.toMillis(Constants.CACHE_EXPIRATION));
-    }
-
-
-    @Override
-    public void showCacheCleanerStarted() {
-        Log.d(TAG, "showCacheCleanerStarted: ");
-    }
-
-    @Override
-    public void showCacheWasCleanedUp() {
-        Log.d(TAG, "showCacheWasCleanedUp: ");
-    }
-
 
     @Override
     public void injectDependencies(BeerApp app) {
@@ -61,8 +65,24 @@ public class CacheCleanerIntentService extends BaseIntentService implements Cach
     @Override
     public void onDestroy() {
 
-        Log.d(TAG, "unLoad: cache");
+        Timber.d("unLoad: cache");
         super.onDestroy();
     }
+
+    @Override
+    protected void onHandleIntent(Intent intent) {
+        String action = intent.getAction();
+        if (Objects.equals(action, ACTION_CLEAN_OLD_CACHE_DATA)) {
+            cleanUpCache();
+        }
+
+    }
+
+    private void cleanUpCache() {
+        presenter.clearCache(TimeUnit.HOURS.toMillis(Constants.CACHE_EXPIRATION));
+
+
+    }
+
 }
 

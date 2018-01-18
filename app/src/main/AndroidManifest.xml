@@ -54,8 +54,8 @@
         </service>
 
 
-        <receiver android:name=".collection.widget.CollectionWidgetProvider">
-            <intent-filter>
+        <receiver android:name=".collection.widget.CollectionWidgetProvider" >
+            <intent-filter >
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>
             <meta-data

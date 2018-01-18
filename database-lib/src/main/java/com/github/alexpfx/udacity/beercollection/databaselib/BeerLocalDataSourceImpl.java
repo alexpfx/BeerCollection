@@ -2,7 +2,6 @@ package com.github.alexpfx.udacity.beercollection.databaselib;
 
 import com.github.alexpfx.udacity.beercollection.beer.BeerLocalDataSource;
 import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -13,7 +12,10 @@ import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import io.reactivex.FlowableEmitter;
 import io.reactivex.Maybe;
@@ -27,7 +29,7 @@ public class BeerLocalDataSourceImpl implements BeerLocalDataSource {
     private static final String TAG = "BeerLocalDataSourceImpl";
     private final FirebaseDatabase database;
     private final FirebaseAuth firebaseAuth;
-
+    AtomicInteger count = new AtomicInteger();
 
     public BeerLocalDataSourceImpl(FirebaseDatabase database, FirebaseAuth firebaseAuth) {
         this.database = database;
@@ -125,10 +127,11 @@ public class BeerLocalDataSourceImpl implements BeerLocalDataSource {
             ref.addValueEventListener(valueEventListener);
             emitter.setCancellable(() -> ref.removeEventListener(valueEventListener));
         });
+
     }
 
     @Override
-    public Single<Void> clearCache(long elapsedTime) {
+    public Single<Integer> clearCache(long elapsedTime) {
         return Single.create(emitter -> {
             if (firebaseAuth == null || firebaseAuth.getCurrentUser() == null) {
                 return;
@@ -143,17 +146,29 @@ public class BeerLocalDataSourceImpl implements BeerLocalDataSource {
 
             long target = System.currentTimeMillis() - elapsedTime;
 
+
             ValueEventListener valueEventListener = new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Iterable<DataSnapshot> children = dataSnapshot.getChildren();
 
+
+                    count.set(0);
+                    Map<String, Object> toDelete = new HashMap<>();
                     for (DataSnapshot child : children) {
                         String beerId = child.getKey();
-                        lastUpdateRef.removeValue();
-                        Task<Void> voidTask = beersRef.child(beerId).removeValue();
-                        voidTask.addOnSuccessListener(emitter::onSuccess);
+                        toDelete.put("/" + beersRef, null);
+                        count.addAndGet(1);
                     }
+
+                    beersRef.updateChildren(Collections.emptyMap(), new DatabaseReference.CompletionListener() {
+                        @Override
+                        public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                            emitter.onSuccess(count.get());
+                            lastUpdateRef.removeValue();
+                        }
+                    });
+
 
                 }
 

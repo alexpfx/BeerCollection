@@ -31,9 +31,9 @@
         <item quantity="one">You have drank %d more beer!</item>
         <item quantity="other">You have drank %d more beers!</item>
     </plurals>
-    <plurals name="notification_title_beer_updates">
-        <item quantity="one">A beer in your collection had his details updated.</item>
-        <item quantity="other">Beers in your collection has his details updated.</item>
+    <plurals name="notification_title_cache_clared">
+        <item quantity="one"> %d beer was cleared from cache</item>
+        <item quantity="other">%d beers was cleared from cache</item>
     </plurals>
 
 
@@ -84,6 +84,13 @@
 
     <item type="id" name="tag_beer_name"/>
     <item type="id" name="tag_beer_id"/>
+
+
+    <string name="pref_key_send_notification_when_cache_cleared_key" translatable="false">cache_send_notification</string>
+    <string name="pref_key_send_notification_when_cache_cleared_label" >cache_send_notification</string>
+    <string name="pref_no">No</string>
+    <string name="pref_yes">Yes</string>
+    <string name="message_cache_clared">Cache cleared!</string>
 
 
 </resources>

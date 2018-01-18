@@ -41,9 +41,9 @@ public class CacheCleanerPresenterImpl implements CacheCleanerPresenter {
 
     @Override
     public void clearCache(long elapsedTimeLimit) {
-        view.showCacheCleanerStarted();
-        Disposable disposable = interactor.clearCache(elapsedTimeLimit).subscribe(aVoid -> view.showCacheWasCleanedUp
-                ());
+        view.whenClearCacheRoutineStarts();
+        Disposable disposable = interactor.clearCache(elapsedTimeLimit).subscribe(count -> view.whenClearCacheRoutineEnds
+                (count));
 
         compositeDisposable.add(disposable);
 

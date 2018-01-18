@@ -99,7 +99,12 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionFr
 
     @Override
     public void navigateToDetail(String beerId) {
-        DetailActivity.startDetail(getApplicationContext(), beerId);
+        if (!isMultiPane){
+            Intent intent = DetailActivity.startIntent(getApplicationContext(), beerId);
+            startActivity(intent);
+        }else{
+
+        }
 
 
     }

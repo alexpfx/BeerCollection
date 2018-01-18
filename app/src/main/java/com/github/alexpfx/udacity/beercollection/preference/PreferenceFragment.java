@@ -1,7 +1,6 @@
 package com.github.alexpfx.udacity.beercollection.preference;
 
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
@@ -29,8 +28,7 @@ import timber.log.Timber;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PreferenceFragment extends PreferenceFragmentCompat implements SharedPreferences
-        .OnSharedPreferenceChangeListener, ClearCollectionView {
+public class PreferenceFragment extends PreferenceFragmentCompat implements ClearCollectionView {
 
 
     private static final String TAG = "PreferenceFragment";
@@ -73,10 +71,7 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Shar
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         injectDependencies();
-        getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
-
         setupEvents();
 
 
@@ -87,6 +82,7 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Shar
         app.getMyCollectionSubComponent().inject(this);
         presenter.init(this);
     }
+
 
     private void setupEvents() {
         Preference preference = findPreference(getString(R.string.pref_key_reset_collection));
@@ -115,7 +111,7 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Shar
     @Override
     public void onDestroy() {
         super.onDestroy();
-        getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+
         onResetClick = null;
     }
 
@@ -125,11 +121,7 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Shar
         presenter.unLoad();
     }
 
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
-
-    }
 
     @Override
     public void showClearDataSuccessful() {

@@ -82,7 +82,7 @@ public class BeerInteractorImpl implements BeerInteractor {
     }
 
     @Override
-    public Single<Void> clearCache(long elapsedTime) {
+    public Single<Integer> clearCache(long elapsedTime) {
         return local.clearCache(elapsedTime);
     }
 

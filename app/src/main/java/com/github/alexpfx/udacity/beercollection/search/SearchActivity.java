@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.github.alexpfx.udacity.beercollection.BaseActivity;
 import com.github.alexpfx.udacity.beercollection.BeerApp;
-import com.github.alexpfx.udacity.beercollection.Constants;
 import com.github.alexpfx.udacity.beercollection.R;
 import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerPresenter;
 import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerView;
@@ -90,15 +89,16 @@ public class SearchActivity extends BaseActivity implements SearchFragment.Liste
 
     @Override
     public void onDetail(String id) {
-        Intent intent = new Intent();
-        intent.putExtra(Constants.KEY_BEER_ID, id);
-        setIntent(intent);
+//        Intent intent = new Intent();
+//        intent.putExtra(Constants.KEY_BEER_ID, id);
+//        setIntent(intent);
 
         if (isMultiPane) {
             DetailFragment detailFragment = new DetailFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.container_pane2, detailFragment).commit();
         } else {
-            DetailActivity.startDetail(this, id);
+            Intent intent = DetailActivity.startIntent(this, id);
+            startActivity(intent);
         }
 
     }

@@ -19,5 +19,5 @@ public interface BeerLocalDataSource {
 
     Maybe<Beer> load(String id);
 
-    Single<Void> clearCache(long elapsedTime);
+    Single<Integer> clearCache(long elapsedTime);
 }
