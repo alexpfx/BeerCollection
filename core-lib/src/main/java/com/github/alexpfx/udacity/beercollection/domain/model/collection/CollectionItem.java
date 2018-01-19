@@ -68,7 +68,7 @@ public class CollectionItem {
             return null;
         }
         Collections.sort(itemVOList, CollectionItemVO::compareTo);
-        return new Date(itemVOList.get(0).timestamp);
+        return new Date(itemVOList.get(itemVOList.size() - 1).timestamp);
     }
 
     public int countBeers() {

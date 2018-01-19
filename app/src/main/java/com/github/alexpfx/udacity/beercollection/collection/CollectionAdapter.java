@@ -18,8 +18,6 @@ import com.github.alexpfx.udacity.beercollection.utils.SelectableAdapter;
 import com.github.alexpfx.udacity.beercollection.utils.SelectableItems;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -50,19 +48,8 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionViewHolder
     private io.reactivex.functions.Predicate<View> isNotSeletionMode = view -> !selectable;
     private io.reactivex.functions.Predicate<View> isSeletionMode = view -> selectable;
     private SelectableAdapter selectables = new SelectableItems();
-    private Comparator<? super CollectionItem> comparable = (Comparator<CollectionItem>) (o1, o2) -> {
-        if (o1.getLastDate() == null && o1.getLastDate() == null) {
-            return 0;
-        }
-        if (o1.getLastDate() == null) {
-            return 1;
-        }
-        if (o1.getLastDate() == null) {
-            return -1;
-        }
 
-        return o2.getLastDate().compareTo(o1.getLastDate());
-    };
+
     private RecyclerView recyclerView;
 
     @Inject
@@ -125,7 +112,6 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionViewHolder
     }
 
     public void setItems(List<CollectionItem> items) {
-        Collections.sort(items, comparable);
         this.items = items;
         this.filteredItems = items;
         filterBeer = new FilterBeer(items);

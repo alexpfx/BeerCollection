@@ -9,6 +9,8 @@ import com.github.alexpfx.udacity.beercollection.domain.model.collection.Collect
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -45,7 +47,7 @@ public class LoadCollectionPresenterImpl implements LoadCollectionPresenter {
 
 
     @Override
-    public void load() {
+    public void load(Comparator<CollectionItem> comparator) {
         view.showLoading();
 
 
@@ -64,19 +66,19 @@ public class LoadCollectionPresenterImpl implements LoadCollectionPresenter {
                 .subscribeOn(provider.computation())
                 .observeOn(provider.mainThread())
                 .subscribe(
-                        this::handleCollection,
+                        collectionItems -> handleCollection(collectionItems, comparator),
                         this::handleError);
 
         compositeDisposable.add(disposable);
 
     }
 
-    private void handleCollection(List<CollectionItem> collectionItems) {
+    private void handleCollection(List<CollectionItem> collectionItems, Comparator<CollectionItem> comparator) {
         view.hideLoading();
-        logger.d("handleCollection", collectionItems);
         if (collectionItems.isEmpty()) {
             view.showCollectionEmpty();
         } else {
+            Collections.sort(collectionItems, comparator);
             view.showUserCollection(collectionItems);
         }
     }

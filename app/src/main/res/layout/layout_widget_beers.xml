@@ -15,8 +15,7 @@
         android:layout_height="48dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="@color/iconColor"
-        android:foreground="?android:selectableItemBackground"
+        android:background="?android:selectableItemBackground"
         android:foregroundGravity="center_vertical"
         android:src="@mipmap/ic_beer_launch"
         />
@@ -36,7 +35,17 @@
         android:textSize="15sp"
         android:textStyle="bold"
         tools:text="Favorite Beers"
+        />
 
+    <ImageButton
+        android:id="@+id/widget_image_refresh"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:background="?android:selectableItemBackground"
+        android:foregroundGravity="center_vertical"
+        android:src="@drawable/ic_refresh_black_24dp"
 
         />
 

@@ -14,6 +14,7 @@ import com.github.alexpfx.udacity.beercollection.beer.collection.LoadCollectionP
 import com.github.alexpfx.udacity.beercollection.beer.collection.MyCollectionView;
 import com.github.alexpfx.udacity.beercollection.dagger.MyCollectionModule;
 import com.github.alexpfx.udacity.beercollection.domain.model.collection.CollectionItem;
+import com.github.alexpfx.udacity.beercollection.utils.Comparators;
 
 import java.text.DateFormat;
 import java.util.List;
@@ -48,7 +49,7 @@ public class CollectionRemoteViewFactory implements RemoteViewsService.RemoteVie
 
     @Override
     public void onDataSetChanged() {
-        loadCollectionPresenter.load();
+        loadCollectionPresenter.load(Comparators.COLLECTION_ITEM_BY_QUANTITY_DESC);
         waitData();
     }
 

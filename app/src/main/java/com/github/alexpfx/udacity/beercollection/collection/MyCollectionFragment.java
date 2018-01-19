@@ -31,6 +31,7 @@ import com.github.alexpfx.udacity.beercollection.domain.model.DrinkBeerUpdateIte
 import com.github.alexpfx.udacity.beercollection.domain.model.collection.CollectionItem;
 import com.github.alexpfx.udacity.beercollection.domain.model.collection.CollectionItemVO;
 import com.github.alexpfx.udacity.beercollection.drink.DrinkBeerFragmentDialog;
+import com.github.alexpfx.udacity.beercollection.utils.Comparators;
 
 import java.util.Date;
 import java.util.List;
@@ -140,7 +141,7 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         if (savedInstanceState != null){
             lastPosition = savedInstanceState.getInt(LAST_POSITION);
         }
-        loadCollectionPresenter.load();
+        loadCollectionPresenter.load(Comparators.COLLECTION_ITEM_BY_DATE_DESC);
 
         return view;
 
@@ -377,7 +378,7 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
 
     @Override
     public void onRefresh() {
-        loadCollectionPresenter.load();
+        loadCollectionPresenter.load(Comparators.COLLECTION_ITEM_BY_DATE_DESC);
     }
 
     @Override
