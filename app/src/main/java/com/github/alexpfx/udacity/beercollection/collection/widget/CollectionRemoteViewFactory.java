@@ -93,6 +93,12 @@ public class CollectionRemoteViewFactory implements RemoteViewsService.RemoteVie
         return remoteViews;
     }
 
+
+
+
+
+
+
     @Override
     public RemoteViews getLoadingView() {
         return null;

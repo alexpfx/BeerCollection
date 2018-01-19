@@ -35,8 +35,6 @@ public class UpdateWidgetIntentService extends IntentService {
             return;
         }
 
-        String action = intent.getAction();
-
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
 
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, CollectionWidgetProvider.class));
