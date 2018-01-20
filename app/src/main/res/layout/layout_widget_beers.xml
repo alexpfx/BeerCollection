@@ -5,7 +5,7 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
                 android:background="@color/primary"
-                android:fitsSystemWindows="true"
+
     >
 
 

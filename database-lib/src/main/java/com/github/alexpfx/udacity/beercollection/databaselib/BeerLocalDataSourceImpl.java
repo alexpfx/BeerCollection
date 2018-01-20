@@ -20,6 +20,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import io.reactivex.FlowableEmitter;
 import io.reactivex.Maybe;
 import io.reactivex.Single;
+import timber.log.Timber;
 
 /**
  * Created by alexandre on 08/01/18.
@@ -96,6 +97,7 @@ public class BeerLocalDataSourceImpl implements BeerLocalDataSource {
 
     @Override
     public Maybe<Beer> load(String id) {
+        Timber.d("load %s", id);
 
         return Maybe.create(emitter -> {
             DatabaseReference ref = database.getReference().child(firebaseAuth.getCurrentUser()

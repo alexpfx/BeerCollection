@@ -109,7 +109,7 @@ public class SearchFragment extends BaseFragment implements com.github.alexpfx.u
         compositeDisposable.add(disposable);
 
         disposable = adapter.getClickDetailViewObservable().subscribe(view -> {
-            String beerId = (String) view.getTag();
+            String beerId = (String) view.getTag(R.id.tag_beer_id);
             listener.onDetail(beerId);
         });
         compositeDisposable.add(disposable);

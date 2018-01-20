@@ -27,6 +27,7 @@ import javax.inject.Inject;
 import butterknife.BindBool;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 /**
  * Adicionar indicador de loading
@@ -76,8 +77,6 @@ public class SearchActivity extends BaseActivity implements SearchFragment.Liste
     }
 
 
-
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -86,18 +85,17 @@ public class SearchActivity extends BaseActivity implements SearchFragment.Liste
     }
 
 
-
     @Override
     public void onDetail(String id) {
-//        Intent intent = new Intent();
-//        intent.putExtra(Constants.KEY_BEER_ID, id);
-//        setIntent(intent);
 
+        Timber.d("onDetail %s", id);
         if (isMultiPane) {
-            DetailFragment detailFragment = new DetailFragment();
-            getSupportFragmentManager().beginTransaction().replace(R.id.container_pane2, detailFragment).commit();
+            DetailFragment detailFragment = DetailFragment.getInstance(id);
+            getSupportFragmentManager().beginTransaction()
+                    .addToBackStack(null)
+                    .replace(R.id.container_pane2, detailFragment).commit();
         } else {
-            Intent intent = DetailActivity.startIntent(this, id);
+            Intent intent = DetailActivity.getStartIntent(this, id);
             startActivity(intent);
         }
 

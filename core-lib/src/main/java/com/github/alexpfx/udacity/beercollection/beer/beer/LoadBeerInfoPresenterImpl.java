@@ -8,10 +8,6 @@ import javax.inject.Inject;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
-/**
- * Created by alexandre on 04/11/17.
- */
-
 @PerActivity
 public class LoadBeerInfoPresenterImpl implements LoadBeerInfoPresenter {
 
@@ -42,6 +38,7 @@ public class LoadBeerInfoPresenterImpl implements LoadBeerInfoPresenter {
                             //TODO
                         });
 
+        compositeDisposable.add(disposable);
     }
 
     @Override

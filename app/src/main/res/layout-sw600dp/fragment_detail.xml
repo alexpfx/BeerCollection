@@ -19,6 +19,32 @@
         android:paddingStart="@dimen/layout_horizontal_margin_1x"
         android:paddingTop="@dimen/layout_vertical_margin_1x">
 
+        <ImageView
+            android:id="@+id/img_beer_label"
+            android:layout_width="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="@dimen/card_height_huge"
+            tools:src="@drawable/heineken"
+            android:scaleType="centerCrop"
+            />
+
+        <TextView
+            android:id="@+id/lbl_beer_info"
+            style="@style/HeadSection"
+            android:layout_marginTop="8dp"
+            android:text="@string/label_detail_head_beer_info"
+            app:layout_constraintStart_toStartOf="@+id/guideline_1x"
+            app:layout_constraintTop_toBottomOf="@+id/img_beer_label"/>
+
+        <TextView
+            android:id="@+id/lbl_beer_name"
+            style="@style/Label"
+            android:text="@string/label_detail_beer_name"
+            app:layout_constraintStart_toStartOf="@+id/guideline_1x"
+            app:layout_constraintTop_toBottomOf="@+id/lbl_beer_info" />
+        
 
         <TextView
             android:id="@+id/lbl_brewery_name"
@@ -62,21 +88,7 @@
 
 
 
-        <TextView
-            android:id="@+id/lbl_beer_info"
-            style="@style/HeadSection"
-            android:text="@string/label_detail_head_beer_info"
 
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline_1x"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/lbl_beer_name"
-            style="@style/Label"
-            android:text="@string/label_detail_beer_name"
-            app:layout_constraintStart_toStartOf="@+id/guideline_1x"
-            app:layout_constraintTop_toBottomOf="@+id/lbl_beer_info" />
 
         <TextView
             android:id="@+id/txt_beer_name"

@@ -21,6 +21,8 @@ import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
 
 import javax.inject.Inject;
 
+import timber.log.Timber;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -40,19 +42,31 @@ public class DetailFragment extends BaseFragment implements LoadBeerInfoPresente
         setHasOptionsMenu(true);
     }
 
+    public static DetailFragment getInstance(String beerId) {
+        DetailFragment detailFragment = new DetailFragment();
+        Bundle args = new Bundle();
+        args.putString(Constants.KEY_BEER_ID, beerId);
+        detailFragment.setArguments(args);
+        return detailFragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
         detailViewHolder = new DetailViewHolder(view);
 
-        String beerId = getActivityIntent().getStringExtra(Constants.KEY_BEER_ID);
-
-        Log.d(TAG, "onCreateView: "+beerId);
-        loadBeerInfoPresenter.load(beerId);
+        loadBeerInfoPresenter.load(getBeerId());
         return view;
 
+    }
+
+    private String getBeerId() {
+        if (getActivityIntent().hasExtra(Constants.KEY_BEER_ID)) {
+            return getActivityIntent().getStringExtra(Constants.KEY_BEER_ID);
+        } else {
+            return getArguments().getString(Constants.KEY_BEER_ID);
+        }
     }
 
     @Override
@@ -85,6 +99,8 @@ public class DetailFragment extends BaseFragment implements LoadBeerInfoPresente
 
         if (context instanceof Listener) {
             listener = (Listener) context;
+        } else {
+            listener = Listener.EMPTY;
         }
 
     }
@@ -97,10 +113,11 @@ public class DetailFragment extends BaseFragment implements LoadBeerInfoPresente
 
     @Override
     public void showBeerInfo(Beer beer) {
+
         listener.onTitleChanged(beer.getName());
         listener.onImageChanged(beer.getLabelLarge());
 
-
+        Timber.d("Beer: %s", beer.getName());
         detailViewHolder.setBeer(beer);
 
     }
@@ -112,6 +129,18 @@ public class DetailFragment extends BaseFragment implements LoadBeerInfoPresente
     }
 
     public interface Listener {
+        Listener EMPTY = new Listener() {
+            @Override
+            public void onTitleChanged(String title) {
+                Timber.d("Empty listener to Detail");
+            }
+
+            @Override
+            public void onImageChanged(String imgUrl) {
+                Timber.d("Empty listener to Detail");
+            }
+        };
+
         void onTitleChanged(String title);
 
         void onImageChanged(String imgUrl);

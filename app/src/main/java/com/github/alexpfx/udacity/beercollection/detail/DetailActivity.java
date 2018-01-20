@@ -37,7 +37,7 @@ public class DetailActivity extends BaseActivity implements DetailFragment.Liste
     @BindView(R.id.txt_toolbar_title)
     TextView toolbarTitle;
 
-    public static Intent startIntent(Context context, String beerId) {
+    public static Intent getStartIntent(Context context, String beerId) {
         Intent intent = new Intent(context, DetailActivity.class);
         intent.putExtra(Constants.KEY_BEER_ID, beerId);
         return intent;
@@ -55,7 +55,6 @@ public class DetailActivity extends BaseActivity implements DetailFragment.Liste
 
     @Override
     protected void injectDependencies(BeerApp app) {
-        
 
     }
 
