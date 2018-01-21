@@ -47,7 +47,8 @@ public class BeerApp extends Application {
         startCacheCleanerService();
 
 
-        installLeakCanary();
+
+//        installLeakCanary();
 
 
         applicationComponent = createComponent();
@@ -62,8 +63,6 @@ public class BeerApp extends Application {
         LeakCanary.refWatcher(this).excludedRefs(AndroidExcludedRefs.createAppDefaults()
                 .build())
                 .buildAndInstall();
-
-
 
 
     }

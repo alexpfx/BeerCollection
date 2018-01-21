@@ -16,6 +16,11 @@
         </item>
     </style>
 
+    <style name="AppThemeInterVersions" parent="AppTheme">
+
+
+    </style>
+
 
     <!-- app themes -->
 

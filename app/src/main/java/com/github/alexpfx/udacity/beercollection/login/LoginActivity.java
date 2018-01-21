@@ -13,6 +13,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import javax.inject.Inject;
 
+import timber.log.Timber;
+
 public class LoginActivity extends BaseActivity {
 
     public static final int REQUEST_CODE = 1;
@@ -57,6 +59,7 @@ public class LoginActivity extends BaseActivity {
         if (resultCode == RESULT_OK) {
             startMainScreen();
         } else {
+            Timber.d("login not ok: %d", resultCode);
             finish();
         }
     }

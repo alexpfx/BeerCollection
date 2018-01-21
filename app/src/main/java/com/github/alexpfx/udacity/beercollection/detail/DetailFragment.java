@@ -34,6 +34,7 @@ public class DetailFragment extends BaseFragment implements LoadBeerInfoPresente
     LoadBeerInfoPresenter loadBeerInfoPresenter;
 
 
+
     private Listener listener;
     private DetailViewHolder detailViewHolder;
 
