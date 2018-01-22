@@ -4,11 +4,15 @@ import com.github.alexpfx.udacity.beercollection.BeerCollectionDataSource;
 import com.github.alexpfx.udacity.beercollection.databaselib.dagger.PerActivity;
 import com.github.alexpfx.udacity.beercollection.domain.model.collection.CollectionItemVO;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.Callable;
 
 import javax.inject.Inject;
 
 import io.reactivex.Single;
+import io.reactivex.functions.Function;
 
 /**
  * Created by alexandre on 09/11/17.
@@ -36,6 +40,5 @@ public class MyCollectionInteractorImpl implements MyCollectionInteractor {
     public Single deleteBeer(String id) {
         return dataSource.deleteBeerFromCollection(id);
     }
-
 
 }

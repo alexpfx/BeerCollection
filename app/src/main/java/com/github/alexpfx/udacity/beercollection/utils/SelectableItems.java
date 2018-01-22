@@ -47,6 +47,8 @@ public class SelectableItems implements SelectableAdapter, Iterable<Boolean> {
         selectedPositions.clear();
     }
 
+
+
     @Override
     public boolean hasSelection() {
         for (int i = 0; i < selectedPositions.size(); i++) {

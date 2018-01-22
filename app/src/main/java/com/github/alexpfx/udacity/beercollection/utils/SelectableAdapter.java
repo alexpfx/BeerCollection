@@ -18,4 +18,5 @@ public interface SelectableAdapter extends Parcelable, Iterable<Boolean> {
     void clearSelectedItems();
 
 
+
 }

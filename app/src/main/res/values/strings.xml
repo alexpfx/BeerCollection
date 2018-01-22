@@ -22,7 +22,7 @@
     <string name="activity_title_my_collection">My Collection</string>
     <string name="label_quantity">quantity</string>
     <string name="message_how_many_beers">How many beers?</string>
-    <string name="message_no_itens_in_collection">You don\'t have items in collection yet</string>
+    <string name="message_no_itens_in_collection">You don\'t have oldItems in collection yet</string>
     <string name="tooltip_beer_name">Name of the beer</string>
     <string name="tooltip_last_beer">Date of last beer of this label consumed</string>
     <string name="tooltip_quantity">Total number of beers of this label consumed </string>

@@ -9,6 +9,7 @@
     android:layout_height="@dimen/card_height_gigant"
     android:layout_margin="1dp"
     android:splitMotionEvents="true"
+    android:clickable="true"
     tools:layout_editor_absoluteY="25dp"
     >
 
@@ -21,6 +22,7 @@
         android:adjustViewBounds="true"
         android:alpha="0.9"
         android:scaleType="centerCrop"
+        android:duplicateParentState="true"
         tools:srcCompat="@drawable/heineken"/>
 
 

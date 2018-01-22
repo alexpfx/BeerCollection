@@ -52,7 +52,7 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
 
 
     public CollectionViewHolder(View itemView, PublishSubject<View> clickDetailSubject, PublishSubject<View>
-            clickAddBeerSubject, PublishSubject<View> clickHistorySubject, PublishSubject<View>
+            clickAddBeerSubject, PublishSubject<View>
             clickToggleSelectionSubject,
                                 PublishSubject<View> longClickItemViewSubject
     ) {
@@ -75,23 +75,22 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
         RxView.clicks(imageBeerLabel).map(a -> itemView).subscribe(clickDetailSubject);
         RxView.clicks(btnToggleSelection).map(a -> itemView).subscribe(clickToggleSelectionSubject);
         RxView.clicks(btnDrink).map(a -> itemView).subscribe(clickAddBeerSubject);
+
     }
 
-    public synchronized void bind(CollectionItem item, boolean isSelected, boolean isSelectable) {
+    public void bind(CollectionItem item, boolean isSelected, boolean isSelectable) {
         btnToggleSelection.setSelected(isSelected);
         btnToggleSelection.setVisibility(isSelectable ? View.VISIBLE : View.INVISIBLE);
+        imageBeerLabel.setClickable(!isSelectable);
 
         Beer beer = item.getBeer();
         String id = beer.getId();
         itemView.setTag(id);
 
-        setupLabelView(beer);
-
-        setupBeerNameView(beer);
-
-        setupQuantityView(item);
-
-        setupLastDrinkDateView(item);
+        bindBeerLabel(beer);
+        bindBeerName(beer);
+        bindQuantity(item);
+        bindLastDrinkDate(item);
     }
 
     @OnLongClick(R.id.image_beer_label)
@@ -100,7 +99,7 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
         return true;
     }
 
-    private void setupLabelView(Beer beer) {
+    private void bindBeerLabel(Beer beer) {
 
         int targetHeight = 320;
         Picasso.with(context)
@@ -115,14 +114,14 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
     }
 
 
-    private void setupBeerNameView(Beer beer) {
+    private void bindBeerName(Beer beer) {
         textBeerName.setText(beer.getName());
         setTooltipText(textBeerName, R.string.tooltip_beer_name);
 
     }
 
 
-    private void setupLastDrinkDateView(CollectionItem collectionItem) {
+    private void bindLastDrinkDate(CollectionItem collectionItem) {
         DateFormat dateInstance = DateFormat.getDateInstance(DateFormat.SHORT);
         CharSequence dateFormated = dateInstance.format(collectionItem.getLastDate());
         textLastDrinkDate.setText(dateFormated);
@@ -132,7 +131,7 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
 
     }
 
-    private void setupQuantityView(CollectionItem collectionItem) {
+    private void bindQuantity(CollectionItem collectionItem) {
         textQuantity.setText(String.valueOf(collectionItem.countBeers()));
         setTooltipText(textQuantity, R.string.tooltip_quantity);
 

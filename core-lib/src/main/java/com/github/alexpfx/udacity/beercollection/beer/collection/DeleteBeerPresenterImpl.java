@@ -3,6 +3,8 @@ package com.github.alexpfx.udacity.beercollection.beer.collection;
 import com.github.alexpfx.udacity.beercollection.databaselib.dagger.PerActivity;
 import com.github.alexpfx.udacity.beercollection.databaselib.util.SchedulerProvider;
 
+import java.util.Set;
+
 import javax.inject.Inject;
 
 import io.reactivex.Single;
@@ -45,5 +47,11 @@ public class DeleteBeerPresenterImpl implements DeleteBeerPresenter {
         Disposable disposable = single.subscribeOn(provider.computation()).observeOn(provider.mainThread()).subscribe
                 (onSuccess -> view.showBeerDeleted(beerId));
         compositeDisposable.add(disposable);
+    }
+
+
+    @Override
+    public void deleteBeers(Set<String> beers) {
+
     }
 }

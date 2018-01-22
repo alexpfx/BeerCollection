@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,20 +28,22 @@ import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
 
 @PerActivity
-public class CollectionAdapter extends RecyclerView.Adapter<CollectionViewHolder> implements Filter.FilterListener {
+public class CollectionAdapter extends RecyclerView.Adapter<CollectionViewHolder> implements Filter.FilterListener,
+        MultiSelectableAdapter {
 
-    private static final String TAG = "CollectionAdapter";
-    public static final String SELECTABLES_STATE_KEY = "selectablesStateKey";
+    public static final String SELECTABLES_KEY = "selectablesStateKey";
     public static final String RECYCLER_STATE_KEY = "recyclerStateKey";
+    public static final String IS_SELECTABLE_KEY = "selectable_key";
+    private static final String TAG = "CollectionAdapter";
     private static final String RECYCLER_POSITION_KEY = "recyclerPositionkey";
+
     private final PublishSubject<View> detailClickSubject = PublishSubject.create();
     private final PublishSubject<View> addBeerClickSubject = PublishSubject.create();
-    private final PublishSubject<View> historyClickSubject = PublishSubject.create();
     private final PublishSubject<View> clickItemViewSubject = PublishSubject.create();
     private final PublishSubject<View> longClickItemViewSubject = PublishSubject.create();
 
-    private List<CollectionItem> filteredItems;
-    private List<CollectionItem> items = new ArrayList<>();
+    private SparseBooleanArray selectControl = new SparseBooleanArray();
+
 
     private boolean selectable = false;
     private FilterBeer filterBeer;
@@ -47,6 +51,11 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionViewHolder
     /*Use to discard view events if adapter state is in selection mode*/
     private io.reactivex.functions.Predicate<View> isNotSeletionMode = view -> !selectable;
     private io.reactivex.functions.Predicate<View> isSeletionMode = view -> selectable;
+
+
+    //https://stackoverflow.com/a/20479071/4785114
+    private List<CollectionItem> filteredItems = new ArrayList<>();
+    private List<CollectionItem> items = new ArrayList<>();
     private SelectableAdapter selectables = new SelectableItems();
 
 
@@ -59,7 +68,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionViewHolder
     @Override
     public CollectionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_collection, parent, false);
-        return new CollectionViewHolder(view, detailClickSubject, addBeerClickSubject, historyClickSubject,
+        return new CollectionViewHolder(view, detailClickSubject, addBeerClickSubject,
                 clickItemViewSubject, longClickItemViewSubject);
     }
 
@@ -84,14 +93,8 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionViewHolder
         this.recyclerView = null;
     }
 
-    public boolean isSelectable() {
-        return selectable;
-    }
 
-    public void setSelectable(boolean selectable) {
-        this.selectable = selectable;
 
-    }
 
     public void deleteItemById(String beerId) {
         CollectionItem willBeDeleted = findItem(beerId);
@@ -112,8 +115,12 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionViewHolder
     }
 
     public void setItems(List<CollectionItem> items) {
-        this.items = items;
-        this.filteredItems = items;
+        this.items.clear();
+        this.filteredItems.clear();
+
+        this.items.addAll(items);
+        this.filteredItems.addAll(items);
+
         filterBeer = new FilterBeer(items);
 
         notifyDataSetChanged();
@@ -193,34 +200,36 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionViewHolder
     }
 
     public Parcelable onSaveInstanceState() {
+        Bundle bundle = new Bundle();
         LinearLayoutManager layoutManager = getLinearLayoutManager();
 
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(SELECTABLES_STATE_KEY, selectables);
-        bundle.putParcelable(RECYCLER_STATE_KEY, layoutManager.onSaveInstanceState());
-        int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
+        int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
 
-        bundle.putInt(RECYCLER_POSITION_KEY, lastVisibleItemPosition);
-
+        bundle.putParcelable(SELECTABLES_KEY, selectables);
+        bundle.putBoolean(IS_SELECTABLE_KEY, isSelectable());
+        bundle.putInt(RECYCLER_POSITION_KEY, firstVisibleItemPosition);
         return bundle;
     }
 
 
-
-    private LinearLayoutManager getLinearLayoutManager (){
+    private LinearLayoutManager getLinearLayoutManager() {
         return (LinearLayoutManager) recyclerView.getLayoutManager();
     }
 
 
     public void onRestoreInstanceState(Parcelable state) {
-        if (state instanceof Bundle){
+        if (state instanceof Bundle) {
+            Bundle newState = (Bundle) state;
             LinearLayoutManager layoutManager = getLinearLayoutManager();
 
-            Bundle newState = (Bundle) state;
-            this.selectables = (SelectableAdapter) newState.get(SELECTABLES_STATE_KEY);
-            layoutManager.onRestoreInstanceState(newState.getParcelable(RECYCLER_STATE_KEY));
+            this.selectables = (SelectableAdapter) newState.get(SELECTABLES_KEY);
+            this.selectable = (boolean) newState.get(IS_SELECTABLE_KEY);
+            int position = (int) newState.get(RECYCLER_POSITION_KEY);
 
+            Log.d(TAG, "onRestoreInstanceState: " + Thread.currentThread().getName());
 
+            layoutManager.scrollToPositionWithOffset(position, 0);
+            notifyDataSetChanged();
         }
 
     }
@@ -238,11 +247,6 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionViewHolder
                 .hide();
     }
 
-    public Observable<View> getHistoryClickObservable() {
-        return historyClickSubject
-                .filter(isNotSeletionMode)
-                .hide();
-    }
 
     public Observable<View> getItemViewClickObservable() {
         return clickItemViewSubject
@@ -297,6 +301,27 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionViewHolder
         public List<CollectionItem> getFilteredItems() {
             return filteredItems;
         }
+    }
+
+
+    @Override
+    public boolean isSelectable() {
+        return selectable;
+    }
+
+    @Override
+    public void setSelectable(boolean selectable) {
+        this.selectable = selectable;
+    }
+
+    @Override
+    public boolean isSelected(int position) {
+        return selectControl.get(position);
+    }
+
+    @Override
+    public void setSelected(int position, boolean isSelected) {
+        selectControl.put(position, isSelected);
     }
 
 }
