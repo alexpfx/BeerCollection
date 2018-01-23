@@ -9,7 +9,6 @@
     android:layout_height="@dimen/card_height_gigant"
     android:layout_margin="1dp"
     android:splitMotionEvents="true"
-    android:clickable="true"
     tools:layout_editor_absoluteY="25dp"
     >
 
@@ -67,6 +66,18 @@
         app:layout_constraintTop_toTopOf="@+id/view_scrim"
         tools:text="Text \nText"/>
 
+    <View
+        android:foreground="@drawable/collection_state_list_drawable"
+        android:id="@+id/view_clicable_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageButton
         android:id="@+id/btn_drink_action"
@@ -81,17 +92,6 @@
         app:layout_constraintTop_toTopOf="@+id/view_scrim"
         tools:src="@drawable/googleg_standard_color_18"/>
 
-    <ImageButton
-        android:id="@+id/btn_toggle_selection"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/collection_state_list_drawable"
-        android:checked="true"
-        android:text="test"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
 
 
 </android.support.constraint.ConstraintLayout>

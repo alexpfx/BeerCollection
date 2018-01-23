@@ -11,6 +11,10 @@
     <color name="scrim_color">#5c000000</color>
     <color name="color_action_icon">#fff</color>
 
+    <color name="colorPressed">#5faf</color>
+    <color name="colorItemSelected">#5afa</color>
+
+
     <!-- pallete -->
     <color name="primary">#FF5722</color>
     <color name="primary_dark">#E64A19</color>
@@ -20,6 +24,7 @@
     <color name="secondary_text">#757575</color>
     <color name="icons">#FFFFFF</color>
     <color name="divider">#BDBDBD</color>
+    <color name="semi_transparent">#5500ff00</color>
 </resources>
 
 

@@ -27,10 +27,10 @@ import io.reactivex.subjects.PublishSubject;
 public class SelectableItemsAdapter extends RecyclerView.Adapter<CollectionViewHolder> implements
         MultiSelectableAdapter {
 
-    private final PublishSubject<View> detailClickSubject = PublishSubject.create();
-    private final PublishSubject<View> addBeerClickSubject = PublishSubject.create();
-    private final PublishSubject<View> clickItemViewSubject = PublishSubject.create();
-    private final PublishSubject<View> longClickItemViewSubject = PublishSubject.create();
+    private final PublishSubject<View> detailEvent = PublishSubject.create();
+    private final PublishSubject<View> addBeerEvent = PublishSubject.create();
+    private final PublishSubject<View> toggleSelectionEvent = PublishSubject.create();
+    private final PublishSubject<View> toggleSelectionModeEvent = PublishSubject.create();
     private final List<SelectableItem<CollectionItem>> items = new ArrayList<>();
     private boolean selectable = false;
     private io.reactivex.functions.Predicate<View> isNotSeletionMode = view -> !selectable;
@@ -67,8 +67,8 @@ public class SelectableItemsAdapter extends RecyclerView.Adapter<CollectionViewH
     public CollectionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_collection, parent, false);
 
-        return new CollectionViewHolder(view, detailClickSubject, addBeerClickSubject,
-                clickItemViewSubject, longClickItemViewSubject);
+        return new CollectionViewHolder(view, detailEvent, addBeerEvent,
+                toggleSelectionEvent, toggleSelectionModeEvent);
     }
 
     @Override
@@ -111,28 +111,27 @@ public class SelectableItemsAdapter extends RecyclerView.Adapter<CollectionViewH
     }
 
 
-    public Observable<View> getDetailClickObservable() {
-        return detailClickSubject
+    public Observable<View> getDetailEventObservable() {
+        return detailEvent
                 /*Discard view events if adapter state is in selection mode*/
                 .filter(isNotSeletionMode)
                 .hide();
     }
 
-    public Observable<View> getAddBeerClickObservable() {
-        return addBeerClickSubject
-                .filter(isNotSeletionMode)
+    public Observable<View> getAddBeerEventObservable() {
+        return addBeerEvent
                 .hide();
     }
 
 
-    public Observable<View> getClickItemViewObservable() {
-        return clickItemViewSubject
+    public Observable<View> getToggleSelectionEventObservable() {
+        return toggleSelectionEvent
                 .filter(isSeletionMode)
                 .hide();
     }
 
-    public Observable<View> getLongClickItemViewObservable() {
-        return longClickItemViewSubject.hide();
+    public Observable<View> getToggleSelectionModeEventObservable() {
+        return toggleSelectionModeEvent.hide();
     }
 
 }

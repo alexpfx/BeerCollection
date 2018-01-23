@@ -17,6 +17,8 @@ import com.jakewharton.rxbinding2.view.RxView;
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,10 +27,10 @@ import io.reactivex.subjects.PublishSubject;
 
 public class CollectionViewHolder extends RecyclerView.ViewHolder {
     private static final String TAG = "CollectionViewHolder";
-    private final PublishSubject<View> clickDetailSubject;
-    private final PublishSubject<View> clickAddBeerSubject;
-    private final PublishSubject<View> clickToggleSelectionSubject;
-    private final PublishSubject<View> longClickItemViewSubject;
+    private final PublishSubject<View> detailEvent;
+    private final PublishSubject<View> addBeerEvent;
+    private final PublishSubject<View> toggleSelectionEvent;
+    private final PublishSubject<View> toggleSelectionModeEvent;
 
     @BindView(R.id.image_beer_label)
     ImageView imageBeerLabel;
@@ -40,28 +42,31 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
     TextView textQuantity;
     @BindView(R.id.btn_drink_action)
     ImageButton btnDrink;
+
     @BindView(R.id.layout_collecion_item)
     ConstraintLayout layout;
-    @BindView(R.id.view_scrim)
-    View viewScrim;
 
-    @BindView(R.id.btn_toggle_selection)
-    ImageButton btnToggleSelection;
+
+//    @BindView(R.id.btn_toggle_selection)
+//    ImageButton btnToggleSelection;
+
+
+    @BindView(R.id.view_clicable_area)
+    View viewClicableArea;
 
     private Context context;
 
 
-    public CollectionViewHolder(View itemView, PublishSubject<View> clickDetailSubject, PublishSubject<View>
-            clickAddBeerSubject, PublishSubject<View>
-            clickToggleSelectionSubject,
-                                PublishSubject<View> longClickItemViewSubject
+    public CollectionViewHolder(View itemView, PublishSubject<View> detailEvent, PublishSubject<View>
+            addBeerEvent, PublishSubject<View>
+                                        toggleSelectionEvent,
+                                PublishSubject<View> toggleSelectionModeEvent
     ) {
         super(itemView);
-        this.clickDetailSubject = clickDetailSubject;
-        this.clickAddBeerSubject = clickAddBeerSubject;
-        this.clickToggleSelectionSubject = clickToggleSelectionSubject;
-        this.longClickItemViewSubject = longClickItemViewSubject;
-
+        this.detailEvent = detailEvent;
+        this.addBeerEvent = addBeerEvent;
+        this.toggleSelectionEvent = toggleSelectionEvent;
+        this.toggleSelectionModeEvent = toggleSelectionModeEvent;
 
         ButterKnife.bind(this, itemView);
         context = itemView.getContext();
@@ -70,17 +75,34 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
 
     private void setupEvents() {
 
-        //RxView.clicks(viewOverlay).map(a -> itemView).subscribe(clickToggleSelectionSubject);
 
-        RxView.clicks(imageBeerLabel).map(a -> itemView).subscribe(clickDetailSubject);
-        RxView.clicks(btnToggleSelection).map(a -> itemView).subscribe(clickToggleSelectionSubject);
-        RxView.clicks(btnDrink).map(a -> itemView).subscribe(clickAddBeerSubject);
+        //RxView.clicks(viewOverlay).map(a -> itemView).subscribe(toggleSelectionEvent);
+
+//        RxView.clicks(imageBeerLabel).map(a -> itemView).subscribe(detailEvent);
+
+
+//        RxView.clicks(btnToggleSelection).map(a -> itemView).subscribe(toggleSelectionEvent);
+
+
+        RxView.clicks(btnDrink).map(a -> itemView).subscribe(addBeerEvent);
+        CompositeClickListener compositeClickListener = new CompositeClickListener(itemView);
+
+        compositeClickListener.registerListener(detailEvent::onNext);
+        compositeClickListener.registerListener(toggleSelectionEvent::onNext);
+
+        viewClicableArea.setOnClickListener(compositeClickListener);
+
+        viewClicableArea.setOnLongClickListener(v -> {
+            toggleSelectionModeEvent.onNext(itemView);
+            return true;
+        });
 
     }
 
     public void bind(CollectionItem item, boolean isSelected, boolean isSelectable) {
-        btnToggleSelection.setSelected(isSelected);
-        btnToggleSelection.setVisibility(isSelectable ? View.VISIBLE : View.INVISIBLE);
+        viewClicableArea.setSelected(isSelected);
+//        btnToggleSelection.setSelected(isSelected);
+//        btnToggleSelection.setVisibility(isSelectable ? View.VISIBLE : View.INVISIBLE);
         imageBeerLabel.setClickable(!isSelectable);
 
         Beer beer = item.getBeer();
@@ -95,7 +117,7 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
 
     @OnLongClick(R.id.image_beer_label)
     public boolean onImageBeerLabelLongClick(View view) {
-        longClickItemViewSubject.onNext(itemView);
+//        toggleSelectionModeEvent.onNext(itemView);
         return true;
     }
 
@@ -143,6 +165,32 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
 
     private String getString(@StringRes int id) {
         return context.getString(id);
+    }
+
+
+    class CompositeClickListener implements View.OnClickListener {
+
+        private View view;
+        private Collection<View.OnClickListener> listenerCollection = new ArrayList<>();
+
+        public CompositeClickListener(View view) {
+            this.view = view;
+        }
+
+        public void registerListener(View.OnClickListener onClickListener) {
+            listenerCollection.add(onClickListener);
+        }
+
+        public void unRegisterListener(View.OnClickListener onClickListener) {
+            listenerCollection.remove(onClickListener);
+        }
+
+        @Override
+        public void onClick(View v) {
+            for (View.OnClickListener onClickListener : listenerCollection) {
+                onClickListener.onClick(view);
+            }
+        }
     }
 
 }

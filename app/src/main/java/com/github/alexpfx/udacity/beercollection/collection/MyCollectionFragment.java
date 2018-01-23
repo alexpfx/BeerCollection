@@ -256,18 +256,18 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     private void setupEvents() {
         Disposable disposable;
 
-        disposable = adapter.getDetailClickObservable().subscribe(this::navigateToDetail);
+        disposable = adapter.getDetailEventObservable().subscribe(this::navigateToDetail);
         compositeDisposable.add(disposable);
 
 
-        disposable = adapter.getAddBeerClickObservable().subscribe(v -> showDrinkDialog(getBeerIdFromTag(v)));
+        disposable = adapter.getAddBeerEventObservable().subscribe(v -> showDrinkDialog(getBeerIdFromTag(v)));
         compositeDisposable.add(disposable);
 
 
-        disposable = adapter.getClickItemViewObservable().subscribe(this::toggleSelection);
+        disposable = adapter.getToggleSelectionEventObservable().subscribe(this::toggleSelection);
         compositeDisposable.add(disposable);
 
-        disposable = adapter.getLongClickItemViewObservable().subscribe(v -> toggleSelectionMode(v));
+        disposable = adapter.getToggleSelectionModeEventObservable().subscribe(v -> toggleSelectionMode(v));
         compositeDisposable.add(disposable);
     }
 
@@ -290,6 +290,7 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     }
 
     private void toggleSelectionMode(View view) {
+        Timber.d("toggleSelectionMode");
         setSelectionMode(!isSelectMode());
         toggleSelection(view);
 
@@ -306,8 +307,8 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     }
 
     private void toggleSelection(View v) {
+        Timber.d("toggleSelection");
         int position = rcvCollection.getChildAdapterPosition(v);
-        Timber.d("toggleSelection %d", System.identityHashCode(rcvCollection));
         if (position == RecyclerView.NO_POSITION){
             return;
         }
@@ -318,8 +319,9 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     }
 
     private void navigateToDetail(View v) {
-        listener.navigateToDetail
-                (getBeerIdFromTag(v));
+        Timber.d("navigateToDetail");
+//        listener.navigateToDetail
+//                (getBeerIdFromTag(v));
     }
 
     @Override
