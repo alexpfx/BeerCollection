@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/scrim_color"/>
+    <gradient android:type="linear" android:startColor="@color/scrim_color" android:endColor="@color/white" android:angle="90" >
+
+
+
+    </gradient>
 
     <!--<solid android:color="#fff"/>-->
 

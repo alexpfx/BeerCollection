@@ -5,6 +5,7 @@ import android.support.annotation.StringRes;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.TooltipCompat;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.github.alexpfx.udacity.beercollection.R;
 import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
 import com.github.alexpfx.udacity.beercollection.domain.model.collection.CollectionItem;
+import com.github.alexpfx.udacity.beercollection.utils.CropMiddleFirstPixelTransformation;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.squareup.picasso.Picasso;
 
@@ -24,9 +26,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnLongClick;
 import io.reactivex.subjects.PublishSubject;
+import jp.wasabeef.picasso.transformations.CropSquareTransformation;
 
 public class CollectionViewHolder extends RecyclerView.ViewHolder {
-    private static final String TAG = "CollectionViewHolder";
     private final PublishSubject<View> detailEvent;
     private final PublishSubject<View> addBeerEvent;
     private final PublishSubject<View> toggleSelectionEvent;
@@ -45,6 +47,9 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.layout_collecion_item)
     ConstraintLayout layout;
+
+//    @BindView(R.id.view_scrim)
+//    View view;
 
 
 //    @BindView(R.id.btn_toggle_selection)
@@ -101,6 +106,8 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(CollectionItem item, boolean isSelected, boolean isSelectable) {
         viewClicableArea.setSelected(isSelected);
+//        view.setVisibility(isSelected?View.INVISIBLE:View.VISIBLE);
+
 //        btnToggleSelection.setSelected(isSelected);
 //        btnToggleSelection.setVisibility(isSelectable ? View.VISIBLE : View.INVISIBLE);
         imageBeerLabel.setClickable(!isSelectable);
@@ -129,7 +136,8 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
                 .placeholder(R.drawable.beerplaceholder)
                 .error(R.drawable.ic_warning_white)
                 .resize(targetHeight, targetHeight)
-//                .transform(new CropMiddleFirstPixelTransformation())
+                .transform(new CropSquareTransformation())
+                .transform(new CropMiddleFirstPixelTransformation())
                 .centerCrop()
                 .into(imageBeerLabel);
 
@@ -146,15 +154,15 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
     private void bindLastDrinkDate(CollectionItem collectionItem) {
         DateFormat dateInstance = DateFormat.getDateInstance(DateFormat.SHORT);
         CharSequence dateFormated = dateInstance.format(collectionItem.getLastDate());
-        textLastDrinkDate.setText(dateFormated);
-
+        textLastDrinkDate.setText(TextUtils.concat(getString(R.string.icon_cmd_calendar), " ", dateFormated));
         setTooltipText(textLastDrinkDate, R.string.tooltip_last_beer);
 
 
     }
 
     private void bindQuantity(CollectionItem collectionItem) {
-        textQuantity.setText(String.valueOf(collectionItem.countBeers()));
+        textQuantity.setText(TextUtils.concat(getString(R.string.icon_cmd_beer), " ", String.valueOf(collectionItem
+                .countBeers())));
         setTooltipText(textQuantity, R.string.tooltip_quantity);
 
     }

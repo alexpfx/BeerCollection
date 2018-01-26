@@ -4,6 +4,8 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_selected="true">
         <color android:color="@color/colorItemSelected"/>
+
+
     </item>
     <item android:state_pressed="true">
         <color android:color="@color/colorPressed"/>
@@ -12,3 +14,4 @@
         <color android:color="@android:color/transparent"/>
     </item>
 </selector>
+

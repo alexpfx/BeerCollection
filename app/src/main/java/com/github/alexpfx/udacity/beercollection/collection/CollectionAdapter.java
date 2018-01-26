@@ -94,8 +94,6 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionViewHolder
     }
 
 
-
-
     public void deleteItemById(String beerId) {
         CollectionItem willBeDeleted = findItem(beerId);
         if (willBeDeleted != null) {

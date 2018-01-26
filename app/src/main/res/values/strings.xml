@@ -21,6 +21,7 @@
     </string>
     <string name="activity_title_my_collection">My Collection</string>
     <string name="label_quantity">quantity</string>
+    <string name="label_total">Total </string>
     <string name="message_how_many_beers">How many beers?</string>
     <string name="message_no_itens_in_collection">You don\'t have oldItems in collection yet</string>
     <string name="tooltip_beer_name">Name of the beer</string>
@@ -91,6 +92,8 @@
     <string name="pref_no">No</string>
     <string name="pref_yes">Yes</string>
     <string name="message_cache_clared">Cache cleared!</string>
+    <string name="icon_cmd_beer">{cmd-beer}</string>
+    <string name="icon_cmd_calendar">{cmd-calendar_today}</string>
 
 
 </resources>
