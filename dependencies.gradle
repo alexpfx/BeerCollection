@@ -28,7 +28,8 @@ ext {
     rxBindingVersion = "2.0.0"
 
     lib_android_implementation = [
-            timber                   : 'com.jakewharton.timber:timber:4.6.0',
+//            timber                   : 'com.jakewharton.timber:timber:4.6.0',
+
             /* iconics */
             iconicsCore              : "com.mikepenz:iconics-core:2.9.5@aar",
             materialTypeface         : 'com.mikepenz:google-material-typeface:3.0.1.2.original@aar',
@@ -75,7 +76,7 @@ ext {
 
 
     lib_database = [
-            timber          : 'com.jakewharton.timber:timber:4.6.0',
+//            timber          : 'com.jakewharton.timber:timber:4.6.0',
             dagger          : "com.google.dagger:dagger:${daggerVersion}",
 
             firebaseCore    : "com.google.firebase:firebase-core:${firebaseVersion}",

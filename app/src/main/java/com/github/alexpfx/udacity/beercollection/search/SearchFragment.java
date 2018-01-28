@@ -37,8 +37,6 @@ import io.reactivex.disposables.Disposable;
 public class SearchFragment extends BaseFragment implements com.github.alexpfx.udacity.beercollection.databaselib
         .search.SearchView {
 
-
-    private static final String TAG = "SearchFragment";
     @BindView(R.id.rcv_search_result)
     RecyclerView rcvSearchResult;
     @Inject
@@ -91,7 +89,7 @@ public class SearchFragment extends BaseFragment implements com.github.alexpfx.u
     }
 
     private void setupEvents() {
-        /*Searchs if */
+        /*TODO: explicar */
         RxTextView.textChanges(edtSearchQuery)
                 .filter(charSequence -> charSequence.length() >= 3)
                 .debounce(Constants.QUERY_DEBONCE_TIME, TimeUnit.MILLISECONDS)
@@ -156,14 +154,7 @@ public class SearchFragment extends BaseFragment implements com.github.alexpfx.u
 
     @Override
     public void showNoResults(String query) {
-        /*
-        Snackbar snack = Snackbar.make(getActivity().findViewById(R.id.layout_search), getString(R.string
-                        .message_no_results) + " "
-                        + query,
-                Snackbar.LENGTH_LONG);
-        snack.setAction(getString(R.string.action_dismiss), view -> snack.dismiss());
-        snack.show();
-        */
+        //não mostra nada, pois com o Typeahead Search este método é chamado constantemente.
     }
 
     @Override
@@ -185,7 +176,7 @@ public class SearchFragment extends BaseFragment implements com.github.alexpfx.u
     public void onSearchClick(View view) {
         String query = edtSearchQuery.getText().toString();
         if (!query.isEmpty()) {
-            performSearch (query);
+            performSearch(query);
         }
     }
 
@@ -200,21 +191,5 @@ public class SearchFragment extends BaseFragment implements com.github.alexpfx.u
 
 
     }
-//
-//            adapter.getClickDetailViewObservable().subscribe(view -> {
-//        String beerId = String.valueOf(view.getTag());
-//
-//        Intent intent = new Intent(this, DetailActivity.class);
-//        intent.putExtra(Constants.KEY_BEER_ID, beerId);
-//        startActivity(intent);
-//
-//    });
-//
-//        adapter.getClickDownloadViewObservable().subscribe(view -> {
-//        String beerId = String.valueOf(view.getTag());
-//        drinkBeerPresenter.drink(new DrinkBeerUpdateItem(beerId, 0));
-//        finish();
-//    });
-
 
 }

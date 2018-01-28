@@ -21,20 +21,19 @@ public abstract class AbstractBaseAdapter<VH extends RecyclerView.ViewHolder, I>
         return viewHolder;
     }
 
-    protected abstract VH createViewHolder(View view);
-
     protected abstract View inflate(LayoutInflater inflater, ViewGroup parent);
 
+    protected abstract VH createViewHolder(View view);
+
+    @Override
+    public int getItemCount() {
+        return items == null ? 0 : items.size();
+    }
 
     @Override
     public void setItems(List<I> items) {
         this.items = items;
         notifyDataSetChanged();
-    }
-
-    @Override
-    public int getItemCount() {
-        return items == null ? 0 : items.size();
     }
 
     @Override

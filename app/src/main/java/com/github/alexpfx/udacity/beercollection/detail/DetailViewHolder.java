@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.alexpfx.udacity.beercollection.Constants;
 import com.github.alexpfx.udacity.beercollection.R;
 import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
 import com.github.alexpfx.udacity.beercollection.utils.CropMiddleFirstPixelTransformation;
@@ -18,15 +19,12 @@ import butterknife.BindBool;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import io.reactivex.subjects.PublishSubject;
 
 import static com.github.alexpfx.udacity.beercollection.utils.TextViewUtils.valueOrDash;
 
 /**
- * Created by alexandre on 07/11/17.
+ * Como a Activity Detail possui muitas views, preferi separar a instanciação delas nesta classe.
  */
-
-
 public class DetailViewHolder {
 
     @BindView(R.id.txt_short_style)
@@ -53,9 +51,6 @@ public class DetailViewHolder {
     @BindView(R.id.txt_srm)
     TextView txtSrm;
 
-//    @BindView(R.id.txt_organic)
-//    TextView txtOrganic;
-
     @BindView(R.id.img_srm_color)
     ImageView imgSrmColor;
 
@@ -71,7 +66,7 @@ public class DetailViewHolder {
     @BindView(R.id.txt_brewery_website)
     TextView txtBreweryWebsite;
 
-    /* Present only in the tablet  version */
+    /* Disponível apenas na versão para tablet */
     @Nullable
     @BindView(R.id.img_beer_label)
     ImageView imgBeerLabel;
@@ -81,17 +76,12 @@ public class DetailViewHolder {
 
     private WeakReference<Context> contextWeakReference;
 
-
     private Unbinder unbinder;
-
-    private PublishSubject<View> beerClickSubject = PublishSubject.create();
-
 
     public DetailViewHolder(View view) {
         unbinder = ButterKnife.bind(this, view);
         contextWeakReference = new WeakReference<Context>(view.getContext());
     }
-
 
     public void setBeer(Beer beer) {
 
@@ -106,7 +96,6 @@ public class DetailViewHolder {
         txtIbu.setText(valueOrDash(beer.getIbu()));
 
         txtSrm.setText(valueOrDash(beer.getSrm()));
-//        txtOrganic.setText(valueOrDash(beer.getOrganic()));
 
         imgSrmColor.setBackgroundColor(getColor(beer.getSrmHexColor(), Color.TRANSPARENT));
         txtServingTemperature.setText(valueOrDash(beer.getServingTemperature()));
@@ -120,13 +109,12 @@ public class DetailViewHolder {
             Picasso.with(contextWeakReference.get()).load(beer.getLabelLarge())
                     .placeholder(R.drawable.beerplaceholder)
                     .error(R.drawable.ic_warning_white)
-                    .resize(640, 640)
+                    .resize(Constants.DETAIL_BEER_LABEL_IMAGE_SIZE, Constants.DETAIL_BEER_LABEL_IMAGE_SIZE)
                     .transform(new CropMiddleFirstPixelTransformation())
                     .centerCrop()
                     .into(imgBeerLabel);
 
         }
-
 
     }
 

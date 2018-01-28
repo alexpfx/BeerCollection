@@ -13,22 +13,11 @@ import android.support.v4.content.ContextCompat;
 import com.github.alexpfx.udacity.beercollection.R;
 import com.github.alexpfx.udacity.beercollection.detail.DetailActivity;
 
-/**
- * Created by alexandre on 09/01/18.
- */
-
 public class NotificationUtils {
 
     private static final int BEER_INFO_UPDATES_PENDING_INTENT_ID = 1001;
     private static final String CACHE_CLEANER_INFO_CHANNEL_ID = "notification";
     private static final int BEER_INFO_UPDATES_NOTIFICATION_ID = 1001;
-
-
-    private static PendingIntent contentIntent(Context context) {
-        Intent intent = new Intent(context, DetailActivity.class);
-        return PendingIntent.getActivity(context, BEER_INFO_UPDATES_PENDING_INTENT_ID, intent, PendingIntent
-                .FLAG_UPDATE_CURRENT);
-    }
 
     public static void showInfoAboutCacheCleanerProcess(Context context, int count) {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context
@@ -42,7 +31,6 @@ public class NotificationUtils {
         }
 
         String body = context.getString(R.string.message_cache_clared);
-
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(context, CACHE_CLEANER_INFO_CHANNEL_ID)
                         .setColor(ContextCompat.getColor(context, R.color.primary))
@@ -60,6 +48,11 @@ public class NotificationUtils {
         }
         notificationManager.notify(BEER_INFO_UPDATES_NOTIFICATION_ID, builder.build());
 
+    }
 
+    private static PendingIntent contentIntent(Context context) {
+        Intent intent = new Intent(context, DetailActivity.class);
+        return PendingIntent.getActivity(context, BEER_INFO_UPDATES_PENDING_INTENT_ID, intent, PendingIntent
+                .FLAG_UPDATE_CURRENT);
     }
 }

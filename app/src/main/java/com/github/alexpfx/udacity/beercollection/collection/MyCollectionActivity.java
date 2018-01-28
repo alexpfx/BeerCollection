@@ -28,7 +28,6 @@ import butterknife.BindBool;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import timber.log.Timber;
 
 public class MyCollectionActivity extends BaseActivity implements MyCollectionFragment.Listener {
 
@@ -64,7 +63,6 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionFr
 
     @Override
     public void navigateToDetail(String beerId) {
-        Timber.d("navigateToDetail: %s %b", beerId, isMultiPane);
         if (isMultiPane) {
             getSupportFragmentManager().beginTransaction()
                     .addToBackStack(null)
@@ -118,7 +116,6 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionFr
     }
 
     private void onBackStackChanged() {
-        Timber.d("onBackStackChanged");
         updateVisibility();
     }
 

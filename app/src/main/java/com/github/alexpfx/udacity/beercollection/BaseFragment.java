@@ -19,15 +19,15 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract void injectDependencies(BeerApp app);
 
-    public void executeOnActivityActionBar(Consumer<ActionBar> consumer){
+    public void executeOnActivityActionBar(Consumer<ActionBar> consumer) {
         ActionBar supportActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        if (supportActionBar != null){
+        if (supportActionBar != null) {
             consumer.accept(supportActionBar);
         }
 
     }
 
-    public Intent getActivityIntent(){
+    public Intent getActivityIntent() {
         return getActivity().getIntent();
     }
 }

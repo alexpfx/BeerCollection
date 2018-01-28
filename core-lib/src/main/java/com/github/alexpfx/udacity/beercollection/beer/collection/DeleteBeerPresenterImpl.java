@@ -3,13 +3,15 @@ package com.github.alexpfx.udacity.beercollection.beer.collection;
 import com.github.alexpfx.udacity.beercollection.databaselib.dagger.PerActivity;
 import com.github.alexpfx.udacity.beercollection.databaselib.util.SchedulerProvider;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
 
 /**
  * Created by alexandre on 04/01/18.
@@ -44,6 +46,8 @@ public class DeleteBeerPresenterImpl implements DeleteBeerPresenter {
     @Override
     public void deleteBeer(String beerId) {
         Single single = interactor.deleteBeer(beerId);
+
+
         Disposable disposable = single.subscribeOn(provider.computation()).observeOn(provider.mainThread()).subscribe
                 (onSuccess -> view.showBeerDeleted(beerId));
         compositeDisposable.add(disposable);
@@ -51,7 +55,15 @@ public class DeleteBeerPresenterImpl implements DeleteBeerPresenter {
 
 
     @Override
-    public void deleteBeers(Set<String> beers) {
+    public void deleteBeers(List<String> beers) {
+        List<Single<Void>> singles = new ArrayList<>();
+        for (String beerId : beers) {
+            singles.add(interactor.deleteBeer(beerId));
+        }
+
+        // notify UI when all deletions were  performed.
+        Single.zip(singles, (Function<Object[], Object>) objects -> 0)
+                .subscribe(o -> view.showBeersDeleted());
 
     }
 }

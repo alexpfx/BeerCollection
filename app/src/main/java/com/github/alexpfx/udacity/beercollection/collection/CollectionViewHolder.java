@@ -1,8 +1,12 @@
 package com.github.alexpfx.udacity.beercollection.collection;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.StringRes;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.TooltipCompat;
 import android.text.TextUtils;
@@ -14,9 +18,9 @@ import android.widget.TextView;
 import com.github.alexpfx.udacity.beercollection.R;
 import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
 import com.github.alexpfx.udacity.beercollection.domain.model.collection.CollectionItem;
-import com.github.alexpfx.udacity.beercollection.utils.CropMiddleFirstPixelTransformation;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -24,7 +28,6 @@ import java.util.Collection;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnLongClick;
 import io.reactivex.subjects.PublishSubject;
 import jp.wasabeef.picasso.transformations.CropSquareTransformation;
 
@@ -48,19 +51,37 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.layout_collecion_item)
     ConstraintLayout layout;
 
-//    @BindView(R.id.view_scrim)
-//    View view;
-
-
-//    @BindView(R.id.btn_toggle_selection)
-//    ImageButton btnToggleSelection;
-
-
     @BindView(R.id.view_clicable_area)
     View viewClicableArea;
+    Target target = new Target() {
+        @Override
+        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+            imageBeerLabel.setImageBitmap(bitmap);
 
+            Palette.from(bitmap).generate(palette -> {
+                Palette.Swatch swatch = palette.getDominantSwatch();
+                int textColor = swatch.getTitleTextColor();
+                int rgb = swatch.getRgb();
+                layout.setBackgroundColor(rgb);
+
+                textBeerName.setTextColor(textColor);
+
+                btnDrink.getDrawable().setColorFilter(textColor, PorterDuff.Mode.MULTIPLY);
+
+            });
+        }
+
+        @Override
+        public void onBitmapFailed(Drawable errorDrawable) {
+
+        }
+
+        @Override
+        public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+        }
+    };
     private Context context;
-
 
     public CollectionViewHolder(View itemView, PublishSubject<View> detailEvent, PublishSubject<View>
             addBeerEvent, PublishSubject<View>
@@ -78,17 +99,11 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
         setupEvents();
     }
 
+    /**
+     * Configura os eventos da UI collection_item, que são despachados
+     * através de objetos PublishSubject do RxJava.
+     */
     private void setupEvents() {
-
-
-        //RxView.clicks(viewOverlay).map(a -> itemView).subscribe(toggleSelectionEvent);
-
-//        RxView.clicks(imageBeerLabel).map(a -> itemView).subscribe(detailEvent);
-
-
-//        RxView.clicks(btnToggleSelection).map(a -> itemView).subscribe(toggleSelectionEvent);
-
-
         RxView.clicks(btnDrink).map(a -> itemView).subscribe(addBeerEvent);
         CompositeClickListener compositeClickListener = new CompositeClickListener(itemView);
 
@@ -106,10 +121,6 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(CollectionItem item, boolean isSelected, boolean isSelectable) {
         viewClicableArea.setSelected(isSelected);
-//        view.setVisibility(isSelected?View.INVISIBLE:View.VISIBLE);
-
-//        btnToggleSelection.setSelected(isSelected);
-//        btnToggleSelection.setVisibility(isSelectable ? View.VISIBLE : View.INVISIBLE);
         imageBeerLabel.setClickable(!isSelectable);
 
         Beer beer = item.getBeer();
@@ -122,27 +133,19 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
         bindLastDrinkDate(item);
     }
 
-    @OnLongClick(R.id.image_beer_label)
-    public boolean onImageBeerLabelLongClick(View view) {
-//        toggleSelectionModeEvent.onNext(itemView);
-        return true;
-    }
-
     private void bindBeerLabel(Beer beer) {
-
-        int targetHeight = 320;
+        int targetSize = 320;
         Picasso.with(context)
                 .load(beer.getLabelLarge())
                 .placeholder(R.drawable.beerplaceholder)
                 .error(R.drawable.ic_warning_white)
-                .resize(targetHeight, targetHeight)
+                .resize(targetSize, targetSize)
                 .transform(new CropSquareTransformation())
-                .transform(new CropMiddleFirstPixelTransformation())
+//                .transform(new CropMiddleFirstPixelTransformation())
                 .centerCrop()
-                .into(imageBeerLabel);
+                .into(target);
 
     }
-
 
     private void bindBeerName(Beer beer) {
         textBeerName.setText(beer.getName());

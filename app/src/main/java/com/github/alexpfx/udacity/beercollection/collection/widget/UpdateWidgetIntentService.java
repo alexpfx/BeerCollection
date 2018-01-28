@@ -23,7 +23,7 @@ public class UpdateWidgetIntentService extends IntentService {
     }
 
 
-    public static void start (Context context){
+    public static void start(Context context) {
         Intent intent = new Intent(context, UpdateWidgetIntentService.class);
         intent.setAction(ACTION_UPDATE_COLLECTION);
         context.startService(intent);

@@ -15,11 +15,7 @@ import com.github.alexpfx.udacity.beercollection.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by alexandre on 12/11/17.
- */
 public class DrinkBeerFragmentDialog extends DialogFragment {
-    private static final String TAG = "DrinkBeerFragmentDialog";
     @BindView(R.id.input_quantity)
     NumberPicker inputQuantity;
     private Listener listener;
@@ -77,7 +73,6 @@ public class DrinkBeerFragmentDialog extends DialogFragment {
 
     }
 
-
     public interface Listener {
         void onPositiveClick(Integer quant);
 
@@ -87,8 +82,6 @@ public class DrinkBeerFragmentDialog extends DialogFragment {
     public static abstract class PositiveClickListener implements Listener {
         @Override
         public void onNegativeClick() {
-
-
         }
     }
 

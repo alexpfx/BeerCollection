@@ -13,4 +13,8 @@ public interface MultiSelectableAdapter {
     boolean isSelected(int position);
 
     void setSelected(int position, boolean isSelected);
+
+    void clearSelections();
+
+
 }

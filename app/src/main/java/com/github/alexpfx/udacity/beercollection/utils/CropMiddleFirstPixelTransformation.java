@@ -4,12 +4,9 @@ import android.graphics.Bitmap;
 
 import com.squareup.picasso.Transformation;
 
-import timber.log.Timber;
-
 /**
- * Created by alexandre on 01/12/17.
+ * Transformation usado para cortar bordas brancas das imagens carregadas pelo Picasso.
  */
-
 public class CropMiddleFirstPixelTransformation implements Transformation {
     private int mWidth;
     private int mHeight;
@@ -17,7 +14,6 @@ public class CropMiddleFirstPixelTransformation implements Transformation {
 
     @Override
     public Bitmap transform(Bitmap source) {
-        long before = System.currentTimeMillis();
         int width = source.getWidth();
         int height = source.getHeight();
 
@@ -38,27 +34,15 @@ public class CropMiddleFirstPixelTransformation implements Transformation {
         mWidth = right - left;
         mHeight = bottom - top;
 
-
         if (!isNegative(left, right, top, bottom)) {
 
             return source;
         }
 
-        Bitmap bitmap = Bitmap.createBitmap(source, left, top, mWidth , mHeight);
+        Bitmap bitmap = Bitmap.createBitmap(source, left, top, mWidth, mHeight);
         source.recycle();
 
-        Timber.d("elapsed time: %d", System.currentTimeMillis() - before);
         return bitmap;
-
-    }
-
-    private boolean isNegative(int... values) {
-        for (int i : values) {
-            if (i < 0) {
-                return false;
-            }
-        }
-        return true;
 
     }
 
@@ -90,6 +74,15 @@ public class CropMiddleFirstPixelTransformation implements Transformation {
         return -1;
     }
 
+    private boolean isNegative(int... values) {
+        for (int i : values) {
+            if (i < 0) {
+                return false;
+            }
+        }
+        return true;
+
+    }
 
     @Override
     public String key() {

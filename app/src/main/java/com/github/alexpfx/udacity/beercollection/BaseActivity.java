@@ -21,6 +21,11 @@ import java.lang.reflect.Field;
 public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(IconicsContextWrapper.wrap(newBase));
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
@@ -51,11 +56,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(IconicsContextWrapper.wrap(newBase));
-    }
-
-    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         injectDependencies((BeerApp) getApplicationContext());
@@ -72,19 +72,20 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * Fix memory leak coming from Android Source code.
-     *
+     * <p>
      * https://issuetracker.google.com/issues/37043700#comment17
-     *
+     * <p>
      * fixInputMethod
      *
-     * @author androidmalin
      * @param context Context
+     * @author androidmalin
      */
     public static void fixInputMethod(Context context) {
         if (context == null) return;
         InputMethodManager inputMethodManager = null;
         try {
-            inputMethodManager = (InputMethodManager) context.getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager = (InputMethodManager) context.getApplicationContext().getSystemService(Context
+                    .INPUT_METHOD_SERVICE);
         } catch (Throwable th) {
             th.printStackTrace();
         }

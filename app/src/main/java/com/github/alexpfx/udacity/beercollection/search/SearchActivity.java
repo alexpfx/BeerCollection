@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.github.alexpfx.udacity.beercollection.BaseActivity;
@@ -27,7 +26,6 @@ import javax.inject.Inject;
 import butterknife.BindBool;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 /**
  * Adicionar indicador de loading
@@ -88,7 +86,6 @@ public class SearchActivity extends BaseActivity implements SearchFragment.Liste
     @Override
     public void onDetail(String id) {
 
-        Timber.d("onDetail %s", id);
         if (isMultiPane) {
             DetailFragment detailFragment = DetailFragment.getInstance(id);
             getSupportFragmentManager().beginTransaction()
@@ -126,23 +123,22 @@ public class SearchActivity extends BaseActivity implements SearchFragment.Liste
 
     @Override
     public void showLoadError(Throwable throwable) {
-        Log.e(TAG, "showLoadError: ", throwable);
-
-        /*If reaches here it indicates that for any reason the beer info cannot be loaded, even if the beer has been
-        added tho collection, so it
-         shows the message without show the name of the beer. */
+        /*
+        Se passar aqui é porque as informações da cerveja não puderam ser carregadas. Mesmo assim
+        a cerveja é adicionada a collection.
+         */
         Snackbar.make(getBaseContentView(), getString(R.string.message_beer_added_collection, ""), Snackbar
                 .LENGTH_SHORT).show();
     }
 
     @Override
     public void onTitleChanged(String title) {
-        //When DetailFragment is inside SearchActivity ctivity it doesn't changes the activity title.
+        //Quando o DetailFragment está dentro da SearchActivity, ele não altera o título da Activity.
 
     }
 
     @Override
     public void onImageChanged(String imgUrl) {
-        //When DetailFragment is inside SearchActivity it doesn't changes the toolbar image.
+        //Quando o DetailFragment está dentro da SearchActivity, ele não altera a imagem da toolbar.
     }
 }

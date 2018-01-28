@@ -10,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,7 +33,6 @@ import com.github.alexpfx.udacity.beercollection.domain.model.DrinkBeerUpdateIte
 import com.github.alexpfx.udacity.beercollection.domain.model.collection.CollectionItem;
 import com.github.alexpfx.udacity.beercollection.drink.DrinkBeerFragmentDialog;
 import com.github.alexpfx.udacity.beercollection.utils.Comparators;
-import com.github.alexpfx.udacity.beercollection.utils.SelectableItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +44,6 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import timber.log.Timber;
 
 public class MyCollectionFragment extends BaseFragment implements MyCollectionView, SwipeRefreshLayout
         .OnRefreshListener, DrinkBeerView, DeleteBeerView {
@@ -79,7 +78,7 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     private Unbinder unbinder;
     private DrinkBeerFragmentDialog.PositiveClickListener positiveClickListener;
     private MenuItem.OnMenuItemClickListener actionDeleteClick = menuItem -> {
-        List<String> selectedItemIds = getSelectedIds();
+        List<String> selectedItemIds = adapter.getSelectedIds();
         deleteItems(selectedItemIds);
         return true;
     };
@@ -88,18 +87,19 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         return true;
     };
     private SearchView searchView;
+
     public MyCollectionFragment() {
 
     }
 
-    private List<String> getSelectedIds() {
-        return adapter.get(SelectableItem::isSelected, selectableItem -> selectableItem.getItem().getBeer().getId());
-    }
 
     private void deleteItems(List<String> selectedItemIds) {
-        for (String selectedItemId : selectedItemIds) {
-            delete(selectedItemId);
-        }
+//        for (String selectedItemId : selectedItemIds) {
+//            delete(selectedItemId);
+//        }
+
+        deleteBeerPresenter.deleteBeers(selectedItemIds);
+
     }
 
     private void delete(String beerId) {
@@ -290,15 +290,15 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     }
 
     private void toggleSelectionMode(View view) {
-        Timber.d("toggleSelectionMode");
         setSelectionMode(!isSelectMode());
-        toggleSelection(view);
-
-
+        if (isSelectMode()) {
+            toggleSelection(view);
+        }
     }
 
     private void setSelectionMode(boolean selectionMode) {
         adapter.setSelectable(selectionMode);
+
         getActivity().invalidateOptionsMenu();
     }
 
@@ -307,9 +307,8 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     }
 
     private void toggleSelection(View v) {
-        Timber.d("toggleSelection");
         int position = rcvCollection.getChildAdapterPosition(v);
-        if (position == RecyclerView.NO_POSITION){
+        if (position == RecyclerView.NO_POSITION) {
             return;
         }
 
@@ -319,9 +318,8 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     }
 
     private void navigateToDetail(View v) {
-        Timber.d("navigateToDetail");
-//        listener.navigateToDetail
-//                (getBeerIdFromTag(v));
+        listener.navigateToDetail
+                (getBeerIdFromTag(v));
     }
 
     @Override
@@ -389,6 +387,12 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
 
     @Override
     public void showBeerDeleted(String beerId) {
+        Log.d(TAG, "showBeerDeleted: " + beerId);
+
+    }
+
+    @Override
+    public void showBeersDeleted() {
         onRefresh();
     }
 

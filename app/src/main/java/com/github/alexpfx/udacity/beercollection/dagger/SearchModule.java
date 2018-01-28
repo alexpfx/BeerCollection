@@ -9,11 +9,7 @@ import com.github.alexpfx.udacity.beercollection.databaselib.search.SearchPresen
 import dagger.Module;
 import dagger.Provides;
 
-/**
- * Created by alexandre on 17/10/17.
- */
-
-@Module()
+@Module
 public class SearchModule {
 
     public SearchModule() {

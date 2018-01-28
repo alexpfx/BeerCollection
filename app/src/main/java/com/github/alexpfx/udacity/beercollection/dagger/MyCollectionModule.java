@@ -13,10 +13,6 @@ import com.github.alexpfx.udacity.beercollection.databaselib.dagger.PerActivity;
 import dagger.Module;
 import dagger.Provides;
 
-/**
- * Created by alexandre on 09/11/17.
- */
-
 @Module(includes = ActivityModule.class)
 public class MyCollectionModule {
 
@@ -47,7 +43,7 @@ public class MyCollectionModule {
 
     @PerActivity
     @Provides
-    DeleteBeerPresenter deleteBeerPresenter(DeleteBeerPresenterImpl deleteBeerPresenter){
+    DeleteBeerPresenter deleteBeerPresenter(DeleteBeerPresenterImpl deleteBeerPresenter) {
         return deleteBeerPresenter;
 
     }

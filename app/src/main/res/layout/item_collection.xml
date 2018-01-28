@@ -8,8 +8,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="1dp"
-    android:background="@color/secondary_text"
-    android:splitMotionEvents="true"
     tools:layout_editor_absoluteY="25dp"
     >
 
@@ -35,10 +33,11 @@
         android:id="@+id/view_clicable_area"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:foreground="@drawable/collection_state_list_drawable"
+        app:layout_constraintBottom_toBottomOf="@id/image_beer_label"
+        app:layout_constraintEnd_toEndOf="@id/image_beer_label"
+        app:layout_constraintStart_toStartOf="@id/image_beer_label"
+        app:layout_constraintTop_toTopOf="@id/image_beer_label"/>
 
     <TextView
         android:id="@+id/text_beer_name"
@@ -59,7 +58,7 @@
         app:layout_constraintTop_toBottomOf="@+id/image_beer_label"
         tools:text="Heineken Lager"/>
 
-    <TextView
+    <com.mikepenz.iconics.view.IconicsTextView
         android:id="@+id/text_quantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -67,12 +66,11 @@
         android:layout_marginTop="4dp"
         android:textColor="@color/white"
         android:textSize="15sp"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/text_last_drink_date"
         tools:text="110"/>
 
-    <TextView
+    <com.mikepenz.iconics.view.IconicsTextView
         android:id="@+id/text_last_drink_date"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -80,7 +78,6 @@
         android:layout_marginTop="16dp"
         android:textSize="15sp"
         android:textColor="@color/white"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline2"

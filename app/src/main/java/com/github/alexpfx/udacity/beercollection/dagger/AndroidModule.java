@@ -3,11 +3,9 @@ package com.github.alexpfx.udacity.beercollection.dagger;
 import android.content.Context;
 import android.content.res.Resources;
 
-import com.github.alexpfx.udacity.beercollection.utils.AndroidSchedulerProvider;
 import com.github.alexpfx.udacity.beercollection.BeerApp;
-import com.github.alexpfx.udacity.beercollection.Logger;
-import com.github.alexpfx.udacity.beercollection.utils.TimberLogger;
 import com.github.alexpfx.udacity.beercollection.databaselib.util.SchedulerProvider;
+import com.github.alexpfx.udacity.beercollection.utils.AndroidSchedulerProvider;
 
 import javax.inject.Singleton;
 
@@ -41,13 +39,6 @@ public class AndroidModule {
     @Singleton
     SchedulerProvider schedulerProvider(AndroidSchedulerProvider schedulerProvider) {
         return schedulerProvider;
-    }
-
-
-    @Provides
-    @Singleton
-    Logger logger() {
-        return new TimberLogger();
     }
 
 

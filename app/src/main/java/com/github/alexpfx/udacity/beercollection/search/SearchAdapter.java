@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.alexpfx.udacity.beercollection.AbstractBaseAdapter;
+import com.github.alexpfx.udacity.beercollection.Constants;
 import com.github.alexpfx.udacity.beercollection.R;
 import com.github.alexpfx.udacity.beercollection.databaselib.dagger.PerActivity;
 import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
@@ -28,12 +29,8 @@ import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
-/**
- * Created by alexandre on 31/10/17.
- */
 @PerActivity
 public class SearchAdapter extends AbstractBaseAdapter<SearchAdapter.SeachViewHolder, Beer> {
-    private static final String TAG = "SearchAdapter";
     private List<Beer> items = new ArrayList<>();
     private PublishSubject<View> clickDetailViewObservable = PublishSubject.create();
     private PublishSubject<View> clickDownloadViewObservable = PublishSubject.create();
@@ -52,11 +49,6 @@ public class SearchAdapter extends AbstractBaseAdapter<SearchAdapter.SeachViewHo
     }
 
     @Override
-    protected SeachViewHolder createViewHolder(View view) {
-        return new SeachViewHolder(view);
-    }
-
-    @Override
     protected View inflate(LayoutInflater inflater, ViewGroup parent) {
         View view = inflater.inflate(R.layout.item_search_beer, parent, false);
 
@@ -64,10 +56,8 @@ public class SearchAdapter extends AbstractBaseAdapter<SearchAdapter.SeachViewHo
     }
 
     @Override
-    public void onBindViewHolder(SeachViewHolder holder, int position) {
-        Beer beer = items.get(position);
-
-        holder.bind(beer);
+    protected SeachViewHolder createViewHolder(View view) {
+        return new SeachViewHolder(view);
     }
 
     @Override
@@ -75,14 +65,21 @@ public class SearchAdapter extends AbstractBaseAdapter<SearchAdapter.SeachViewHo
         return items.size();
     }
 
+    public void setItems(List<Beer> items) {
+        this.items = items;
+        notifyDataSetChanged();
+    }
+
     public void clear() {
         items.clear();
         notifyDataSetChanged();
     }
 
-    public void setItems(List<Beer> items) {
-        this.items = items;
-        notifyDataSetChanged();
+    @Override
+    public void onBindViewHolder(SeachViewHolder holder, int position) {
+        Beer beer = items.get(position);
+
+        holder.bind(beer);
     }
 
     public class SeachViewHolder extends RecyclerView.ViewHolder {
@@ -122,9 +119,9 @@ public class SearchAdapter extends AbstractBaseAdapter<SearchAdapter.SeachViewHo
             txtBeerName.setText(beerName);
             txtBeerStyle.setText(beer.getStyle());
 
-
+            int detailBeerLabelImageSize = Constants.SEARCH_BEER_LABEL_IMAGE_SIZE;
             Picasso.with(context).load(beer.getLabelIcon())
-                    .resize(256, 256)
+                    .resize(detailBeerLabelImageSize, detailBeerLabelImageSize)
                     .placeholder(R.drawable.beerplaceholder)
                     .error(R.drawable.ic_error_outline_white)
                     .transform(new CropMiddleFirstPixelTransformation())
@@ -133,7 +130,6 @@ public class SearchAdapter extends AbstractBaseAdapter<SearchAdapter.SeachViewHo
                     .into(imgBeerLabel);
 
         }
-
 
 
     }

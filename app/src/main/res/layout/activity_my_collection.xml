@@ -8,8 +8,8 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context="com.github.alexpfx.udacity.beercollection.collection.MyCollectionActivity"
-    >
 
+    >
 
     <include layout="@layout/layout_toolbar"/>
 

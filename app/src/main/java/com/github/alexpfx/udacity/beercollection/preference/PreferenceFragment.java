@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v14.preference.SwitchPreference;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
@@ -22,12 +21,8 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import timber.log.Timber;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class PreferenceFragment extends PreferenceFragmentCompat implements ClearCollectionView {
 
 
@@ -35,7 +30,6 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Clea
     @Inject
     ClearCollectionPresenter presenter;
     private Preference.OnPreferenceClickListener onResetClick = preference -> {
-        Timber.d(preference.getKey());
         SwitchPreference switchPreference = (SwitchPreference) preference;
 
         startDialog(switchPreference);
@@ -44,7 +38,6 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Clea
     private Unbinder unbinder;
 
     public PreferenceFragment() {
-        // Required empty public constructor
     }
 
     private void startDialog(SwitchPreference switchPreference) {
@@ -120,7 +113,6 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Clea
         super.onDetach();
         presenter.unLoad();
     }
-
 
 
     @Override

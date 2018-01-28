@@ -1,7 +1,6 @@
 package com.github.alexpfx.udacity.beercollection.beer.collection;
 
 import com.github.alexpfx.udacity.beercollection.Constants;
-import com.github.alexpfx.udacity.beercollection.Logger;
 import com.github.alexpfx.udacity.beercollection.beer.beer.BeerInteractor;
 import com.github.alexpfx.udacity.beercollection.databaselib.dagger.PerActivity;
 import com.github.alexpfx.udacity.beercollection.databaselib.util.SchedulerProvider;
@@ -26,7 +25,6 @@ public class LoadCollectionPresenterImpl implements LoadCollectionPresenter {
 
     private final MyCollectionInteractor collectionInteractor;
     private final SchedulerProvider provider;
-    private final Logger logger;
     private CompositeDisposable compositeDisposable;
     private MyCollectionView view;
     private BeerInteractor beerInteractor;
@@ -36,13 +34,12 @@ public class LoadCollectionPresenterImpl implements LoadCollectionPresenter {
     @Inject
     public LoadCollectionPresenterImpl(MyCollectionInteractor collectionInteractor,
                                        SchedulerProvider
-                                               provider, BeerInteractor beerInteractor, Logger logger) {
+                                               provider, BeerInteractor beerInteractor) {
 
 
         this.collectionInteractor = collectionInteractor;
         this.provider = provider;
         this.beerInteractor = beerInteractor;
-        this.logger = logger;
     }
 
 

@@ -9,23 +9,19 @@ import com.github.alexpfx.udacity.beercollection.databaselib.dagger.PerActivity;
 import dagger.Module;
 import dagger.Provides;
 
-/**
- * Created by alexandre on 06/12/17.
- */
-
 @Module
 public class DrinkBeerModule {
 
     @Provides
     @PerActivity
-    DrinkBeerPresenter drinkBeerPresenter (DrinkBeerPresenterImpl drinkBeerPresenter){
+    DrinkBeerPresenter drinkBeerPresenter(DrinkBeerPresenterImpl drinkBeerPresenter) {
         return drinkBeerPresenter;
     }
 
     //TODO: mover para collection.
     @Provides
     @PerActivity
-    DrinkBeerInteractor drinkBeerInteractor (DrinkBeerInteractorImpl drinkBeerInteractor){
+    DrinkBeerInteractor drinkBeerInteractor(DrinkBeerInteractorImpl drinkBeerInteractor) {
         return drinkBeerInteractor;
     }
 

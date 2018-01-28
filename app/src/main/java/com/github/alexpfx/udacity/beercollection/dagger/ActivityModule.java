@@ -9,7 +9,6 @@ import dagger.Provides;
 
 
 @Module
-
 public class ActivityModule {
     Activity activity;
 
@@ -20,7 +19,7 @@ public class ActivityModule {
 
     @PerActivity
     @Provides
-    public Activity activity (){
+    public Activity activity() {
         return this.activity;
 
     }

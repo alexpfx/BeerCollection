@@ -5,6 +5,8 @@ import java.util.List;
 
 public interface BaseAdapter<I> {
     void setItems(List<I> items);
-    void clear ();
-    I getItem (int position);
+
+    void clear();
+
+    I getItem(int position);
 }

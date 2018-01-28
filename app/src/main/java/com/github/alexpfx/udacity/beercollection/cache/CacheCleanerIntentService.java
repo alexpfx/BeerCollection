@@ -17,15 +17,14 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
-import timber.log.Timber;
-
-
+/**
+ * Classe responsável por apagar do banco de dados itens de cache que estão armazenados há mais de 24 horas.
+ */
 public class CacheCleanerIntentService extends BaseIntentService implements CacheCleanerView {
     public static final String ACTION_CLEAN_OLD_CACHE_DATA = "clean-old-cache-data";
 
     @Inject
     CacheCleanerPresenter presenter;
-
 
     public CacheCleanerIntentService() {
         super("CacheCleanerIntentService");
@@ -33,23 +32,18 @@ public class CacheCleanerIntentService extends BaseIntentService implements Cach
 
     @Override
     public void whenClearCacheRoutineStarts() {
-        Timber.d("Starting cache cleaning");
-
     }
-
 
     @Override
     public void whenClearCacheRoutineEnds(int removed) {
-        Timber.d("Cache routine ends: removed: %d", removed);
         if (removed == 0) {
             return;
         }
         SharedPreferences defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences
                 (getApplicationContext());
         boolean shouldShowNotification = defaultSharedPreferences.getBoolean(getString(R.string
-                        .pref_key_send_notification_when_cache_cleared_key), false);
+                .pref_key_send_notification_when_cache_cleared_key), false);
 
-        Timber.d("should show notification: %b", shouldShowNotification);
 
         if (shouldShowNotification) {
             NotificationUtils.showInfoAboutCacheCleanerProcess(getApplicationContext(), removed);
@@ -63,13 +57,6 @@ public class CacheCleanerIntentService extends BaseIntentService implements Cach
     }
 
     @Override
-    public void onDestroy() {
-
-        Timber.d("unLoad: cache");
-        super.onDestroy();
-    }
-
-    @Override
     protected void onHandleIntent(Intent intent) {
         String action = intent.getAction();
         if (Objects.equals(action, ACTION_CLEAN_OLD_CACHE_DATA)) {
@@ -80,7 +67,6 @@ public class CacheCleanerIntentService extends BaseIntentService implements Cach
 
     private void cleanUpCache() {
         presenter.clearCache(TimeUnit.HOURS.toMillis(Constants.CACHE_EXPIRATION));
-
 
     }
 

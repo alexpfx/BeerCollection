@@ -6,10 +6,6 @@ import com.firebase.ui.auth.AuthUI;
 
 import java.util.Arrays;
 
-/**
- * Created by alexandre on 30/10/17.
- */
-
 public class FirebaseUtils {
 
     public static void openAuthUi (Activity activity, int requestCode){

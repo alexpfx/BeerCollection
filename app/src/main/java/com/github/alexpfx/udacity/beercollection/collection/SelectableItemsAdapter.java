@@ -20,9 +20,6 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
 
-/**
- * Created by alexandre on 21/01/18.
- */
 @PerActivity
 public class SelectableItemsAdapter extends RecyclerView.Adapter<CollectionViewHolder> implements
         MultiSelectableAdapter {
@@ -33,6 +30,7 @@ public class SelectableItemsAdapter extends RecyclerView.Adapter<CollectionViewH
     private final PublishSubject<View> toggleSelectionModeEvent = PublishSubject.create();
     private final List<SelectableItem<CollectionItem>> items = new ArrayList<>();
     private boolean selectable = false;
+
     private io.reactivex.functions.Predicate<View> isNotSeletionMode = view -> !selectable;
     private io.reactivex.functions.Predicate<View> isSeletionMode = view -> selectable;
 
@@ -64,6 +62,38 @@ public class SelectableItemsAdapter extends RecyclerView.Adapter<CollectionViewH
     }
 
     @Override
+    public void clearSelections() {
+        get(si -> si.isSelected(), selectableItem -> {
+            int position = items.indexOf(selectableItem);
+            selectableItem.setSelected(false);
+            notifyItemChanged(position);
+            return selectableItem;
+        });
+    }
+
+
+    /**
+     * Método utilizado para realizar queries de propósito geral sobre os Items do adaspter.
+     *
+     * @param predicate Usado para filtrar os itens.
+     * @param function  Recebe uma função que pode ser usada para aplicar uma transformação
+     *                  no item filtrado antes de que ele seja retornado.
+     * @param <R>       Tipo de retorno da função
+     * @return A lista filtrada pela query
+     */
+    private <R> List<R> get(Predicate<SelectableItem<CollectionItem>>
+                                    predicate, Function<SelectableItem<CollectionItem>, R> function) {
+        List<R> list = new ArrayList<>();
+        for (SelectableItem<CollectionItem> item : items) {
+            if (predicate.test(item)) {
+                list.add(function.apply(item));
+            }
+        }
+        return list;
+    }
+
+
+    @Override
     public CollectionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_collection, parent, false);
 
@@ -82,7 +112,6 @@ public class SelectableItemsAdapter extends RecyclerView.Adapter<CollectionViewH
         return items.size();
     }
 
-
     public void resetState(List<CollectionItem> newItems) {
         List<SelectableItem<CollectionItem>> sNewItems = new ArrayList<>();
         setSelectable(false);
@@ -97,19 +126,6 @@ public class SelectableItemsAdapter extends RecyclerView.Adapter<CollectionViewH
         items.addAll(newItems);
         notifyDataSetChanged();
     }
-
-
-    public <R> List<R> get(Predicate<SelectableItem<CollectionItem>>
-                                   predicate, Function<SelectableItem<CollectionItem>, R> function) {
-        List<R> list = new ArrayList<>();
-        for (SelectableItem<CollectionItem> item : items) {
-            if (predicate.test(item)) {
-                list.add(function.apply(item));
-            }
-        }
-        return list;
-    }
-
 
     public Observable<View> getDetailEventObservable() {
         return detailEvent
@@ -134,4 +150,8 @@ public class SelectableItemsAdapter extends RecyclerView.Adapter<CollectionViewH
         return toggleSelectionModeEvent.hide();
     }
 
+
+    public List<String> getSelectedIds() {
+        return get(SelectableItem::isSelected, selectableItem -> selectableItem.getItem().getBeer().getId());
+    }
 }

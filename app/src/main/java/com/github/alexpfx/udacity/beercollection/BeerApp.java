@@ -17,43 +17,28 @@ import com.github.alexpfx.udacity.beercollection.dagger.SearchModule;
 import com.github.alexpfx.udacity.beercollection.dagger.SearchSubComponent;
 import com.github.alexpfx.udacity.beercollection.databaselib.dagger.ServiceModule;
 import com.github.alexpfx.udacity.beercollection.domain.model.remote.config.BreweryDbConfig;
-import com.squareup.leakcanary.AndroidExcludedRefs;
-import com.squareup.leakcanary.LeakCanary;
-
-import timber.log.Timber;
 
 
 public class BeerApp extends Application {
 
     ApplicationComponent applicationComponent;
-    MyCollectionSubComponent myCollectionSubComponent;
     private SearchSubComponent searchSubComponent;
     private DetailSubComponent detailSubComponent;
-
-//    @Override
-//    protected void attachBaseContext(Context base) {
-//        super.attachBaseContext(IconicsContextWrapper.wrap(base));
-//    }
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-
-       if (BuildConfig.DEBUG) {
-            Timber.plant(new Timber.DebugTree());
-        }
+//       if (BuildConfig.DEBUG) {
+//            Timber.plant(new Timber.DebugTree());
+//        }
 
         startCacheCleanerService();
-
-
-
-//        installLeakCanary();
-
 
         applicationComponent = createComponent();
     }
 
+/*
     private void installLeakCanary() {
         if (LeakCanary.isInAnalyzerProcess(this)) {
             return;
@@ -66,6 +51,7 @@ public class BeerApp extends Application {
 
 
     }
+*/
 
     private void startCacheCleanerService() {
         Intent intent = new Intent(this, CacheCleanerIntentService.class);
@@ -84,7 +70,6 @@ public class BeerApp extends Application {
     }
 
     public SearchSubComponent getSearchSubComponent() {
-        //TODO: analisar
         if (searchSubComponent == null) {
             searchSubComponent = applicationComponent.plus(new SearchModule());
         }

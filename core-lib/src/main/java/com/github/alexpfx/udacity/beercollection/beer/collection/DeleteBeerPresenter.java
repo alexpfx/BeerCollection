@@ -2,7 +2,7 @@ package com.github.alexpfx.udacity.beercollection.beer.collection;
 
 import com.github.alexpfx.udacity.beercollection.base.BasePresenter;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * Created by alexandre on 04/01/18.
@@ -11,5 +11,5 @@ import java.util.Set;
 public interface DeleteBeerPresenter extends BasePresenter<DeleteBeerView>{
     void deleteBeer (String beerId);
 
-    void deleteBeers (Set<String> beers);
+    void deleteBeers (List<String> beers);
 }

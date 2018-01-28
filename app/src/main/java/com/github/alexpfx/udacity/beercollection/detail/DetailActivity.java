@@ -20,8 +20,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class DetailActivity extends BaseActivity implements DetailFragment.Listener {
-    private static final String TAG = "DetailActivity";
-
 
     @BindView(R.id.collapsing_toolbar)
     CollapsingToolbarLayout collapsingToolbarLayout;
@@ -58,7 +56,6 @@ public class DetailActivity extends BaseActivity implements DetailFragment.Liste
 
     }
 
-
     @Override
     public void onTitleChanged(String title) {
         collapsingToolbarLayout.setTitle(title);
@@ -67,10 +64,12 @@ public class DetailActivity extends BaseActivity implements DetailFragment.Liste
 
     @Override
     public void onImageChanged(String imgUrl) {
+        int imageSize = Constants.DETAIL_BEER_LABEL_IMAGE_SIZE;
+
         Picasso.with(this).load(imgUrl)
                 .placeholder(R.drawable.beerplaceholder)
                 .error(R.drawable.ic_warning_white)
-                .resize(640, 640)
+                .resize(imageSize, imageSize)
                 .transform(new CropMiddleFirstPixelTransformation())
                 .centerCrop()
                 .into(imgToolbar);
