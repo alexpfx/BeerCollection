@@ -25,7 +25,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_height="@dimen/card_height_huge"
+            android:layout_height="@dimen/card_height_gigant"
             tools:src="@drawable/heineken"
             android:scaleType="centerCrop"
             />

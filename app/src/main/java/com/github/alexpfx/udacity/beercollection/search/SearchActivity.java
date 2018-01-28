@@ -32,7 +32,6 @@ import butterknife.ButterKnife;
  */
 public class SearchActivity extends BaseActivity implements SearchFragment.Listener, DetailFragment.Listener,
         DrinkBeerView, LoadBeerInfoPresenterView {
-    private static final String TAG = "SearchActivity";
 
 
     @BindView(R.id.toolbar)

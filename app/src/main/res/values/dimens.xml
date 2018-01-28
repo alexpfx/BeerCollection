@@ -24,10 +24,10 @@
 
     <dimen name="card_height_tiny">24dp</dimen>
     <dimen name="card_height_small">48dp</dimen>
-    <dimen name="card_height_normal">64dp</dimen>
-    <dimen name="card_height_large">180dp</dimen>
+    <dimen name="card_height_normal">72dp</dimen>
+    <dimen name="card_height_large">120dp</dimen>
     <dimen name="card_height_huge">192dp</dimen>
-    <dimen name="card_height_gigant">224dp</dimen>
+    <dimen name="card_height_gigant">312dp</dimen>
 
     <dimen name="icon_box_small">32dp</dimen>
     <dimen name="icon_box_normal">48dp</dimen>

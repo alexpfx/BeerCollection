@@ -9,10 +9,6 @@ import com.github.alexpfx.udacity.beercollection.preference.PreferenceFragment;
 
 import dagger.Subcomponent;
 
-/**
- * Created by alexandre on 10/11/17.
- */
-
 
 @PerActivity
 @Subcomponent(modules = {MyCollectionModule.class, DrinkBeerModule.class, BeerModule.class})

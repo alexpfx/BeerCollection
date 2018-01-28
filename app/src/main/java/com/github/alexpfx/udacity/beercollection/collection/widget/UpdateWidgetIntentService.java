@@ -9,9 +9,6 @@ import android.support.annotation.Nullable;
 
 import com.github.alexpfx.udacity.beercollection.R;
 
-/**
- * Created by alexandre on 11/01/18.
- */
 
 public class UpdateWidgetIntentService extends IntentService {
 

@@ -92,9 +92,6 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
 
     }
 
-    private void delete(String beerId) {
-        deleteBeerPresenter.deleteBeer(beerId);
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -257,7 +254,7 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         disposable = adapter.getToggleSelectionEventObservable().subscribe(this::toggleSelection);
         compositeDisposable.add(disposable);
 
-        disposable = adapter.getToggleSelectionModeEventObservable().subscribe(v -> toggleSelectionMode(v));
+        disposable = adapter.getToggleSelectionModeEventObservable().subscribe(this::toggleSelectionMode);
         compositeDisposable.add(disposable);
     }
 

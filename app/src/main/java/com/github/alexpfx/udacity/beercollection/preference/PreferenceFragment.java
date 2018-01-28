@@ -26,7 +26,6 @@ import butterknife.Unbinder;
 public class PreferenceFragment extends PreferenceFragmentCompat implements ClearCollectionView {
 
 
-    private static final String TAG = "PreferenceFragment";
     @Inject
     ClearCollectionPresenter presenter;
     private Preference.OnPreferenceClickListener onResetClick = preference -> {

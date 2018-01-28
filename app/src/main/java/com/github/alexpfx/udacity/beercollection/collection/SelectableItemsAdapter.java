@@ -49,10 +49,7 @@ public class SelectableItemsAdapter extends RecyclerView.Adapter<CollectionViewH
 
     @Override
     public boolean isSelected(int position) {
-        if (position == RecyclerView.NO_POSITION) {
-            return false;
-        }
-        return items.get(position).isSelected();
+        return position != RecyclerView.NO_POSITION && items.get(position).isSelected();
     }
 
     @Override
@@ -63,7 +60,7 @@ public class SelectableItemsAdapter extends RecyclerView.Adapter<CollectionViewH
 
     @Override
     public void clearSelections() {
-        get(si -> si.isSelected(), selectableItem -> {
+        get(SelectableItem::isSelected, selectableItem -> {
             int position = items.indexOf(selectableItem);
             selectableItem.setSelected(false);
             notifyItemChanged(position);
@@ -78,12 +75,12 @@ public class SelectableItemsAdapter extends RecyclerView.Adapter<CollectionViewH
      * @param predicate Usado para filtrar os itens.
      * @param function  Recebe uma função que pode ser usada para aplicar uma transformação
      *                  no item filtrado antes de que ele seja retornado.
-     * @param <R>       Tipo de retorno da função
+     * @param <RT>       Tipo de retorno da função
      * @return A lista filtrada pela query
      */
-    private <R> List<R> get(Predicate<SelectableItem<CollectionItem>>
-                                    predicate, Function<SelectableItem<CollectionItem>, R> function) {
-        List<R> list = new ArrayList<>();
+    private <RT> List<RT> get(Predicate<SelectableItem<CollectionItem>>
+                                    predicate, Function<SelectableItem<CollectionItem>, RT> function) {
+        List<RT> list = new ArrayList<>();
         for (SelectableItem<CollectionItem> item : items) {
             if (predicate.test(item)) {
                 list.add(function.apply(item));

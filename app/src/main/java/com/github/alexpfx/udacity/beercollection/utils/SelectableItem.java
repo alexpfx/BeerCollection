@@ -19,9 +19,8 @@ public class SelectableItem<T> implements Parcelable {
     private T item;
     private boolean selected = false;
 
-    public SelectableItem(T item, boolean selected) {
+    public SelectableItem(T item) {
         this.item = item;
-        this.selected = selected;
     }
 
     protected SelectableItem(Parcel in) {
@@ -29,7 +28,7 @@ public class SelectableItem<T> implements Parcelable {
     }
 
     public static <T> SelectableItem createFrom(T item) {
-        return new SelectableItem<>(item, false);
+        return new SelectableItem<>(item);
     }
 
     @Override

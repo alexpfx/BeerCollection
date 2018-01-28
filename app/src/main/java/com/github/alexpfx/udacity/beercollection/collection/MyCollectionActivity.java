@@ -31,9 +31,7 @@ import butterknife.OnClick;
 
 public class MyCollectionActivity extends BaseActivity implements MyCollectionFragment.Listener {
 
-    public static final String DETAIL_FRAGMENT = "detailFragment";
     private static final String TAG = "MyCollectionActivity";
-    private static final String HISTORY_FRAGMENT_TAG = "historyFragment";
     @Inject
     DrinkBeerPresenter drinkBeerPresenter;
     @BindView(R.id.toolbar)
@@ -97,7 +95,7 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionFr
 
         setupToolbar();
 
-        getSupportFragmentManager().addOnBackStackChangedListener(() -> onBackStackChanged());
+        getSupportFragmentManager().addOnBackStackChangedListener(this::onBackStackChanged);
 
         if (savedInstanceState == null) {
             if (!isMultiPane) {

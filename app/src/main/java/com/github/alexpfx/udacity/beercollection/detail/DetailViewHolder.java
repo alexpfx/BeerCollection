@@ -80,7 +80,7 @@ public class DetailViewHolder {
 
     public DetailViewHolder(View view) {
         unbinder = ButterKnife.bind(this, view);
-        contextWeakReference = new WeakReference<Context>(view.getContext());
+        contextWeakReference = new WeakReference<>(view.getContext());
     }
 
     public void setBeer(Beer beer) {
