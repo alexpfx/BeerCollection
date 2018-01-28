@@ -5,9 +5,6 @@ import com.github.alexpfx.udacity.beercollection.domain.model.collection.Collect
 
 import java.util.Comparator;
 
-/**
- * Created by alexandre on 09/11/17.
- */
 
 public interface LoadCollectionPresenter extends BasePresenter<MyCollectionView> {
     void load(Comparator<CollectionItem> comparator);

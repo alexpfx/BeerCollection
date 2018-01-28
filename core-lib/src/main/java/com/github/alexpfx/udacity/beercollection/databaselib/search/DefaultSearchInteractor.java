@@ -13,10 +13,6 @@ import javax.inject.Inject;
 import io.reactivex.Single;
 import io.reactivex.functions.Consumer;
 
-/**
- * Created by alexandre on 17/10/17.
- */
-
 @PerActivity
 public class DefaultSearchInteractor implements SearchInteractor {
     private BeerRemoteDataSource remote;

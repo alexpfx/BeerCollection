@@ -143,8 +143,5 @@ public class CollectionRemoteViewFactory implements RemoteViewsService.RemoteVie
 
     }
 
-    @Override
-    public void clearResults() {
 
-    }
 }

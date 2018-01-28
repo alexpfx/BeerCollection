@@ -161,12 +161,9 @@ public class BeerLocalDataSourceImpl implements BeerLocalDataSource {
                         count.addAndGet(1);
                     }
 
-                    beersRef.updateChildren(Collections.emptyMap(), new DatabaseReference.CompletionListener() {
-                        @Override
-                        public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-                            emitter.onSuccess(count.get());
-                            lastUpdateRef.removeValue();
-                        }
+                    beersRef.updateChildren(Collections.emptyMap(), (databaseError, databaseReference) -> {
+                        emitter.onSuccess(count.get());
+                        lastUpdateRef.removeValue();
                     });
 
 

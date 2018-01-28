@@ -9,9 +9,6 @@ import javax.inject.Inject;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
-/**
- * Created by alexandre on 12/11/17.
- */
 @PerActivity
 public class DrinkBeerPresenterImpl implements DrinkBeerPresenter {
 

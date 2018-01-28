@@ -17,10 +17,6 @@ import io.reactivex.Flowable;
 import io.reactivex.Single;
 import io.reactivex.functions.Consumer;
 
-/**
- * Created by alexandre on 04/11/17.
- */
-
 @PerActivity
 public class BeerInteractorImpl implements BeerInteractor {
     private Logger logger = Logger.getLogger(this.getClass().getName());
@@ -58,7 +54,6 @@ public class BeerInteractorImpl implements BeerInteractor {
      * Caso a resposta seja proveniente da consulta remota, o valor retornado é salvo no banco antes de ser emitido.
      *
      * <p>
-     * TODO: traduzir
      *
      * @param beerId
      * @return

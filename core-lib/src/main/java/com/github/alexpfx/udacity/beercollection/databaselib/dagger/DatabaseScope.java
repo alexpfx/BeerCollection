@@ -5,9 +5,6 @@ import java.lang.annotation.RetentionPolicy;
 
 import javax.inject.Scope;
 
-/**
- * Created by alexandre on 28/10/17.
- */
 @Scope
 @Retention(RetentionPolicy.RUNTIME)
 public @interface DatabaseScope {

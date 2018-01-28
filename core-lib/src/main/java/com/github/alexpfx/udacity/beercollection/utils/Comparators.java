@@ -4,9 +4,6 @@ import com.github.alexpfx.udacity.beercollection.domain.model.collection.Collect
 
 import java.util.Comparator;
 
-/**
- * Created by alexandre on 19/01/18.
- */
 
 public class Comparators {
     public static Comparator<CollectionItem> COLLECTION_ITEM_BY_DATE_DESC = (Comparator<CollectionItem>) (o1, o2) -> {

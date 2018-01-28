@@ -5,9 +5,6 @@ import com.github.alexpfx.udacity.beercollection.domain.model.DrinkBeerUpdateIte
 
 import io.reactivex.Single;
 
-/**
- * Created by alexandre on 12/11/17.
- */
 
 public interface DrinkBeerInteractor extends BaseInteractor {
     Single save (DrinkBeerUpdateItem beer);

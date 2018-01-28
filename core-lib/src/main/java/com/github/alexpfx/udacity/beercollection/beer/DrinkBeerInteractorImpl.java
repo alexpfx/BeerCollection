@@ -8,9 +8,6 @@ import javax.inject.Inject;
 
 import io.reactivex.Single;
 
-/**
- * Created by alexandre on 12/11/17.
- */
 @PerActivity
 public class DrinkBeerInteractorImpl implements DrinkBeerInteractor {
 

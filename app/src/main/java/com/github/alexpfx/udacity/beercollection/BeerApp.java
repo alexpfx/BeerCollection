@@ -28,30 +28,11 @@ public class BeerApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
-//       if (BuildConfig.DEBUG) {
-//            Timber.plant(new Timber.DebugTree());
-//        }
-
         startCacheCleanerService();
 
         applicationComponent = createComponent();
     }
 
-/*
-    private void installLeakCanary() {
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            return;
-        }
-
-
-        LeakCanary.refWatcher(this).excludedRefs(AndroidExcludedRefs.createAppDefaults()
-                .build())
-                .buildAndInstall();
-
-
-    }
-*/
 
     private void startCacheCleanerService() {
         Intent intent = new Intent(this, CacheCleanerIntentService.class);

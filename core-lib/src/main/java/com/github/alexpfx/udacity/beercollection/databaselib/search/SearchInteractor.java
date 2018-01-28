@@ -7,10 +7,6 @@ import java.util.List;
 
 import io.reactivex.Single;
 
-/**
- * Created by alexandre on 15/10/17.
- */
-
 public interface SearchInteractor {
     Single<List<Beer>> searchBeers(String query);
 }

@@ -13,9 +13,6 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
 
-/**
- * Created by alexandre on 04/01/18.
- */
 
 @PerActivity
 public class DeleteBeerPresenterImpl implements DeleteBeerPresenter {
@@ -61,7 +58,7 @@ public class DeleteBeerPresenterImpl implements DeleteBeerPresenter {
             singles.add(interactor.deleteBeer(beerId));
         }
 
-        // notify UI when all deletions were  performed.
+        // Notifica a UI quando todas as exclusões são executadas
         Single.zip(singles, (Function<Object[], Object>) objects -> 0)
                 .subscribe(o -> view.showBeersDeleted());
 

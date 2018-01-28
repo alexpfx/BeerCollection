@@ -34,7 +34,6 @@ import com.github.alexpfx.udacity.beercollection.domain.model.collection.Collect
 import com.github.alexpfx.udacity.beercollection.drink.DrinkBeerFragmentDialog;
 import com.github.alexpfx.udacity.beercollection.utils.Comparators;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -57,11 +56,6 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     SwipeRefreshLayout swipeRefreshCollection;
     @BindView(R.id.text_empty_content)
     TextView txtMessagesEmptyCollection;
-//    @Inject
-//    CollectionAdapter adapter;
-
-//    @Inject
-//    CollectionMultiselectableAdapter adapter;
 
     @Inject
     SelectableItemsAdapter adapter;
@@ -94,10 +88,6 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
 
 
     private void deleteItems(List<String> selectedItemIds) {
-//        for (String selectedItemId : selectedItemIds) {
-//            delete(selectedItemId);
-//        }
-
         deleteBeerPresenter.deleteBeers(selectedItemIds);
 
     }
@@ -363,11 +353,6 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
             swipeRefreshCollection.setRefreshing(false);
         }
 
-    }
-
-    @Override
-    public void clearResults() {
-        adapter.swapItems(new ArrayList<>());
     }
 
     @Override

@@ -12,10 +12,6 @@ import javax.inject.Inject;
 
 import io.reactivex.disposables.Disposable;
 
-/**
- * Created by alexandre on 17/10/17.
- */
-
 @PerActivity
 public class DefaultSearchPresenter implements SearchPresenter {
 

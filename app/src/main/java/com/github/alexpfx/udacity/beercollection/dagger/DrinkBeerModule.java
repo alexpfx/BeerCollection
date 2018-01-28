@@ -25,11 +25,5 @@ public class DrinkBeerModule {
         return drinkBeerInteractor;
     }
 
-//    @Provides
-//    @PerActivity
-//    public DrinkBeerView drinkBeerView (Activity activity){
-//        return (DrinkBeerView) activity;
-//    }
-
 
 }

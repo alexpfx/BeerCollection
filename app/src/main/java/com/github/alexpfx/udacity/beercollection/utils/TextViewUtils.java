@@ -16,15 +16,5 @@ public final class TextViewUtils {
         }
     }
 
-    /*
-    public static void setOrHide(String label, TextView view, Object o) {
-        if (o == null) {
-            view.setVisibility(View.GONE);
-        } else {
-            CharSequence text = TextUtils.concat(label, ": ", o.toString());
-            view.setText(text);
-        }
-    }
-    */
 
 }
