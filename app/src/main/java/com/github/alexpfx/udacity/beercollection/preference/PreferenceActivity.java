@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.github.alexpfx.udacity.beercollection.BaseActivity;
 import com.github.alexpfx.udacity.beercollection.BeerApp;
@@ -17,6 +18,9 @@ public class PreferenceActivity extends BaseActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
+    @BindView(R.id.text_toolbar_title)
+    TextView toolbarTitle;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -32,7 +36,10 @@ public class PreferenceActivity extends BaseActivity {
         setContentView(R.layout.activity_preference);
         ButterKnife.bind(this);
 
-        ToolbarUtils.setupToolbar(this, toolbar, false, true, false, false);
+        ToolbarUtils.setupToolbar(this, toolbar, false, true, true, false);
+
+        toolbarTitle.setText(getString(R.string.title_settings));
+
     }
 
     @Override

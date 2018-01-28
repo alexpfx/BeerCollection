@@ -14,5 +14,6 @@ public class Constants {
 
     public static final long QUERY_DEBONCE_TIME = 500;
     public static final int DETAIL_BEER_LABEL_IMAGE_SIZE = 640;
+    public static final int COLLECTION_BEER_LABEL_IMAGE_SIZE = 480;
     public static final int SEARCH_BEER_LABEL_IMAGE_SIZE = 320;
 }

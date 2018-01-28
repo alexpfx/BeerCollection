@@ -10,6 +10,7 @@
     <string name="title_activity_my_collection">MyCollection</string>
     <string name="title_activity_search">Search for a beer</string>
     <string name="action_settings">Settings</string>
+    <string name="title_settings">Settings</string>
     <string name="ok">@android:string/ok</string>
     <string name="cancel">Cancel</string>
     <string name="message_content_cannot_loaded">Content cannot be loaded, please check your internet connection</string>
@@ -23,7 +24,7 @@
     <string name="label_quantity">quantity</string>
     <string name="label_total">Total </string>
     <string name="message_how_many_beers">How many beers?</string>
-    <string name="message_no_itens_in_collection">You don\'t have oldItems in collection yet</string>
+    <string name="message_no_itens_in_collection">You don\'t have items in collection yet</string>
     <string name="tooltip_beer_name">Name of the beer</string>
     <string name="tooltip_last_beer">Date of last beer of this label consumed</string>
     <string name="tooltip_quantity">Total number of beers of this label consumed </string>
@@ -88,7 +89,7 @@
 
 
     <string name="pref_key_send_notification_when_cache_cleared_key" translatable="false">cache_send_notification</string>
-    <string name="pref_key_send_notification_when_cache_cleared_label" >cache_send_notification</string>
+    <string name="pref_key_send_notification_when_cache_cleared_label" >Send notification when cache is cleared</string>
     <string name="pref_no">No</string>
     <string name="pref_yes">Yes</string>
     <string name="message_cache_clared">Cache cleared!</string>
@@ -97,3 +98,4 @@
 
 
 </resources>
+

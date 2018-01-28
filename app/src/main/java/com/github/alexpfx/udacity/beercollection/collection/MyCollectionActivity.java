@@ -31,7 +31,6 @@ import butterknife.OnClick;
 
 public class MyCollectionActivity extends BaseActivity implements MyCollectionFragment.Listener {
 
-    private static final String TAG = "MyCollectionActivity";
     @Inject
     DrinkBeerPresenter drinkBeerPresenter;
     @BindView(R.id.toolbar)
@@ -108,7 +107,7 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionFr
     }
 
     private void setupToolbar() {
-        ToolbarUtils.setupToolbar(this, toolbar, false, false, false, false);
+        ToolbarUtils.setupToolbar(this, toolbar, true, false, false, false);
         textToolbarTitle.setText(getString(R.string.activity_title_my_collection));
 
     }

@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.alexpfx.udacity.beercollection.Constants;
 import com.github.alexpfx.udacity.beercollection.R;
 import com.github.alexpfx.udacity.beercollection.domain.model.beer.Beer;
 import com.github.alexpfx.udacity.beercollection.domain.model.collection.CollectionItem;
@@ -134,7 +135,8 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
     }
 
     private void bindBeerLabel(Beer beer) {
-        int targetSize = 320;
+        int targetSize = Constants.COLLECTION_BEER_LABEL_IMAGE_SIZE;
+
         Picasso.with(context)
                 .load(beer.getLabelLarge())
                 .placeholder(R.drawable.beerplaceholder)
@@ -159,7 +161,6 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
         CharSequence dateFormated = dateInstance.format(collectionItem.getLastDate());
         textLastDrinkDate.setText(TextUtils.concat(getString(R.string.icon_cmd_calendar), " ", dateFormated));
         setTooltipText(textLastDrinkDate, R.string.tooltip_last_beer);
-
 
     }
 

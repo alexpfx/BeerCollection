@@ -48,12 +48,17 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         .OnRefreshListener, DrinkBeerView, DeleteBeerView {
 
     public static final String LAST_POSITION = "lastPosition";
+
     public static final String ADAPTER_KEY = "adapter_key";
+
     private static final String TAG = "MyCollectionFragment";
+
     @BindView(R.id.rcv_collection)
     RecyclerView rcvCollection;
+
     @BindView(R.id.swipe_refresh_collection)
     SwipeRefreshLayout swipeRefreshCollection;
+
     @BindView(R.id.text_empty_content)
     TextView txtMessagesEmptyCollection;
 
@@ -61,25 +66,35 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     SelectableItemsAdapter adapter;
 
     CompositeDisposable compositeDisposable;
+
     Listener listener;
+
     @Inject
     LoadCollectionPresenter loadCollectionPresenter;
+
     @Inject
     DrinkBeerPresenter drinkBeerPresenter;
+
     @Inject
     DeleteBeerPresenter deleteBeerPresenter;
+
     private int lastPosition = 0;
+
     private Unbinder unbinder;
+
     private DrinkBeerFragmentDialog.PositiveClickListener positiveClickListener;
+
     private MenuItem.OnMenuItemClickListener actionDeleteClick = menuItem -> {
         List<String> selectedItemIds = adapter.getSelectedIds();
         deleteItems(selectedItemIds);
         return true;
     };
+
     private MenuItem.OnMenuItemClickListener actionCancelEditionClick = item -> {
         setSelectionMode(false);
         return true;
     };
+
     private SearchView searchView;
 
     public MyCollectionFragment() {
@@ -121,7 +136,7 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
 
         setupRecycler();
         setupEvents();
-        executeOnActivityActionBar(ab -> ab.setDisplayHomeAsUpEnabled(false));
+//        executeOnActivityActionBar(ab -> ab.setDisplayHomeAsUpEnabled(false));
 
         if (savedInstanceState != null) {
             lastPosition = savedInstanceState.getInt(LAST_POSITION);
@@ -207,6 +222,9 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
 
     }
 
+    private boolean isSelectMode() {
+        return adapter.isSelectable();
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -233,6 +251,17 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
                 return false;
             }
         });
+    }
+
+    private void setSelectionMode(boolean selectionMode) {
+        adapter.setSelectable(selectionMode);
+
+        if (!selectionMode){
+            adapter.clearSelections();
+        }
+
+        getActivity().invalidateOptionsMenu();
+
     }
 
     private void setupRecycler() {
@@ -281,16 +310,6 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         if (isSelectMode()) {
             toggleSelection(view);
         }
-    }
-
-    private void setSelectionMode(boolean selectionMode) {
-        adapter.setSelectable(selectionMode);
-
-        getActivity().invalidateOptionsMenu();
-    }
-
-    private boolean isSelectMode() {
-        return adapter.isSelectable();
     }
 
     private void toggleSelection(View v) {
@@ -389,6 +408,7 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     }
 
     public interface Listener {
+
         void navigateToDetail(String beerId);
     }
 
