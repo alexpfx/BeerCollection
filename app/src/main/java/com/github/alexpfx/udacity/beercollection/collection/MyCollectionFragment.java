@@ -3,14 +3,12 @@ package com.github.alexpfx.udacity.beercollection.collection;
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,9 +29,11 @@ import com.github.alexpfx.udacity.beercollection.beer.collection.LoadCollectionP
 import com.github.alexpfx.udacity.beercollection.beer.collection.MyCollectionView;
 import com.github.alexpfx.udacity.beercollection.domain.model.DrinkBeerUpdateItem;
 import com.github.alexpfx.udacity.beercollection.domain.model.collection.CollectionItem;
+import com.github.alexpfx.udacity.beercollection.domain.model.collection.CollectionItemVO;
 import com.github.alexpfx.udacity.beercollection.drink.DrinkBeerFragmentDialog;
 import com.github.alexpfx.udacity.beercollection.utils.Comparators;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -97,14 +97,16 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
 
     private SearchView searchView;
 
-    public MyCollectionFragment() {
+    private Bundle adapterState;
 
+
+    public MyCollectionFragment() {
+        setRetainInstance(true);
     }
 
 
     private void deleteItems(List<String> selectedItemIds) {
         deleteBeerPresenter.deleteBeers(selectedItemIds);
-
     }
 
 
@@ -118,6 +120,7 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         }
     }
 
+
     @Override
     protected void injectDependencies(BeerApp app) {
         app.getMyCollectionSubComponent().inject(this);
@@ -125,6 +128,7 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         deleteBeerPresenter.init(this);
         loadCollectionPresenter.init(this);
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -141,11 +145,12 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         if (savedInstanceState != null) {
             lastPosition = savedInstanceState.getInt(LAST_POSITION);
         }
+
         loadCollectionPresenter.load(Comparators.COLLECTION_ITEM_BY_DATE_DESC);
 
         return view;
-
     }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -153,25 +158,24 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         super.onActivityCreated(savedInstanceState);
     }
 
+
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
         if (savedInstanceState == null) {
             return;
         }
-        Parcelable state = savedInstanceState.getParcelable(ADAPTER_KEY);
-//        adapter.onRestoreInstanceState(state);
+        getLinearLayoutManager().scrollToPositionWithOffset(lastPosition, 0);
+        Bundle adapterState = savedInstanceState.getBundle(ADAPTER_KEY);
+        this.adapterState = adapterState;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-//        outState.putParcelable(ADAPTER_KEY, adapter.onSaveInstanceState());
-
+        outState.putInt(LAST_POSITION, getLinearLayoutManager().findFirstVisibleItemPosition());
+        Bundle adapterBundle = adapter.onSaveInstanceState();
+        outState.putBundle(ADAPTER_KEY, adapterBundle);
     }
 
 
@@ -184,6 +188,7 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         unbinder.unbind();
     }
 
+
     @Override
     public void onDetach() {
         super.onDetach();
@@ -193,8 +198,8 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         this.positiveClickListener = null;
 
         compositeDisposable.dispose();
-
     }
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -203,11 +208,12 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         setupEditMode(menu);
-
     }
+
 
     private void setupEditMode(Menu menu) {
         boolean visible = isSelectMode();
@@ -219,19 +225,21 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         MenuItem action_delete = menu.findItem(R.id.action_delete);
         action_delete.setOnMenuItemClickListener(actionDeleteClick);
         action_delete.setVisible(visible);
-
     }
+
 
     private boolean isSelectMode() {
         return adapter.isSelectable();
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        getActivity().invalidateOptionsMenu();
+//        getActivity().invalidateOptionsMenu();
 
         return true;
     }
+
 
     private void setupSearchView(Menu menu) {
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
@@ -246,6 +254,7 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
                 return false;
             }
 
+
             @Override
             public boolean onQueryTextChange(String query) {
                 return false;
@@ -253,20 +262,27 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         });
     }
 
+
     private void setSelectionMode(boolean selectionMode) {
         adapter.setSelectable(selectionMode);
 
-        if (!selectionMode){
+        if (!selectionMode) {
             adapter.clearSelections();
         }
 
         getActivity().invalidateOptionsMenu();
-
     }
+
+
+    private LinearLayoutManager getLinearLayoutManager() {
+        return (LinearLayoutManager) rcvCollection.getLayoutManager();
+    }
+
 
     private void setupRecycler() {
         rcvCollection.setAdapter(adapter);
     }
+
 
     //https://stackoverflow.com/questions/36497690/how-to-handle-item-clicks-for-a-recycler-view-using-rxjava
     private void setupEvents() {
@@ -274,7 +290,6 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
 
         disposable = adapter.getDetailEventObservable().subscribe(this::navigateToDetail);
         compositeDisposable.add(disposable);
-
 
         disposable = adapter.getAddBeerEventObservable().subscribe(v -> showDrinkDialog(getBeerIdFromTag(v)));
         compositeDisposable.add(disposable);
@@ -286,6 +301,7 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         disposable = adapter.getToggleSelectionModeEventObservable().subscribe(this::toggleSelectionMode);
         compositeDisposable.add(disposable);
     }
+
 
     private void showDrinkDialog(String id) {
         positiveClickListener = new DrinkBeerFragmentDialog
@@ -301,9 +317,11 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         instance.show(getActivity().getSupportFragmentManager(), "DrinkBeerDialogFragment");
     }
 
+
     private String getBeerIdFromTag(View v) {
         return (String) v.getTag();
     }
+
 
     private void toggleSelectionMode(View view) {
         setSelectionMode(!isSelectMode());
@@ -311,6 +329,7 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
             toggleSelection(view);
         }
     }
+
 
     private void toggleSelection(View v) {
         int position = rcvCollection.getChildAdapterPosition(v);
@@ -320,13 +339,14 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
 
         boolean itemChecked = adapter.isSelected(position);
         adapter.setSelected(position, !itemChecked);
-
     }
+
 
     private void navigateToDetail(View v) {
         listener.navigateToDetail
                 (getBeerIdFromTag(v));
     }
+
 
     @Override
     public void showUserCollection(List<CollectionItem> items) {
@@ -335,12 +355,16 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         txtMessagesEmptyCollection.setVisibility(View.INVISIBLE);
         searchView.onActionViewCollapsed();
 
-        getLinearLayoutManager(rcvCollection).scrollToPositionWithOffset(lastPosition, 0);
+
+        getLinearLayoutManager().scrollToPositionWithOffset(lastPosition, 0);
+
+        if (adapterState != null) {
+            adapter.onRestoreInstanceState(adapterState);
+            getActivity().invalidateOptionsMenu();
+            adapterState = null;
+        }
     }
 
-    private LinearLayoutManager getLinearLayoutManager(RecyclerView recyclerView) {
-        return (LinearLayoutManager) recyclerView.getLayoutManager();
-    }
 
     @Override
     public void showErrorLoadingCollection(String message) {
@@ -349,12 +373,14 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         txtMessagesEmptyCollection.setText(getString(R.string.message_content_cannot_loaded));
     }
 
+
     @Override
     public void showCollectionEmpty() {
         rcvCollection.setVisibility(View.INVISIBLE);
         txtMessagesEmptyCollection.setVisibility(View.VISIBLE);
         txtMessagesEmptyCollection.setText(getString(R.string.message_no_itens_in_collection));
     }
+
 
     @Override
     public void showLoading() {
@@ -363,17 +389,19 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         }
     }
 
+
     @Override
     public void hideLoading() {
         if (swipeRefreshCollection != null) {
             swipeRefreshCollection.setRefreshing(false);
         }
-
     }
+
 
     @Override
     public void showDrinkAdded(String beerId, int quantity) {
-//        adapter.addTempItem(new CollectionItemVO(beerId, new Date().getTime(), quantity));
+        adapter.addTempItem(new CollectionItemVO(beerId, new Date().getTime(), quantity));
+
         if (quantity > 0) {
             Snackbar.make(swipeRefreshCollection, getResources().getQuantityString(R.plurals
                     .message_you_drink_more_beers, quantity, quantity), Snackbar
@@ -381,36 +409,39 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         }
     }
 
+
     @Override
     public void showErrorOnDrinkBeer(Object error) {
 
     }
 
+
     @Override
     public void showBeerDeleted(String beerId) {
-        Log.d(TAG, "showBeerDeleted: " + beerId);
 
     }
+
 
     @Override
     public void showBeersDeleted() {
         onRefresh();
     }
 
+
     @Override
     public void onRefresh() {
         loadCollectionPresenter.load(Comparators.COLLECTION_ITEM_BY_DATE_DESC);
     }
+
 
     @Override
     public void showCouldNotDeleteBeer() {
 
     }
 
+
     public interface Listener {
 
         void navigateToDetail(String beerId);
     }
-
-
 }

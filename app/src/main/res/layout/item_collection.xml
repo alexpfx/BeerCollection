@@ -19,8 +19,8 @@
         android:adjustViewBounds="true"
         android:alpha="0.9"
         android:duplicateParentState="true"
-        android:scaleType="centerCrop"
         android:foreground="@drawable/scrim_background_beer_label"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -43,68 +43,71 @@
         android:id="@+id/text_beer_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:ellipsize="end"
         android:gravity="start|center_vertical"
         android:maxLines="2"
-        android:layout_marginStart="16dp"
-        android:paddingTop="4dp"
         android:paddingBottom="4dp"
+        android:paddingTop="4dp"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_drink_action"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/image_beer_label"
         tools:text="Heineken Lager"/>
 
-    <com.mikepenz.iconics.view.IconicsTextView
-        android:id="@+id/text_quantity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="4dp"
-        android:textColor="@color/white"
-        android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/text_last_drink_date"
-        tools:text="110"/>
 
     <com.mikepenz.iconics.view.IconicsTextView
         android:id="@+id/text_last_drink_date"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        android:textSize="15sp"
+
+        android:paddingStart="16dp"
+        android:paddingTop="8dp"
         android:textColor="@color/white"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/text_quantity"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         tools:text="{gmd-bubble-chart} - 10/10/2010"/>
+
+
+    <com.mikepenz.iconics.view.IconicsTextView
+        android:id="@+id/text_quantity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:paddingBottom="8dp"
+        android:paddingStart="16dp"
+        android:paddingTop="4dp"
+
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/view_clicable_area"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="110"/>
 
     <ImageButton
         android:id="@+id/btn_drink_action"
         android:layout_width="36dp"
         android:layout_height="36dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
+
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         app:ico_color="@color/white"
         app:ico_icon="cmd_beer"
         app:ico_size="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_beer_label"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="16dp"/>
 
 </android.support.constraint.ConstraintLayout>
