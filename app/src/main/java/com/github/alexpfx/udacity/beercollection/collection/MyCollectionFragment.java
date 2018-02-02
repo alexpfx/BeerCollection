@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -51,6 +52,8 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
 
     public static final String ADAPTER_KEY = "adapter_key";
 
+    public static final String SEARCH_QUERY_KEY = "SEARCH_QUERY_KEY";
+
     private static final String TAG = "MyCollectionFragment";
 
     @BindView(R.id.rcv_collection)
@@ -81,6 +84,8 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     private int lastPosition = 0;
 
     private Unbinder unbinder;
+
+    private String searchQuery;
 
     private DrinkBeerFragmentDialog.PositiveClickListener positiveClickListener;
 
@@ -167,6 +172,8 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         }
         getLinearLayoutManager().scrollToPositionWithOffset(lastPosition, 0);
         Bundle adapterState = savedInstanceState.getBundle(ADAPTER_KEY);
+
+        searchQuery = savedInstanceState.getString(SEARCH_QUERY_KEY);
         this.adapterState = adapterState;
     }
 
@@ -176,6 +183,7 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         outState.putInt(LAST_POSITION, getLinearLayoutManager().findFirstVisibleItemPosition());
         Bundle adapterBundle = adapter.onSaveInstanceState();
         outState.putBundle(ADAPTER_KEY, adapterBundle);
+        outState.putString(SEARCH_QUERY_KEY, searchView.getQuery().toString());
     }
 
 
@@ -244,6 +252,7 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     private void setupSearchView(Menu menu) {
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
 
+
         searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
 
@@ -251,15 +260,25 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                return false;
+
+                return true;
             }
 
 
             @Override
             public boolean onQueryTextChange(String query) {
-                return false;
+                adapter.getFilter().filter(query);
+
+                return true;
             }
         });
+
+
+        if (!TextUtils.isEmpty(searchQuery)) {
+            searchView.onActionViewExpanded();
+            searchView.setQuery(searchQuery, true);
+            searchView.clearFocus();
+        }
     }
 
 
@@ -400,9 +419,8 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
 
     @Override
     public void showDrinkAdded(String beerId, int quantity) {
-        adapter.addTempItem(new CollectionItemVO(beerId, new Date().getTime(), quantity));
-
         if (quantity > 0) {
+            adapter.addTempItem(new CollectionItemVO(beerId, new Date().getTime(), quantity));
             Snackbar.make(swipeRefreshCollection, getResources().getQuantityString(R.plurals
                     .message_you_drink_more_beers, quantity, quantity), Snackbar
                     .LENGTH_SHORT).show();

@@ -7,16 +7,20 @@ import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 
 import com.github.alexpfx.udacity.beercollection.R;
 import com.github.alexpfx.udacity.beercollection.databaselib.dagger.PerActivity;
 import com.github.alexpfx.udacity.beercollection.domain.model.collection.CollectionItem;
 import com.github.alexpfx.udacity.beercollection.domain.model.collection.CollectionItemVO;
+import com.github.alexpfx.udacity.beercollection.utils.FilterUtils;
 import com.github.alexpfx.udacity.beercollection.utils.Function;
 import com.github.alexpfx.udacity.beercollection.utils.Predicate;
 import com.github.alexpfx.udacity.beercollection.utils.SelectableItem;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -26,7 +30,7 @@ import io.reactivex.subjects.PublishSubject;
 
 @PerActivity
 public class SelectableItemsAdapter extends RecyclerView.Adapter<CollectionViewHolder> implements
-        MultiSelectableAdapter {
+        MultiSelectableAdapter, Filterable {
 
     public static final String SELECTED_KEY = "selectables";
 
@@ -43,6 +47,9 @@ public class SelectableItemsAdapter extends RecyclerView.Adapter<CollectionViewH
     private final PublishSubject<View> toggleSelectionModeEvent = PublishSubject.create();
 
     private final List<SelectableItem<CollectionItem>> items = new ArrayList<>();
+
+    private final List<SelectableItem<CollectionItem>> fullItems = new ArrayList<>();
+
 
     private boolean selectable = false;
 
@@ -92,7 +99,6 @@ public class SelectableItemsAdapter extends RecyclerView.Adapter<CollectionViewH
         });
     }
 
-
     /**
      * Método utilizado para realizar queries de propósito geral sobre os Items do adaspter.
      *
@@ -107,31 +113,20 @@ public class SelectableItemsAdapter extends RecyclerView.Adapter<CollectionViewH
         return (get(predicate, function, null));
     }
 
-
-    /**
-     * Método utilizado para realizar queries de propósito geral sobre os Items do adaspter.
-     *
-     * @param <RT>          Tipo de retorno da função
-     * @param predicate     Usado para filtrar os itens.
-     * @param function      Recebe uma função que pode ser usada para aplicar uma transformação
-     *                      no item filtrado antes de que ele seja retornado.
-     * @param stopCondition se a condição for satisfeita, força a parada do laço, returnando a lista criada até então.
-     * @return A lista filtrada pela query
-     */
     private <RT> List<RT> get(Predicate<SelectableItem<CollectionItem>>
                                       predicate, Function<SelectableItem<CollectionItem>, RT> function,
                               @Nullable Predicate<SelectableItem<CollectionItem>> stopCondition) {
-        List<RT> list = new ArrayList<>();
-        for (SelectableItem<CollectionItem> item : items) {
-            if (predicate.test(item)) {
-                list.add(function.apply(item));
-            }
-            if (stopCondition != null && stopCondition.test(item)) {
-                return list;
-            }
-        }
-        return list;
+        return FilterUtils.filter(items, predicate, function, stopCondition);
     }
+
+
+    private <RT> List<RT> get(List<SelectableItem<CollectionItem>> inputList, Predicate<SelectableItem<CollectionItem>>
+                                      predicate, Function<SelectableItem<CollectionItem>, RT> function) {
+        return FilterUtils.filter(inputList, predicate, function, null);
+
+    }
+
+
 
 
     @Override
@@ -167,6 +162,8 @@ public class SelectableItemsAdapter extends RecyclerView.Adapter<CollectionViewH
 
 
     public void swapItems(List<SelectableItem<CollectionItem>> newItems) {
+        fullItems.clear();
+        fullItems.addAll(newItems);
         items.clear();
         items.addAll(newItems);
         notifyDataSetChanged();
@@ -255,5 +252,44 @@ public class SelectableItemsAdapter extends RecyclerView.Adapter<CollectionViewH
         }
         //TODO otimizar notificando apenas a position.
         notifyDataSetChanged();
+    }
+
+
+
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String queryString = constraint.toString().toLowerCase();
+                List<SelectableItem<CollectionItem>> resultList;
+
+                if (queryString.isEmpty()) {
+                    resultList = fullItems;
+                } else {
+                    resultList = get(fullItems, sItem -> sItem.getItem().getBeer().getName().toLowerCase().contains(constraint), rItem -> rItem);
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = resultList;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                if (results == null) {
+                    return;
+                }
+                Object values = results.values;
+                if (values.equals(items)){
+                    return;
+                }
+
+                items.clear();
+                items.addAll((Collection<? extends SelectableItem<CollectionItem>>) results.values);
+                notifyDataSetChanged();
+            }
+        };
     }
 }
