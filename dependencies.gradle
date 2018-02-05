@@ -30,24 +30,20 @@ ext {
     lib_android_implementation = [
 //            timber                   : 'com.jakewharton.timber:timber:4.6.0',
 
-            /* iconics */
+/* iconics */
             iconicsCore              : "com.mikepenz:iconics-core:2.9.5@aar",
-            materialTypeface         : 'com.mikepenz:google-material-typeface:3.0.1.2.original@aar',
-            communityMaterialTypeface: 'com.mikepenz:community-material-typeface:2.0.46.1@aar',
-            iconicTypeface           : 'com.mikepenz:material-design-iconic-typeface:2.2.0.4@aar',
             iconicViews              : "com.mikepenz:iconics-views:2.9.5@aar",
-            fontawesomeTypeface      : 'com.mikepenz:fontawesome-typeface:4.7.0.2@aar',
-            typeiconsTypeface        : 'com.mikepenz:typeicons-typeface:2.0.7.4@aar',
 
+
+            communityMaterialTypeface: 'com.mikepenz:community-material-typeface:2.0.46.1@aar',
+            materialTypeface         : 'com.mikepenz:google-material-typeface:3.0.1.2.original@aar',
 
             supportAppCompat         : "com.android.support:appcompat-v7:${supportVersion}",
             recyclerView             : "com.android.support:recyclerview-v7:${supportVersion}",
-            supportCoreUi            : "com.android.support:support-core-ui:${supportVersion}",
-            supportGridLayout        : "com.android.support:gridlayout-v7:${supportVersion}",
+
             supportPalette           : "com.android.support:palette-v7:${supportVersion}",
             supportVerctorDrawable   : "com.android.support:support-vector-drawable:${supportVersion}",
             supportAnnotations       : "com.android.support:support-annotations:${supportVersion}",
-            supportCardView          : "com.android.support:cardview-v7:${supportVersion}",
             supportDesign            : "com.android.support:design:${supportVersion}",
             supportPreference        : "com.android.support:preference-v7:${supportVersion}",
             supportPreferenceV14     : "com.android.support:preference-v14:${supportVersion}",
@@ -111,8 +107,8 @@ ext {
             daggerCompiler: "com.google.dagger:dagger-compiler:${daggerVersion}"
     ]
     test_common = [
-            junit       : "junit:junit:4.12",
-            hamcrestCore: "org.hamcrest:hamcrest-core:1.3"
+            junit: "junit:junit:4.12",
+
     ]
 
 }

@@ -222,7 +222,8 @@
             app:layout_constraintBottom_toBottomOf="@+id/txt_ibu"
             app:layout_constraintEnd_toEndOf="@+id/txt_srm"
             app:layout_constraintStart_toStartOf="@+id/guideline_3x"
-            app:layout_constraintTop_toBottomOf="@+id/lbl_srm" />
+            app:layout_constraintTop_toBottomOf="@+id/lbl_srm"
+            android:contentDescription="@string/content_srm_color"/>
 
         <TextView
             android:id="@+id/lbl_serving"

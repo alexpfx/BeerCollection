@@ -95,6 +95,14 @@
     <string name="message_cache_clared">Cache cleared!</string>
     <string name="icon_cmd_beer">{cmd-beer}</string>
     <string name="icon_cmd_calendar">{cmd-calendar_today}</string>
+    <string name="content_toolbar_image">Toolbar Detail Image</string>
+    <string name="content_srm_color">Srm Color</string>
+    <string name="content_beer_label">Beer Label</string>
+    <string name="content_search">Search</string>
+    <string name="content_drink">Drink</string>
+    <string name="content_save_beer_to_collection">Save beer to collection</string>
+    <string name="content_logo">Logo</string>
+    <string name="content_refresh">Refresh</string>
 
 
 </resources>

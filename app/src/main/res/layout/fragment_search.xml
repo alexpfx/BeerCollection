@@ -41,7 +41,9 @@
         app:ico_size="24dp"
         app:layout_constraintBottom_toBottomOf="@+id/text_input_search_query"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/text_input_search_query"/>
+        app:layout_constraintTop_toTopOf="@+id/text_input_search_query"
+
+        android:contentDescription="@string/content_search"/>
 
 
     <android.support.v7.widget.RecyclerView

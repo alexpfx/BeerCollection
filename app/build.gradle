@@ -13,9 +13,9 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
 
-        def project_keys_files = rootProject.file("project_keys.properties");
-        def project_keys = new Properties();
-        project_keys.load(new FileInputStream(project_keys_files));
+        def project_keys_files = rootProject.file("project_keys.properties")
+        def project_keys = new Properties()
+        project_keys.load(new FileInputStream(project_keys_files))
 
         buildTypes.each {
             it.buildConfigField 'String', 'KEY_BREWERYDB', project_keys['brewerydb_key']
@@ -46,7 +46,7 @@ android {
         exclude 'META-INF/LICENSE' // It is not include LICENSE file
     }
 
-    signingConfigs{
+    signingConfigs {
         newconfig {
             keyAlias 'alias'
             keyPassword 'xpto1010'
@@ -70,6 +70,8 @@ android {
 
 dependencies {
     def ext = rootProject.ext
+
+
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
