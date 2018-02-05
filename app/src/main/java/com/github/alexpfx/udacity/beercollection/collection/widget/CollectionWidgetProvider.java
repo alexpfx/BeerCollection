@@ -19,11 +19,11 @@ public class CollectionWidgetProvider extends AppWidgetProvider {
         super.onReceive(context, intent);
     }
 
+
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         for (int appWidgetId : appWidgetIds) {
             RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.layout_widget_beers);
-
 
             PendingIntent piAppLaunch = getAppLaunchPendingIntent(context);
             rv.setOnClickPendingIntent(R.id.widget_image_logo, piAppLaunch);
@@ -40,10 +40,12 @@ public class CollectionWidgetProvider extends AppWidgetProvider {
         }
     }
 
+
     private PendingIntent getAppLaunchPendingIntent(Context context) {
         Intent intent = new Intent(context, MyCollectionActivity.class);
         return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
+
 
     private PendingIntent getItemListClickPendingIntent(Context context) {
         Intent intent = new Intent(context, DetailActivity.class);
