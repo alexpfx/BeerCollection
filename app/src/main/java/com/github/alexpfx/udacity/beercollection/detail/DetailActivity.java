@@ -3,6 +3,7 @@ package com.github.alexpfx.udacity.beercollection.detail;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
@@ -25,6 +26,7 @@ public class DetailActivity extends BaseActivity implements DetailFragment.Liste
     CollapsingToolbarLayout collapsingToolbarLayout;
 
 
+    @Nullable
     @BindView(R.id.toolbar_image)
     ImageView imgToolbar;
 
@@ -34,6 +36,7 @@ public class DetailActivity extends BaseActivity implements DetailFragment.Liste
 
     @BindView(R.id.txt_toolbar_title)
     TextView toolbarTitle;
+
 
     public static Intent getStartIntent(Context context, String beerId) {
         Intent intent = new Intent(context, DetailActivity.class);
@@ -62,8 +65,15 @@ public class DetailActivity extends BaseActivity implements DetailFragment.Liste
         toolbarTitle.setText(title);
     }
 
+
+    private static final String TAG = "DetailActivity";
     @Override
     public void onImageChanged(String imgUrl) {
+        if (imgToolbar == null){
+            //tablet
+            return;
+        }
+
         int imageSize = Constants.DETAIL_BEER_LABEL_IMAGE_SIZE;
 
         Picasso.with(this).load(imgUrl)

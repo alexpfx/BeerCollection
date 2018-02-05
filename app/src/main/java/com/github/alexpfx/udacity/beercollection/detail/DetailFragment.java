@@ -4,6 +4,7 @@ package com.github.alexpfx.udacity.beercollection.detail;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +22,7 @@ import javax.inject.Inject;
 
 public class DetailFragment extends BaseFragment implements LoadBeerInfoPresenterView {
 
+    private static final String TAG = "DetailFragment";
 
     @Inject
     LoadBeerInfoPresenter loadBeerInfoPresenter;
@@ -119,10 +121,12 @@ public class DetailFragment extends BaseFragment implements LoadBeerInfoPresente
         Listener EMPTY = new Listener() {
             @Override
             public void onTitleChanged(String title) {
+                Log.d(TAG, "onTitleChanged: ");
             }
 
             @Override
             public void onImageChanged(String imgUrl) {
+                Log.d(TAG, "onImageChanged: ");
             }
         };
 

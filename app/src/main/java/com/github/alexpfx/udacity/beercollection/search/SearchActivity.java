@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.github.alexpfx.udacity.beercollection.BaseActivity;
@@ -27,12 +28,11 @@ import butterknife.BindBool;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Adicionar indicador de loading
- */
 public class SearchActivity extends BaseActivity implements SearchFragment.Listener, DetailFragment.Listener,
         DrinkBeerView, LoadBeerInfoPresenterView {
 
+
+    private static final String TAG = "SearchActivity";
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -61,8 +61,8 @@ public class SearchActivity extends BaseActivity implements SearchFragment.Liste
             ToolbarUtils.setupToolbar(this, toolbar, false, true, false, false);
             textToolbarTitle.setText(getString(R.string.title_activity_search));
         }
-
     }
+
 
     @Override
     protected void injectDependencies(BeerApp app) {
@@ -70,7 +70,6 @@ public class SearchActivity extends BaseActivity implements SearchFragment.Liste
 
         drinkBeerPresenter.init(this);
         loadBeerInfoPresenter.init(this);
-
     }
 
 
@@ -94,7 +93,6 @@ public class SearchActivity extends BaseActivity implements SearchFragment.Liste
             Intent intent = DetailActivity.getStartIntent(this, id);
             startActivity(intent);
         }
-
     }
 
 
@@ -109,16 +107,19 @@ public class SearchActivity extends BaseActivity implements SearchFragment.Liste
         loadBeerInfoPresenter.load(beerId);
     }
 
+
     @Override
     public void showErrorOnDrinkBeer(Object error) {
 
     }
+
 
     @Override
     public void showBeerInfo(Beer beer) {
         Snackbar.make(getBaseContentView(), getString(R.string.message_beer_added_collection, beer.getName()),
                 Snackbar.LENGTH_SHORT).show();
     }
+
 
     @Override
     public void showLoadError(Throwable throwable) {
@@ -130,14 +131,17 @@ public class SearchActivity extends BaseActivity implements SearchFragment.Liste
                 .LENGTH_SHORT).show();
     }
 
+
     @Override
     public void onTitleChanged(String title) {
         //Quando o DetailFragment está dentro da SearchActivity, ele não altera o título da Activity.
 
     }
 
+
     @Override
     public void onImageChanged(String imgUrl) {
+        Log.d(TAG, "onImageChanged: ");
         //Quando o DetailFragment está dentro da SearchActivity, ele não altera a imagem da toolbar.
     }
 }
