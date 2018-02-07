@@ -8,5 +8,6 @@ import dagger.Subcomponent;
 @PerActivity
 @Subcomponent(modules = {CacheCleanerModule.class, BeerModule.class})
 public interface CacheCleanerSubComponent {
+
     void inject(CacheCleanerIntentService cacheCleanerIntentService);
 }

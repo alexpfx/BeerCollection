@@ -21,18 +21,22 @@ import javax.inject.Inject;
  * Classe responsável por apagar do banco de dados itens de cache que estão armazenados há mais de 24 horas.
  */
 public class CacheCleanerIntentService extends BaseIntentService implements CacheCleanerView {
+
     public static final String ACTION_CLEAN_OLD_CACHE_DATA = "clean-old-cache-data";
 
     @Inject
     CacheCleanerPresenter presenter;
 
+
     public CacheCleanerIntentService() {
         super("CacheCleanerIntentService");
     }
 
+
     @Override
     public void whenClearCacheRoutineStarts() {
     }
+
 
     @Override
     public void whenClearCacheRoutineEnds(int removed) {
@@ -50,11 +54,13 @@ public class CacheCleanerIntentService extends BaseIntentService implements Cach
         }
     }
 
+
     @Override
     public void injectDependencies(BeerApp app) {
         app.getCacheCleanerSubComponent().inject(this);
         presenter.init(this);
     }
+
 
     @Override
     protected void onHandleIntent(Intent intent) {
@@ -62,13 +68,11 @@ public class CacheCleanerIntentService extends BaseIntentService implements Cach
         if (Objects.equals(action, ACTION_CLEAN_OLD_CACHE_DATA)) {
             cleanUpCache();
         }
-
     }
+
 
     private void cleanUpCache() {
         presenter.clearCache(TimeUnit.HOURS.toMillis(Constants.CACHE_EXPIRATION));
-
     }
-
 }
 

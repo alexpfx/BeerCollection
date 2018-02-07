@@ -27,17 +27,21 @@ import javax.inject.Inject;
 public class CollectionRemoteViewFactory implements RemoteViewsService.RemoteViewsFactory, MyCollectionView {
 
     private static final String TAG = "CollectionRemoteViewFac";
+
     @Inject
     LoadCollectionPresenter loadCollectionPresenter;
+
     private Context context;
+
     private List<CollectionItem> items;
+
     private CountDownLatch waitForData;
 
 
     public CollectionRemoteViewFactory(Context context) {
         this.context = context;
-
     }
+
 
     @Override
     public void onCreate() {
@@ -47,11 +51,13 @@ public class CollectionRemoteViewFactory implements RemoteViewsService.RemoteVie
         waitForData = new CountDownLatch(1);
     }
 
+
     @Override
     public void onDataSetChanged() {
         loadCollectionPresenter.load(Comparators.COLLECTION_ITEM_BY_QUANTITY_DESC);
         waitData();
     }
+
 
     private void waitData() {
         try {
@@ -61,16 +67,19 @@ public class CollectionRemoteViewFactory implements RemoteViewsService.RemoteVie
         }
     }
 
+
     @Override
     public void onDestroy() {
         context = null;
         items = null;
     }
 
+
     @Override
     public int getCount() {
         return items == null ? 0 : items.size();
     }
+
 
     @Override
     public RemoteViews getViewAt(int position) {
@@ -100,15 +109,18 @@ public class CollectionRemoteViewFactory implements RemoteViewsService.RemoteVie
         return null;
     }
 
+
     @Override
     public int getViewTypeCount() {
         return 1;
     }
 
+
     @Override
     public long getItemId(int position) {
         return position;
     }
+
 
     @Override
     public boolean hasStableIds() {
@@ -123,25 +135,27 @@ public class CollectionRemoteViewFactory implements RemoteViewsService.RemoteVie
         waitForData.countDown();
     }
 
+
     @Override
     public void showErrorLoadingCollection(String message) {
 
     }
+
 
     @Override
     public void showCollectionEmpty() {
 
     }
 
+
     @Override
     public void showLoading() {
 
     }
 
+
     @Override
     public void hideLoading() {
 
     }
-
-
 }

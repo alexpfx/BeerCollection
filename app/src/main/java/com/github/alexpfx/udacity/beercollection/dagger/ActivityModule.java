@@ -10,7 +10,9 @@ import dagger.Provides;
 
 @Module
 public class ActivityModule {
+
     Activity activity;
+
 
     public ActivityModule(Activity activity) {
         this.activity = activity;
@@ -21,6 +23,5 @@ public class ActivityModule {
     @Provides
     public Activity activity() {
         return this.activity;
-
     }
 }

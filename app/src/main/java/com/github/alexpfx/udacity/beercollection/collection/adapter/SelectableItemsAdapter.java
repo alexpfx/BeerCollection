@@ -1,4 +1,4 @@
-package com.github.alexpfx.udacity.beercollection.collection;
+package com.github.alexpfx.udacity.beercollection.collection.adapter;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -35,8 +35,6 @@ public class SelectableItemsAdapter extends RecyclerView.Adapter<CollectionViewH
     public static final String SELECTED_KEY = "selectables";
 
     public static final String IS_SELECTABLE_KEY = "IS_SELECTABLE";
-
-    private static final String TAG = "SelectableItemsAdapter";
 
     private final PublishSubject<View> detailEvent = PublishSubject.create();
 
@@ -99,6 +97,7 @@ public class SelectableItemsAdapter extends RecyclerView.Adapter<CollectionViewH
         });
     }
 
+
     /**
      * Método utilizado para realizar queries de propósito geral sobre os Items do adaspter.
      *
@@ -113,20 +112,12 @@ public class SelectableItemsAdapter extends RecyclerView.Adapter<CollectionViewH
         return (get(predicate, function, null));
     }
 
+
     private <RT> List<RT> get(Predicate<SelectableItem<CollectionItem>>
                                       predicate, Function<SelectableItem<CollectionItem>, RT> function,
                               @Nullable Predicate<SelectableItem<CollectionItem>> stopCondition) {
         return FilterUtils.filter(items, predicate, function, stopCondition);
     }
-
-
-    private <RT> List<RT> get(List<SelectableItem<CollectionItem>> inputList, Predicate<SelectableItem<CollectionItem>>
-                                      predicate, Function<SelectableItem<CollectionItem>, RT> function) {
-        return FilterUtils.filter(inputList, predicate, function, null);
-
-    }
-
-
 
 
     @Override
@@ -151,6 +142,14 @@ public class SelectableItemsAdapter extends RecyclerView.Adapter<CollectionViewH
     }
 
 
+    @Override
+    public void onViewDetachedFromWindow(CollectionViewHolder holder) {
+        if (holder != null) {
+            holder.onDestroy();
+        }
+    }
+
+
     public void resetState(List<CollectionItem> newItems) {
         List<SelectableItem<CollectionItem>> sNewItems = new ArrayList<>();
         setSelectable(false);
@@ -172,7 +171,7 @@ public class SelectableItemsAdapter extends RecyclerView.Adapter<CollectionViewH
 
     public Observable<View> getDetailEventObservable() {
         return detailEvent
-                /*Discard view events if adapter state is in selection mode*/
+                /*Descarta eventos quando não está em modo seleção*/
                 .filter(isNotSeletionMode)
                 .hide();
     }
@@ -250,11 +249,9 @@ public class SelectableItemsAdapter extends RecyclerView.Adapter<CollectionViewH
             CollectionItem collectionItem = items.get(0);
             collectionItem.add(collectionItemVO);
         }
-        //TODO otimizar notificando apenas a position.
+
         notifyDataSetChanged();
     }
-
-
 
 
     @Override
@@ -268,7 +265,8 @@ public class SelectableItemsAdapter extends RecyclerView.Adapter<CollectionViewH
                 if (queryString.isEmpty()) {
                     resultList = fullItems;
                 } else {
-                    resultList = get(fullItems, sItem -> sItem.getItem().getBeer().getName().toLowerCase().contains(constraint), rItem -> rItem);
+                    resultList = get(fullItems, sItem -> sItem.getItem().getBeer().getName().toLowerCase().contains
+                            (constraint), rItem -> rItem);
                 }
 
                 FilterResults filterResults = new FilterResults();
@@ -276,13 +274,14 @@ public class SelectableItemsAdapter extends RecyclerView.Adapter<CollectionViewH
                 return filterResults;
             }
 
+
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
                 if (results == null) {
                     return;
                 }
                 Object values = results.values;
-                if (values.equals(items)){
+                if (values.equals(items)) {
                     return;
                 }
 
@@ -291,5 +290,11 @@ public class SelectableItemsAdapter extends RecyclerView.Adapter<CollectionViewH
                 notifyDataSetChanged();
             }
         };
+    }
+
+
+    private <RT> List<RT> get(List<SelectableItem<CollectionItem>> inputList, Predicate<SelectableItem<CollectionItem>>
+            predicate, Function<SelectableItem<CollectionItem>, RT> function) {
+        return FilterUtils.filter(inputList, predicate, function, null);
     }
 }

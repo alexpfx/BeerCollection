@@ -36,14 +36,14 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:background="?android:selectableItemBackground"
+        android:contentDescription="@string/content_search"
         app:ico_color="@color/iconColor"
         app:ico_icon="gmd-search"
         app:ico_size="24dp"
         app:layout_constraintBottom_toBottomOf="@+id/text_input_search_query"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/text_input_search_query"
 
-        android:contentDescription="@string/content_search"/>
+        app:layout_constraintTop_toTopOf="@+id/text_input_search_query"/>
 
 
     <android.support.v7.widget.RecyclerView

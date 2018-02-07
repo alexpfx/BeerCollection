@@ -18,11 +18,10 @@ public class BeerModule {
         return beerInteractor;
     }
 
+
     @PerActivity
     @Provides
     LoadBeerInfoPresenter detailPresenter(LoadBeerInfoPresenterImpl detailPresenterImpl) {
         return detailPresenterImpl;
     }
-
-
 }

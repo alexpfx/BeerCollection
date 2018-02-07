@@ -14,10 +14,10 @@
     <ImageView
         android:id="@+id/img_beer_label"
         style="@style/SearchActivityPrimaryImage"
+        android:contentDescription="@string/content_beer_label"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/content_beer_label"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -53,14 +53,14 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:background="?android:selectableItemBackground"
+        android:contentDescription="@string/content_save_beer_to_collection"
         app:ico_color="@color/iconColor"
         app:ico_icon="cmd-download"
-        app:ico_size="24dp"
 
+        app:ico_size="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/content_save_beer_to_collection"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 
 
 </android.support.constraint.ConstraintLayout>

@@ -18,15 +18,18 @@ public class AndroidModule {
 
     private BeerApp beerApp;
 
+
     public AndroidModule(BeerApp beerApp) {
         this.beerApp = beerApp;
     }
+
 
     @Provides
     @Singleton
     Context context() {
         return beerApp.getApplicationContext();
     }
+
 
     @Provides
     @Singleton
@@ -40,6 +43,4 @@ public class AndroidModule {
     SchedulerProvider schedulerProvider(AndroidSchedulerProvider schedulerProvider) {
         return schedulerProvider;
     }
-
-
 }

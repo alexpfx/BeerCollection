@@ -22,6 +22,7 @@ public class PreferenceActivity extends BaseActivity {
     @BindView(R.id.text_toolbar_title)
     TextView toolbarTitle;
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -29,6 +30,7 @@ public class PreferenceActivity extends BaseActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +41,8 @@ public class PreferenceActivity extends BaseActivity {
         ToolbarUtils.setupToolbar(this, toolbar, false, true, true, false);
 
         toolbarTitle.setText(getString(R.string.title_settings));
-
     }
+
 
     @Override
     protected void injectDependencies(BeerApp app) {

@@ -7,8 +7,8 @@ public abstract class BaseIntentService extends IntentService {
 
     public BaseIntentService(String name) {
         super(name);
-
     }
+
 
     @Override
     public void onCreate() {
@@ -16,6 +16,6 @@ public abstract class BaseIntentService extends IntentService {
         injectDependencies((BeerApp) getApplicationContext());
     }
 
-    public abstract void injectDependencies(BeerApp app);
 
+    public abstract void injectDependencies(BeerApp app);
 }

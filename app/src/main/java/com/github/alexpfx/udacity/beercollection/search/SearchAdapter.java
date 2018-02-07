@@ -31,22 +31,29 @@ import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 @PerActivity
 public class SearchAdapter extends AbstractBaseAdapter<SearchAdapter.SeachViewHolder, Beer> {
+
     private List<Beer> items = new ArrayList<>();
+
     private PublishSubject<View> clickDetailViewObservable = PublishSubject.create();
+
     private PublishSubject<View> clickDownloadViewObservable = PublishSubject.create();
+
 
     @Inject
     public SearchAdapter() {
 
     }
 
+
     public Observable<View> getClickDownloadViewObservable() {
         return clickDownloadViewObservable.hide();
     }
 
+
     public Observable<View> getClickDetailViewObservable() {
         return clickDetailViewObservable.hide();
     }
+
 
     @Override
     protected View inflate(LayoutInflater inflater, ViewGroup parent) {
@@ -55,25 +62,30 @@ public class SearchAdapter extends AbstractBaseAdapter<SearchAdapter.SeachViewHo
         return view;
     }
 
+
     @Override
     protected SeachViewHolder createViewHolder(View view) {
         return new SeachViewHolder(view);
     }
+
 
     @Override
     public int getItemCount() {
         return items.size();
     }
 
+
     public void setItems(List<Beer> items) {
         this.items = items;
         notifyDataSetChanged();
     }
 
+
     public void clear() {
         items.clear();
         notifyDataSetChanged();
     }
+
 
     @Override
     public void onBindViewHolder(SeachViewHolder holder, int position) {
@@ -82,7 +94,9 @@ public class SearchAdapter extends AbstractBaseAdapter<SearchAdapter.SeachViewHo
         holder.bind(beer);
     }
 
+
     public class SeachViewHolder extends RecyclerView.ViewHolder {
+
         private final View itemView;
 
         @BindView(R.id.txt_beer_name)
@@ -98,6 +112,7 @@ public class SearchAdapter extends AbstractBaseAdapter<SearchAdapter.SeachViewHo
         ImageButton btnDownload;
 
         private Context context;
+
 
         public SeachViewHolder(View itemView) {
             super(itemView);
@@ -128,10 +143,6 @@ public class SearchAdapter extends AbstractBaseAdapter<SearchAdapter.SeachViewHo
                     .transform(new CropCircleTransformation())
                     .centerCrop()
                     .into(imgBeerLabel);
-
         }
-
-
     }
-
 }

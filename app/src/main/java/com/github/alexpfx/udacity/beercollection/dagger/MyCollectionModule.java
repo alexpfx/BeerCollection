@@ -28,6 +28,7 @@ public class MyCollectionModule {
         return myCollectionInteractorImpl;
     }
 
+
     @Provides
     @PerActivity
     LoadCollectionPresenter myCollectionPresenter(LoadCollectionPresenterImpl defaultMyCollectionPresenter) {
@@ -41,11 +42,10 @@ public class MyCollectionModule {
         return clearCollectionPresenter;
     }
 
+
     @PerActivity
     @Provides
     DeleteBeerPresenter deleteBeerPresenter(DeleteBeerPresenterImpl deleteBeerPresenter) {
         return deleteBeerPresenter;
-
     }
-
 }

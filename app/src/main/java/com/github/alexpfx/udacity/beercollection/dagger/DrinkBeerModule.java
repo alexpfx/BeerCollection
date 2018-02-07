@@ -18,12 +18,10 @@ public class DrinkBeerModule {
         return drinkBeerPresenter;
     }
 
-    //TODO: mover para collection.
+
     @Provides
     @PerActivity
     DrinkBeerInteractor drinkBeerInteractor(DrinkBeerInteractorImpl drinkBeerInteractor) {
         return drinkBeerInteractor;
     }
-
-
 }

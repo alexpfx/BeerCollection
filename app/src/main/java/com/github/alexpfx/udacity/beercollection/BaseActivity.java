@@ -25,12 +25,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.attachBaseContext(IconicsContextWrapper.wrap(newBase));
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -42,18 +44,20 @@ public abstract class BaseActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     private void signOut() {
         AuthUI.getInstance().signOut(this)
                 .addOnCompleteListener(
                         task -> Snackbar.make(getBaseContentView(), R.string.message_successful_signout,
                                 Snackbar.LENGTH_SHORT).show());
         LoginActivity.startLoginActivity(getApplicationContext());
-
     }
+
 
     protected View getBaseContentView() {
         return findViewById(android.R.id.content);
     }
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,7 +65,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         injectDependencies((BeerApp) getApplicationContext());
     }
 
+
     protected abstract void injectDependencies(BeerApp app);
+
 
     @Override
     protected void onDestroy() {

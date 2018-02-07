@@ -28,6 +28,7 @@ import com.github.alexpfx.udacity.beercollection.beer.collection.DeleteBeerPrese
 import com.github.alexpfx.udacity.beercollection.beer.collection.DeleteBeerView;
 import com.github.alexpfx.udacity.beercollection.beer.collection.LoadCollectionPresenter;
 import com.github.alexpfx.udacity.beercollection.beer.collection.MyCollectionView;
+import com.github.alexpfx.udacity.beercollection.collection.adapter.SelectableItemsAdapter;
 import com.github.alexpfx.udacity.beercollection.domain.model.DrinkBeerUpdateItem;
 import com.github.alexpfx.udacity.beercollection.domain.model.collection.CollectionItem;
 import com.github.alexpfx.udacity.beercollection.domain.model.collection.CollectionItemVO;
@@ -53,8 +54,6 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     public static final String ADAPTER_KEY = "adapter_key";
 
     public static final String SEARCH_QUERY_KEY = "SEARCH_QUERY_KEY";
-
-    private static final String TAG = "MyCollectionFragment";
 
     @BindView(R.id.rcv_collection)
     RecyclerView rcvCollection;
@@ -145,7 +144,6 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
 
         setupRecycler();
         setupEvents();
-//        executeOnActivityActionBar(ab -> ab.setDisplayHomeAsUpEnabled(false));
 
         if (savedInstanceState != null) {
             lastPosition = savedInstanceState.getInt(LAST_POSITION);
@@ -241,14 +239,6 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     }
 
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-//        getActivity().invalidateOptionsMenu();
-
-        return true;
-    }
-
-
     private void setupSearchView(Menu menu) {
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
 
@@ -257,21 +247,7 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
 
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-
-                return true;
-            }
-
-
-            @Override
-            public boolean onQueryTextChange(String query) {
-                adapter.getFilter().filter(query);
-
-                return true;
-            }
-        });
+        searchView.setOnQueryTextListener(new OnQueryTextListener());
 
 
         if (!TextUtils.isEmpty(searchQuery)) {
@@ -461,5 +437,21 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
     public interface Listener {
 
         void navigateToDetail(String beerId);
+    }
+
+    private class OnQueryTextListener implements SearchView.OnQueryTextListener {
+
+        @Override
+        public boolean onQueryTextSubmit(String query) {
+            return true;
+        }
+
+
+        @Override
+        public boolean onQueryTextChange(String query) {
+            adapter.getFilter().filter(query);
+
+            return true;
+        }
     }
 }

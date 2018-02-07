@@ -23,7 +23,7 @@ import butterknife.Unbinder;
 import static com.github.alexpfx.udacity.beercollection.utils.TextViewUtils.valueOrDash;
 
 /**
- * Como a Activity Detail possui muitas views, preferi separar a instanciação delas nesta classe.
+ * Como a Activity Detail possui muitas views, preferi separar a instanciação de cada uma delas nesta classe.
  */
 public class DetailViewHolder {
 
@@ -78,10 +78,12 @@ public class DetailViewHolder {
 
     private Unbinder unbinder;
 
+
     public DetailViewHolder(View view) {
         unbinder = ButterKnife.bind(this, view);
         contextWeakReference = new WeakReference<>(view.getContext());
     }
+
 
     public void setBeer(Beer beer) {
 
@@ -113,10 +115,9 @@ public class DetailViewHolder {
                     .transform(new CropMiddleFirstPixelTransformation())
                     .centerCrop()
                     .into(imgBeerLabel);
-
         }
-
     }
+
 
     private int getColor(String srmHexColor, int defaultColor) {
         try {
@@ -125,6 +126,7 @@ public class DetailViewHolder {
             return defaultColor;
         }
     }
+
 
     public void unbind() {
         if (unbinder != null) {

@@ -2,52 +2,52 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/widget_item_beer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/widget_item_beer"
     >
 
     <TextView
         android:id="@+id/widget_text_beer_name"
+        style="@style/WidgetItemListHeader"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         tools:text="Heineken"
-        style="@style/WidgetItemListHeader"
         />
 
     <TextView
         android:id="@+id/widget_lbl_last"
+        style="@style/WidgetItemListLabel"
         android:layout_alignParentStart="true"
         android:layout_below="@id/widget_text_beer_name"
         android:text="@string/layout_label_last"
-        style="@style/WidgetItemListLabel"
         />
 
 
     <TextView
         android:id="@+id/widget_text_last_date"
+        style="@style/WidgetItemListContent"
         android:layout_below="@id/widget_text_beer_name"
         android:layout_toEndOf="@id/widget_lbl_last"
         tools:text="2010-05-23"
-        style="@style/WidgetItemListContent"
         />
 
 
     <TextView
         android:id="@+id/widget_lbl_total"
+        style="@style/WidgetItemListLabel"
         android:layout_below="@id/widget_text_beer_name"
         android:layout_toStartOf="@id/widget_text_quantity"
         android:text="@string/widget_label_total"
-        style="@style/WidgetItemListLabel"
         />
 
     <TextView
         android:id="@+id/widget_text_quantity"
+        style="@style/WidgetItemListContent"
         android:layout_alignParentEnd="true"
         android:layout_below="@id/widget_text_beer_name"
         tools:text="101"
-        style="@style/WidgetItemListContent"
         />
 
 

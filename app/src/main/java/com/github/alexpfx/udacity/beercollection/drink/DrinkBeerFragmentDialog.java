@@ -16,8 +16,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class DrinkBeerFragmentDialog extends DialogFragment {
+
     @BindView(R.id.input_quantity)
     NumberPicker inputQuantity;
+
     private Listener listener;
 
 
@@ -27,6 +29,7 @@ public class DrinkBeerFragmentDialog extends DialogFragment {
         return instance;
     }
 
+
     public static DrinkBeerFragmentDialog getInstance(String beerId) {
         Bundle bundle = new Bundle();
         bundle.putString(Constants.KEY_BEER_ID, beerId);
@@ -35,12 +38,14 @@ public class DrinkBeerFragmentDialog extends DialogFragment {
         return drinkBeerFragmentDialog;
     }
 
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         dismiss();
         listener = null;
     }
+
 
     @NonNull
     @Override
@@ -70,20 +75,20 @@ public class DrinkBeerFragmentDialog extends DialogFragment {
         });
 
         return builder.create();
-
     }
 
+
     public interface Listener {
+
         void onPositiveClick(Integer quant);
 
         void onNegativeClick();
     }
 
     public static abstract class PositiveClickListener implements Listener {
+
         @Override
         public void onNegativeClick() {
         }
     }
-
-
 }

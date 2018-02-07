@@ -16,8 +16,11 @@ import com.github.alexpfx.udacity.beercollection.detail.DetailActivity;
 public class NotificationUtils {
 
     private static final int BEER_INFO_UPDATES_PENDING_INTENT_ID = 1001;
+
     private static final String CACHE_CLEANER_INFO_CHANNEL_ID = "notification";
+
     private static final int BEER_INFO_UPDATES_NOTIFICATION_ID = 1001;
+
 
     public static void showInfoAboutCacheCleanerProcess(Context context, int count) {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context
@@ -47,8 +50,8 @@ public class NotificationUtils {
             builder.setPriority(NotificationCompat.PRIORITY_HIGH);
         }
         notificationManager.notify(BEER_INFO_UPDATES_NOTIFICATION_ID, builder.build());
-
     }
+
 
     private static PendingIntent contentIntent(Context context) {
         Intent intent = new Intent(context, DetailActivity.class);

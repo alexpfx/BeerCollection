@@ -3,8 +3,6 @@ package com.github.alexpfx.udacity.beercollection.search;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -39,20 +37,27 @@ public class SearchFragment extends BaseFragment implements com.github.alexpfx.u
 
     @BindView(R.id.rcv_search_result)
     RecyclerView rcvSearchResult;
+
     @Inject
     SearchPresenter searchPresenter;
+
     @Inject
     SearchAdapter adapter;
+
     @BindView(R.id.edt_search_query)
     TextInputEditText edtSearchQuery;
 
     CompositeDisposable compositeDisposable = new CompositeDisposable();
+
     Listener listener;
+
     private Unbinder unbinder;
+
 
     public SearchFragment() {
         setHasOptionsMenu(true);
     }
+
 
     @Override
     public void onAttach(Context context) {
@@ -60,12 +65,13 @@ public class SearchFragment extends BaseFragment implements com.github.alexpfx.u
         listener = (Listener) context;
     }
 
+
     @Override
     protected void injectDependencies(BeerApp app) {
         app.getSearchSubComponent().inject(this);
         searchPresenter.init(this);
-
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -81,6 +87,7 @@ public class SearchFragment extends BaseFragment implements com.github.alexpfx.u
         return view;
     }
 
+
     private void initializeRecyclerView() {
         rcvSearchResult.setAdapter(adapter);
         LinearLayoutManager layout = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -88,8 +95,11 @@ public class SearchFragment extends BaseFragment implements com.github.alexpfx.u
         rcvSearchResult.addItemDecoration(new DividerItemDecoration(getContext(), layout.getOrientation()));
     }
 
+
     private void setupEvents() {
-        /*TODO: explicar */
+        /*Implementa typeahead search utilizando operadores rxJava. O search será acionado apenas quando o usuário
+        digitar 3 ou mais caractéres
+         * e o intervalo entre-queries é de  QUERY_DEBONCE_TIME millisegundos */
         RxTextView.textChanges(edtSearchQuery)
                 .filter(charSequence -> charSequence.length() >= 3)
                 .debounce(Constants.QUERY_DEBONCE_TIME, TimeUnit.MILLISECONDS)
@@ -102,7 +112,6 @@ public class SearchFragment extends BaseFragment implements com.github.alexpfx.u
             String beerName = (String) view.getTag(R.id.tag_beer_name);
 
             listener.onDownload(beerId, beerName);
-
         });
         compositeDisposable.add(disposable);
 
@@ -113,20 +122,6 @@ public class SearchFragment extends BaseFragment implements com.github.alexpfx.u
         compositeDisposable.add(disposable);
     }
 
-    @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-
-        if (savedInstanceState != null) {
-
-        }
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-
-
-    }
 
     @Override
     public void onDestroyView() {
@@ -134,6 +129,7 @@ public class SearchFragment extends BaseFragment implements com.github.alexpfx.u
         rcvSearchResult.setAdapter(null);
         unbinder.unbind();
     }
+
 
     @Override
     public void onDetach() {
@@ -143,34 +139,41 @@ public class SearchFragment extends BaseFragment implements com.github.alexpfx.u
         listener = null;
     }
 
+
     @Override
     public void showSearchResult(List<Beer> searchResult) {
         adapter.setItems(searchResult);
     }
 
+
     @Override
     public void showSearchError() {
     }
+
 
     @Override
     public void showNoResults(String query) {
         //não mostra nada, pois com o Typeahead Search este método é chamado constantemente.
     }
 
+
     @Override
     public void showLoading() {
 
     }
+
 
     @Override
     public void hideLoading() {
 
     }
 
+
     @Override
     public void clearResults() {
         adapter.clear();
     }
+
 
     @OnClick(R.id.button_search)
     public void onSearchClick(View view) {
@@ -180,16 +183,16 @@ public class SearchFragment extends BaseFragment implements com.github.alexpfx.u
         }
     }
 
+
     private void performSearch(String query) {
         searchPresenter.search(query);
     }
 
+
     public interface Listener {
+
         void onDetail(String id);
 
         void onDownload(String id, String name);
-
-
     }
-
 }

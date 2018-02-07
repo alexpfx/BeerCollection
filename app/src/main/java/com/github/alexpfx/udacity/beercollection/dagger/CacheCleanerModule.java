@@ -15,6 +15,4 @@ public class CacheCleanerModule {
     public CacheCleanerPresenter cacheCleanerPresenter(CacheCleanerPresenterImpl cacheCleanerPresenter) {
         return cacheCleanerPresenter;
     }
-
-
 }

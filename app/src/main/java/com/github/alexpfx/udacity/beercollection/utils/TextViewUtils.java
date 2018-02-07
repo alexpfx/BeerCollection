@@ -8,6 +8,7 @@ public final class TextViewUtils {
     private TextViewUtils() {
     }
 
+
     public static String valueOrDash(Object value) {
         if (TextUtils.isEmpty((CharSequence) value)) {
             return " - ";
@@ -15,6 +16,4 @@ public final class TextViewUtils {
             return value.toString();
         }
     }
-
-
 }

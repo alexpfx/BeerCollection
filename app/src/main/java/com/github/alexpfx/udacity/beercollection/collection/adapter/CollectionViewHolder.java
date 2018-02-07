@@ -1,13 +1,8 @@
-package com.github.alexpfx.udacity.beercollection.collection;
+package com.github.alexpfx.udacity.beercollection.collection.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.StringRes;
 import android.support.constraint.ConstraintLayout;
-import android.support.v4.graphics.ColorUtils;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.TooltipCompat;
 import android.text.TextUtils;
@@ -25,8 +20,6 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -64,70 +57,20 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.view_clicable_area)
     View viewClicableArea;
 
-    Target target = new Target() {
-        @Override
-        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-            imageBeerLabel.setImageBitmap(bitmap);
-
-            Palette.from(bitmap).generate(palette -> {
-                Palette.Swatch swatch = palette.getDominantSwatch();
-                Palette.Swatch vibrantSwatch = palette.getDarkVibrantSwatch();
-
-                int textColor = swatch.getTitleTextColor();
-
-                int rgb = swatch.getRgb();
-
-                layout.setBackgroundColor(rgb);
-
-                textBeerName.setTextColor(textColor);
-                textQuantity.setTextColor(rgb);
-
-                int alphaTitleTextColor = alpha(textColor);
-                textQuantity.setBackgroundColor(alphaTitleTextColor);
-
-                textLastDrinkDate.setTextColor(rgb);
-                textLastDrinkDate.setBackgroundColor(alphaTitleTextColor);
-
-                PorterDuff.Mode mode = PorterDuff.Mode.MULTIPLY;
-                if (vibrantSwatch != null) {
-                    btnDrink.getDrawable().setColorFilter(vibrantSwatch.getRgb(), mode);
-                } else {
-                    btnDrink.getDrawable().setColorFilter(rgb, mode);
-                }
-            });
-        }
-
-
-        int alpha(int color) {
-            return ColorUtils.setAlphaComponent(color, 100);
-        }
-
-
-        @Override
-        public void onBitmapFailed(Drawable errorDrawable) {
-
-        }
-
-
-        @Override
-        public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-        }
-    };
+    Target target = new LabelCollectionImageViewTarget(this);
 
     private Context context;
 
 
     public CollectionViewHolder(View itemView, PublishSubject<View> detailEvent, PublishSubject<View>
-            addBeerEvent, PublishSubject<View>
-                                        toggleSelectionEvent,
-                                PublishSubject<View> toggleSelectionModeEvent
-    ) {
+            addBeerEvent, PublishSubject<View> toggleSelectionEvent,
+                                PublishSubject<View> toggleSelectionModeEvent) {
         super(itemView);
         this.detailEvent = detailEvent;
         this.addBeerEvent = addBeerEvent;
         this.toggleSelectionEvent = toggleSelectionEvent;
         this.toggleSelectionModeEvent = toggleSelectionModeEvent;
+
 
         ButterKnife.bind(this, itemView);
         context = itemView.getContext();
@@ -141,10 +84,11 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
      */
     private void setupEvents() {
         RxView.clicks(btnDrink).map(a -> itemView).subscribe(addBeerEvent);
-        CompositeClickListener compositeClickListener = new CompositeClickListener(itemView);
 
+        CompositeClickListener compositeClickListener = new CompositeClickListener(itemView);
         compositeClickListener.registerListener(detailEvent::onNext);
         compositeClickListener.registerListener(toggleSelectionEvent::onNext);
+
 
         viewClicableArea.setOnClickListener(compositeClickListener);
 
@@ -216,35 +160,11 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
     }
 
 
-    class CompositeClickListener implements View.OnClickListener {
-
-        private View view;
-
-        private Collection<View.OnClickListener> listenerCollection = new ArrayList<>();
-
-
-        public CompositeClickListener(View view) {
-            this.view = view;
-        }
-
-
-        public void registerListener(View.OnClickListener onClickListener) {
-            listenerCollection.add(onClickListener);
-        }
-
-
-        public void unRegisterListener(View.OnClickListener onClickListener) {
-            listenerCollection.remove(onClickListener);
-        }
-
-
-        @Override
-        public void onClick(View v) {
-            for (View.OnClickListener onClickListener : listenerCollection) {
-                onClickListener.onClick(view);
-            }
-        }
+    public void onDestroy() {
+        viewClicableArea.setOnClickListener(null);
     }
 }
+
+
 
 

@@ -9,6 +9,5 @@ import dagger.Subcomponent;
 @Subcomponent(modules = {DetailModule.class, BeerModule.class})
 public interface DetailSubComponent {
 
-    //    void inject (DetailActivity activity);
     void inject(DetailFragment fragment);
 }

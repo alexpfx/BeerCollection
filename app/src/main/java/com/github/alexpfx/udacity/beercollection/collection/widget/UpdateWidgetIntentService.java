@@ -15,6 +15,7 @@ public class UpdateWidgetIntentService extends IntentService {
 
     private static final String ACTION_UPDATE_COLLECTION = "ACTION_UPDATE_COLLECTION";
 
+
     public UpdateWidgetIntentService() {
         super("UpdateWidgetIntentService");
     }
@@ -26,6 +27,7 @@ public class UpdateWidgetIntentService extends IntentService {
         context.startService(intent);
     }
 
+
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         if (intent == null) {
@@ -36,6 +38,5 @@ public class UpdateWidgetIntentService extends IntentService {
 
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, CollectionWidgetProvider.class));
         appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_list_collection);
-
     }
 }

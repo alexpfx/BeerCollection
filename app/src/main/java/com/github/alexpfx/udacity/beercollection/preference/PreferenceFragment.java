@@ -28,16 +28,20 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Clea
 
     @Inject
     ClearCollectionPresenter presenter;
+
     private Preference.OnPreferenceClickListener onResetClick = preference -> {
         SwitchPreference switchPreference = (SwitchPreference) preference;
 
         startDialog(switchPreference);
         return false;
     };
+
     private Unbinder unbinder;
+
 
     public PreferenceFragment() {
     }
+
 
     private void startDialog(SwitchPreference switchPreference) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -55,19 +59,19 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Clea
         builder.create().show();
     }
 
+
     private void clearCollection() {
         presenter.clearCollection();
-
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         injectDependencies();
         setupEvents();
-
-
     }
+
 
     private void injectDependencies() {
         BeerApp app = (BeerApp) getActivity().getApplication();
@@ -81,11 +85,12 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Clea
         preference.setOnPreferenceClickListener(onResetClick);
     }
 
+
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.main_preferences);
-
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -94,11 +99,13 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Clea
         return view;
     }
 
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
+
 
     @Override
     public void onDestroy() {
@@ -106,6 +113,7 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Clea
 
         onResetClick = null;
     }
+
 
     @Override
     public void onDetach() {
@@ -117,7 +125,6 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Clea
     @Override
     public void showClearDataSuccessful() {
         showSnackbarMessage(R.string.message_successful_clear_collection_data);
-
     }
 
 
@@ -127,8 +134,8 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Clea
             Snackbar.make(coordinator, getString(messageResId), Snackbar
                     .LENGTH_SHORT).show();
         }
-
     }
+
 
     @Override
     public void showClearDataError() {

@@ -1,4 +1,4 @@
-package com.github.alexpfx.udacity.beercollection.collection;
+package com.github.alexpfx.udacity.beercollection.collection.adapter;
 
 public interface MultiSelectableAdapter {
 
@@ -11,6 +11,4 @@ public interface MultiSelectableAdapter {
     void setSelected(int position, boolean isSelected);
 
     void clearSelections();
-
-
 }

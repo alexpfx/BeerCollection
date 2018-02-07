@@ -28,12 +28,14 @@ public class DetailFragment extends BaseFragment implements LoadBeerInfoPresente
     LoadBeerInfoPresenter loadBeerInfoPresenter;
 
     private Listener listener;
+
     private DetailViewHolder detailViewHolder;
 
 
     public DetailFragment() {
         setHasOptionsMenu(true);
     }
+
 
     public static DetailFragment getInstance(String beerId) {
         DetailFragment detailFragment = new DetailFragment();
@@ -42,6 +44,7 @@ public class DetailFragment extends BaseFragment implements LoadBeerInfoPresente
         detailFragment.setArguments(args);
         return detailFragment;
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,6 +56,7 @@ public class DetailFragment extends BaseFragment implements LoadBeerInfoPresente
         return view;
     }
 
+
     private String getBeerId() {
         if (getActivityIntent().hasExtra(Constants.KEY_BEER_ID)) {
             return getActivityIntent().getStringExtra(Constants.KEY_BEER_ID);
@@ -61,11 +65,13 @@ public class DetailFragment extends BaseFragment implements LoadBeerInfoPresente
         }
     }
 
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         detailViewHolder.unbind();
     }
+
 
     @Override
     public void onDetach() {
@@ -73,6 +79,7 @@ public class DetailFragment extends BaseFragment implements LoadBeerInfoPresente
         loadBeerInfoPresenter.unLoad();
         listener = null;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -84,6 +91,7 @@ public class DetailFragment extends BaseFragment implements LoadBeerInfoPresente
         return super.onOptionsItemSelected(item);
     }
 
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -93,14 +101,15 @@ public class DetailFragment extends BaseFragment implements LoadBeerInfoPresente
         } else {
             listener = Listener.EMPTY;
         }
-
     }
+
 
     @Override
     protected void injectDependencies(BeerApp app) {
         app.getDetailSubComponent().inject(this);
         loadBeerInfoPresenter.init(this);
     }
+
 
     @Override
     public void showBeerInfo(Beer beer) {
@@ -109,20 +118,23 @@ public class DetailFragment extends BaseFragment implements LoadBeerInfoPresente
         listener.onImageChanged(beer.getLabelLarge());
 
         detailViewHolder.setBeer(beer);
-
     }
+
 
     @Override
     public void showLoadError(Throwable throwable) {
 
     }
 
+
     public interface Listener {
+
         Listener EMPTY = new Listener() {
             @Override
             public void onTitleChanged(String title) {
                 Log.d(TAG, "onTitleChanged: ");
             }
+
 
             @Override
             public void onImageChanged(String imgUrl) {
@@ -134,6 +146,4 @@ public class DetailFragment extends BaseFragment implements LoadBeerInfoPresente
 
         void onImageChanged(String imgUrl);
     }
-
-
 }

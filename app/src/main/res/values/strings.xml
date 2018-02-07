@@ -41,7 +41,6 @@
 
     <string name="message_beer_was_deleted">Beer(s) was deleted!</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="history_fragment">Hello History Fragment</string>
     <string name="hello_detail_fragment">Detail Fragment</string>
     <string name="label_short_style">Short Name</string>
@@ -63,7 +62,6 @@
     <string name="search">Search</string>
     <string name="label_search_beer_name">Beer name</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="label_detail_brewery_name">Brewery</string>
     <string name="label_detail_brewery_website">Website</string>
@@ -84,12 +82,12 @@
     <string name="title_favorite_beers">Favorite Beers</string>
     <string name="message_beer_added_collection">Beer %s added to collection!</string>
 
-    <item type="id" name="tag_beer_name"/>
-    <item type="id" name="tag_beer_id"/>
+    <item name="tag_beer_name" type="id"/>
+    <item name="tag_beer_id" type="id"/>
 
 
     <string name="pref_key_send_notification_when_cache_cleared_key" translatable="false">cache_send_notification</string>
-    <string name="pref_key_send_notification_when_cache_cleared_label" >Send notification when cache is cleared</string>
+    <string name="pref_key_send_notification_when_cache_cleared_label">Send notification when cache is cleared</string>
     <string name="pref_no">No</string>
     <string name="pref_yes">Yes</string>
     <string name="message_cache_clared">Cache cleared!</string>

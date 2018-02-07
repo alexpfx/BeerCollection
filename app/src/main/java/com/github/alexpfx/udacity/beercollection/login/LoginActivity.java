@@ -20,10 +20,12 @@ public class LoginActivity extends BaseActivity {
     @Inject
     FirebaseAuth firebaseAuth;
 
+
     public static void startLoginActivity(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
         context.startActivity(intent);
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,7 @@ public class LoginActivity extends BaseActivity {
         processLogin();
     }
 
+
     private void processLogin() {
         if (firebaseAuth.getCurrentUser() != null) {
             startMainScreen();
@@ -41,15 +44,18 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
+
     private void startMainScreen() {
         startActivity(new Intent(this, MyCollectionActivity.class));
         finish();
     }
 
+
     @Override
     protected void injectDependencies(BeerApp app) {
         app.getComponent().inject(this);
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -33,6 +33,7 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionFr
 
     @Inject
     DrinkBeerPresenter drinkBeerPresenter;
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
@@ -47,16 +48,19 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionFr
     @BindView(R.id.guideline)
     Guideline guideline;
 
+
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
     }
+
 
     @OnClick(R.id.fab)
     public void onFabClick() {
         Intent intent = new Intent(this, SearchActivity.class);
         startActivity(intent);
     }
+
 
     @Override
     public void navigateToDetail(String beerId) {
@@ -69,6 +73,7 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionFr
             startActivity(intent);
         }
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -85,6 +90,7 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionFr
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,18 +112,38 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionFr
         }
     }
 
+
     private void setupToolbar() {
         ToolbarUtils.setupToolbar(this, toolbar, true, false, false, false);
         textToolbarTitle.setText(getString(R.string.activity_title_my_collection));
-
     }
+
+
+    @Override
+    protected void injectDependencies(BeerApp app) {
+        app.getMyCollectionSubComponent().inject(this);
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+
+    private void startSettingsActivity() {
+        Intent intent = new Intent(getApplicationContext(), PreferenceActivity.class);
+        startActivity(intent);
+    }
+
 
     private void onBackStackChanged() {
         updateVisibility();
     }
 
+
     /**
-     * Shows/hide the fragment by moving the Guideline.
+     * Mostra/ esconde o fragment movendo a guidline.
      */
     private void updateVisibility() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.container_pane2);
@@ -126,16 +152,18 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionFr
         } else {
             showSecondPane();
         }
-
     }
+
 
     private void hideSecondPane() {
         changeGuidePercent(1f);
     }
 
+
     private void showSecondPane() {
         changeGuidePercent(0.5f);
     }
+
 
     private void changeGuidePercent(float percent) {
         if (guideline != null) {
@@ -144,21 +172,4 @@ public class MyCollectionActivity extends BaseActivity implements MyCollectionFr
             guideline.setLayoutParams(lp);
         }
     }
-
-    @Override
-    protected void injectDependencies(BeerApp app) {
-        app.getMyCollectionSubComponent().inject(this);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    private void startSettingsActivity() {
-        Intent intent = new Intent(getApplicationContext(), PreferenceActivity.class);
-        startActivity(intent);
-    }
-
-
 }

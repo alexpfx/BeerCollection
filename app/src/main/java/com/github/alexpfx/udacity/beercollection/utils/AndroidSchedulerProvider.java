@@ -16,10 +16,12 @@ public class AndroidSchedulerProvider implements SchedulerProvider {
     public AndroidSchedulerProvider() {
     }
 
+
     @Override
     public Scheduler computation() {
         return Schedulers.computation();
     }
+
 
     @Override
     public Scheduler mainThread() {

@@ -17,10 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Single;
-
-/**
- * Created by alexandre on 24/12/17.
- */
+import io.reactivex.SingleEmitter;
 
 public class BeerCollectionDataSourceImpl implements BeerCollectionDataSource {
     public static final String COLLECTION_CHILD = "collection";
@@ -65,25 +62,7 @@ public class BeerCollectionDataSourceImpl implements BeerCollectionDataSource {
             final Query myCollection = ref.orderByKey();
 
 
-            ValueEventListener eventListener = new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-
-                    for (DataSnapshot child : children) {
-                        CollectionItemVO valuex = child.getValue(CollectionItemVO.class);
-                        items.add(valuex);
-                    }
-                    source.onSuccess(items);
-                    myCollection.removeEventListener(this);
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    source.onError(new RuntimeException(databaseError.getMessage()));
-                    myCollection.removeEventListener(this);
-                }
-            };
+            ValueEventListener eventListener = new QueryAllEventListener(items, source, myCollection);
 
             myCollection.addListenerForSingleValueEvent(eventListener);
 
@@ -110,21 +89,77 @@ public class BeerCollectionDataSourceImpl implements BeerCollectionDataSource {
 
             Query query = ref.orderByChild("beerId").equalTo(id);
 
-            ValueEventListener v = new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (DataSnapshot child : dataSnapshot.getChildren()) {
-                        ref.child(child.getKey()).setValue(null).addOnSuccessListener(aVoid -> emitter.onSuccess(id));
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    emitter.onError(databaseError.toException());
-                }
-            };
+            ValueEventListener v = new DeleteBeerEventListener(ref, emitter, id);
 
             query.addListenerForSingleValueEvent(v);
         });
+    }
+
+
+    private static class DeleteBeerEventListener implements ValueEventListener {
+
+        private final DatabaseReference ref;
+
+        private final SingleEmitter<Object> emitter;
+
+        private final String id;
+
+
+        public DeleteBeerEventListener(DatabaseReference ref, SingleEmitter<Object> emitter, String id) {
+            this.ref = ref;
+            this.emitter = emitter;
+            this.id = id;
+        }
+
+
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            for (DataSnapshot child : dataSnapshot.getChildren()) {
+                ref.child(child.getKey()).setValue(null).addOnSuccessListener(aVoid -> emitter.onSuccess(id));
+            }
+        }
+
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+            emitter.onError(databaseError.toException());
+        }
+    }
+
+    private static class QueryAllEventListener implements ValueEventListener {
+
+        private final List<CollectionItemVO> items;
+
+        private final SingleEmitter<List<CollectionItemVO>> source;
+
+        private final Query myCollection;
+
+
+        public QueryAllEventListener(List<CollectionItemVO> items, SingleEmitter<List<CollectionItemVO>> source,
+                                     Query myCollection) {
+            this.items = items;
+            this.source = source;
+            this.myCollection = myCollection;
+        }
+
+
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+
+            for (DataSnapshot child : children) {
+                CollectionItemVO valuex = child.getValue(CollectionItemVO.class);
+                items.add(valuex);
+            }
+            source.onSuccess(items);
+            myCollection.removeEventListener(this);
+        }
+
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+            source.onError(new RuntimeException(databaseError.getMessage()));
+            myCollection.removeEventListener(this);
+        }
     }
 }

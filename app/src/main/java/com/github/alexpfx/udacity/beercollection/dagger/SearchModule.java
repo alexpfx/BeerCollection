@@ -16,17 +16,17 @@ public class SearchModule {
 
     }
 
+
     @Provides
     @PerActivity
     public SearchPresenter searchPresenter(DefaultSearchPresenter searchPresenter) {
         return searchPresenter;
     }
 
+
     @Provides
     @PerActivity
     public SearchInteractor searchInteractor(DefaultSearchInteractor searchInteractor) {
         return searchInteractor;
     }
-
-
 }

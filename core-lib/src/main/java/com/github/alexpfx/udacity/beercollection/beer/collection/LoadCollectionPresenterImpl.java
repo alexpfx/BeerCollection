@@ -48,6 +48,9 @@ public class LoadCollectionPresenterImpl implements LoadCollectionPresenter {
         view.showLoading();
 
 
+        /*TODO explicar
+        O trecho abaixo utiliza operadores RxJava para basicamente: ouvir duas fontes de dados
+         */
         Disposable disposable = collectionInteractor.load().timeout(Constants.TIMEOUT, TimeUnit.SECONDS).toFlowable()
                 .flatMap
                         (Flowable::fromIterable)

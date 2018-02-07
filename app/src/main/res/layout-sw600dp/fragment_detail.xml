@@ -22,13 +22,13 @@
         <ImageView
             android:id="@+id/img_beer_label"
             android:layout_width="0dp"
+            android:layout_height="@dimen/card_height_gigant"
+            android:contentDescription="@string/content_beer_label"
+            android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_height="@dimen/card_height_gigant"
-            tools:src="@drawable/heineken"
-            android:scaleType="centerCrop"
-            android:contentDescription="@string/content_beer_label"/>
+            tools:src="@drawable/heineken"/>
 
         <TextView
             android:id="@+id/lbl_beer_info"
@@ -43,8 +43,8 @@
             style="@style/Label"
             android:text="@string/label_detail_beer_name"
             app:layout_constraintStart_toStartOf="@+id/guideline_1x"
-            app:layout_constraintTop_toBottomOf="@+id/lbl_beer_info" />
-        
+            app:layout_constraintTop_toBottomOf="@+id/lbl_beer_info"/>
+
 
         <TextView
             android:id="@+id/lbl_brewery_name"
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:text="@string/label_detail_brewery_name"
             app:layout_constraintStart_toStartOf="@+id/guideline_1x"
-            app:layout_constraintTop_toBottomOf="@+id/txt_beer_description" />
+            app:layout_constraintTop_toBottomOf="@+id/txt_beer_description"/>
 
         <TextView
             android:id="@+id/txt_brewery_name"
@@ -63,7 +63,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/lbl_brewery_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/guideline_3x" />
+            app:layout_constraintStart_toStartOf="@+id/guideline_3x"/>
 
 
         <TextView
@@ -73,21 +73,18 @@
             android:layout_height="wrap_content"
             android:text="@string/label_detail_brewery_website"
             app:layout_constraintStart_toStartOf="@+id/guideline_1x"
-            app:layout_constraintTop_toBottomOf="@+id/txt_brewery_name" />
+            app:layout_constraintTop_toBottomOf="@+id/txt_brewery_name"/>
 
         <TextView
             android:id="@+id/txt_brewery_website"
             style="@style/Content"
             android:layout_width="0dp"
-            android:autoLink="web"
             android:layout_height="wrap_content"
+            android:autoLink="web"
             app:layout_constraintBottom_toBottomOf="@+id/lbl_brewery_website"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/guideline_3x" />
-
-
-
+            app:layout_constraintStart_toStartOf="@+id/guideline_3x"/>
 
 
         <TextView
@@ -98,14 +95,14 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/guideline_3x"
             app:layout_constraintTop_toBottomOf="@+id/lbl_beer_info"
-            tools:text="Heineken" />
+            tools:text="Heineken"/>
 
         <TextView
             android:id="@+id/lbl_beer_description"
             style="@style/Label"
             android:text="@string/label_detail_beer_description"
             app:layout_constraintStart_toStartOf="@+id/guideline_1x"
-            app:layout_constraintTop_toBottomOf="@+id/lbl_beer_name" />
+            app:layout_constraintTop_toBottomOf="@+id/lbl_beer_name"/>
 
         <TextView
             android:id="@+id/txt_beer_description"
@@ -113,7 +110,7 @@
             android:layout_width="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline_3x"
-            app:layout_constraintTop_toBottomOf="@+id/txt_beer_name" />
+            app:layout_constraintTop_toBottomOf="@+id/txt_beer_name"/>
 
 
         <TextView
@@ -121,14 +118,14 @@
             style="@style/HeadSection"
             android:text="@string/label_style"
             app:layout_constraintStart_toStartOf="@+id/guideline_1x"
-            app:layout_constraintTop_toBottomOf="@+id/txt_brewery_website" />
+            app:layout_constraintTop_toBottomOf="@+id/txt_brewery_website"/>
 
         <TextView
             android:id="@+id/lbl_short_style"
             style="@style/Label"
             android:text="@string/label_short_style"
             app:layout_constraintStart_toStartOf="@+id/guideline_1x"
-            app:layout_constraintTop_toBottomOf="@+id/lbl_style_name" />
+            app:layout_constraintTop_toBottomOf="@+id/lbl_style_name"/>
 
         <TextView
 
@@ -138,7 +135,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/guideline_3x"
-            tools:text="American Dark Lager" />
+            tools:text="American Dark Lager"/>
 
 
         <TextView
@@ -146,7 +143,7 @@
             style="@style/Label"
             android:text="@string/label_style_name"
             app:layout_constraintStart_toStartOf="@+id/guideline_1x"
-            app:layout_constraintTop_toBottomOf="@+id/lbl_style" />
+            app:layout_constraintTop_toBottomOf="@+id/lbl_style"/>
 
         <TextView
             android:id="@+id/txt_style_name"
@@ -155,7 +152,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/guideline_3x"
-            tools:text="American-Style Dark Lager" />
+            tools:text="American-Style Dark Lager"/>
 
 
         <TextView
@@ -163,7 +160,7 @@
             style="@style/Label"
             android:text="@string/label_style_category"
             app:layout_constraintStart_toStartOf="@+id/guideline_1x"
-            app:layout_constraintTop_toBottomOf="@+id/lbl_short_style" />
+            app:layout_constraintTop_toBottomOf="@+id/lbl_short_style"/>
 
         <TextView
             android:id="@+id/txt_style_category_name"
@@ -172,7 +169,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/guideline_3x"
-            tools:text="North American Lager" />
+            tools:text="North American Lager"/>
 
 
         <TextView
@@ -180,21 +177,21 @@
             style="@style/HeadSection"
             android:text="@string/label_characteristics"
             app:layout_constraintStart_toStartOf="@+id/guideline_1x"
-            app:layout_constraintTop_toBottomOf="@+id/lbl_style_category_name" />
+            app:layout_constraintTop_toBottomOf="@+id/lbl_style_category_name"/>
 
         <TextView
             android:id="@+id/lbl_abv"
             style="@style/Label"
             android:text="@string/label_properties_abv"
             app:layout_constraintStart_toStartOf="@+id/guideline_1x"
-            app:layout_constraintTop_toBottomOf="@+id/lbl_characteristics" />
+            app:layout_constraintTop_toBottomOf="@+id/lbl_characteristics"/>
 
         <TextView
             android:id="@+id/txt_abv"
             style="@style/Content"
             app:layout_constraintBottom_toBottomOf="@+id/lbl_abv"
             app:layout_constraintStart_toStartOf="@+id/guideline_2x"
-            tools:text="10%" />
+            tools:text="10%"/>
 
 
         <TextView
@@ -202,21 +199,21 @@
             style="@style/LabelInlineMargin"
             android:text="@string/label_properties_ibu"
             app:layout_constraintStart_toStartOf="@+id/guideline_1x"
-            app:layout_constraintTop_toBottomOf="@+id/lbl_abv" />
+            app:layout_constraintTop_toBottomOf="@+id/lbl_abv"/>
 
         <TextView
             android:id="@+id/txt_ibu"
             style="@style/Content"
             app:layout_constraintBottom_toBottomOf="@+id/lbl_ibu"
             app:layout_constraintStart_toStartOf="@+id/guideline_2x"
-            tools:text="10" />
+            tools:text="10"/>
 
         <TextView
             android:id="@+id/lbl_srm"
             style="@style/LabelInlineMargin"
             android:text="@string/label_properties_srm"
             app:layout_constraintStart_toStartOf="@+id/guideline_3x"
-            app:layout_constraintTop_toBottomOf="@+id/lbl_characteristics" />
+            app:layout_constraintTop_toBottomOf="@+id/lbl_characteristics"/>
 
 
         <TextView
@@ -224,25 +221,25 @@
             style="@style/Content"
             app:layout_constraintBottom_toBottomOf="@+id/lbl_srm"
             app:layout_constraintStart_toStartOf="@+id/guideline_4x"
-            tools:text="5" />
+            tools:text="5"/>
 
         <ImageView
             android:id="@+id/img_srm_color"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
+            android:contentDescription="@string/content_srm_color"
             app:layout_constraintBottom_toBottomOf="@+id/txt_ibu"
             app:layout_constraintEnd_toEndOf="@+id/txt_srm"
             app:layout_constraintStart_toStartOf="@+id/guideline_3x"
-            app:layout_constraintTop_toBottomOf="@+id/lbl_srm"
-            android:contentDescription="@string/content_srm_color"/>
+            app:layout_constraintTop_toBottomOf="@+id/lbl_srm"/>
 
         <TextView
             android:id="@+id/lbl_serving"
             style="@style/HeadSection"
             android:text="@string/label_serving"
             app:layout_constraintStart_toStartOf="@+id/guideline_1x"
-            app:layout_constraintTop_toBottomOf="@+id/lbl_ibu" />
+            app:layout_constraintTop_toBottomOf="@+id/lbl_ibu"/>
 
 
         <TextView
@@ -250,14 +247,14 @@
             style="@style/LabelInlineMargin"
             android:text="@string/label_serving_temperature"
             app:layout_constraintStart_toStartOf="@+id/guideline_1x"
-            app:layout_constraintTop_toBottomOf="@+id/lbl_serving" />
+            app:layout_constraintTop_toBottomOf="@+id/lbl_serving"/>
 
         <TextView
             android:id="@+id/txt_serving_temperature"
             style="@style/Content"
             app:layout_constraintBottom_toBottomOf="@+id/lbl_serving_temperature"
             app:layout_constraintStart_toStartOf="@+id/guideline_3x"
-            tools:text="Cold" />
+            tools:text="Cold"/>
 
 
         <TextView
@@ -265,14 +262,14 @@
             style="@style/LabelInlineMargin"
             android:text="@string/label_serving_glass"
             app:layout_constraintStart_toStartOf="@+id/guideline_1x"
-            app:layout_constraintTop_toBottomOf="@+id/lbl_serving_temperature" />
+            app:layout_constraintTop_toBottomOf="@+id/lbl_serving_temperature"/>
 
         <TextView
             android:id="@+id/txt_glass"
             style="@style/Content"
             app:layout_constraintBottom_toBottomOf="@+id/lbl_glass"
             app:layout_constraintStart_toStartOf="@+id/guideline_3x"
-            tools:text="Pint" />
+            tools:text="Pint"/>
 
 
         <android.support.constraint.Guideline
@@ -280,7 +277,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="@dimen/guideline_margin_1x" />
+            app:layout_constraintGuide_begin="@dimen/guideline_margin_1x"/>
 
 
         <android.support.constraint.Guideline
@@ -288,7 +285,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="@dimen/guideline_margin_2x" />
+            app:layout_constraintGuide_begin="@dimen/guideline_margin_2x"/>
 
 
         <android.support.constraint.Guideline
@@ -297,14 +294,14 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
 
-            app:layout_constraintGuide_begin="@dimen/guideline_margin_3x" />
+            app:layout_constraintGuide_begin="@dimen/guideline_margin_3x"/>
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline_4x"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="@dimen/guideline_margin_4x" />
+            app:layout_constraintGuide_begin="@dimen/guideline_margin_4x"/>
 
 
     </android.support.constraint.ConstraintLayout>

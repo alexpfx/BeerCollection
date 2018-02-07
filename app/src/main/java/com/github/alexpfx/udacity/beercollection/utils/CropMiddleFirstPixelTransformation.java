@@ -8,7 +8,9 @@ import com.squareup.picasso.Transformation;
  * Transformation usado para cortar bordas brancas das imagens carregadas pelo Picasso.
  */
 public class CropMiddleFirstPixelTransformation implements Transformation {
+
     private int mWidth;
+
     private int mHeight;
 
 
@@ -43,8 +45,8 @@ public class CropMiddleFirstPixelTransformation implements Transformation {
         source.recycle();
 
         return bitmap;
-
     }
+
 
     private int getFirstNonWhitePosition(int[] horizontalMiddleArray) {
         int left = 0;
@@ -55,10 +57,10 @@ public class CropMiddleFirstPixelTransformation implements Transformation {
             if (left != horizontalMiddleArray[i]) {
                 return i;
             }
-
         }
         return -1;
     }
+
 
     private int getLastNonWhitePosition(int[] horizontalMiddleArray) {
         int right = 0;
@@ -74,6 +76,7 @@ public class CropMiddleFirstPixelTransformation implements Transformation {
         return -1;
     }
 
+
     private boolean isNegative(int... values) {
         for (int i : values) {
             if (i < 0) {
@@ -81,8 +84,8 @@ public class CropMiddleFirstPixelTransformation implements Transformation {
             }
         }
         return true;
-
     }
+
 
     @Override
     public String key() {

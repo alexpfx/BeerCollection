@@ -35,7 +35,7 @@ public class LoadBeerInfoPresenterImpl implements LoadBeerInfoPresenter {
                             error.printStackTrace();
                             view.showLoadError(error);
                         }, () -> {
-                            //TODO
+                            //onComplete
                         });
 
         compositeDisposable.add(disposable);

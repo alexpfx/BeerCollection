@@ -25,14 +25,12 @@ public class DetailActivity extends BaseActivity implements DetailFragment.Liste
     @BindView(R.id.collapsing_toolbar)
     CollapsingToolbarLayout collapsingToolbarLayout;
 
-
     @Nullable
     @BindView(R.id.toolbar_image)
     ImageView imgToolbar;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-
 
     @BindView(R.id.txt_toolbar_title)
     TextView toolbarTitle;
@@ -44,6 +42,7 @@ public class DetailActivity extends BaseActivity implements DetailFragment.Liste
         return intent;
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,10 +53,12 @@ public class DetailActivity extends BaseActivity implements DetailFragment.Liste
         ToolbarUtils.setupToolbar(this, toolbar, false, true, false, false);
     }
 
+
     @Override
     protected void injectDependencies(BeerApp app) {
 
     }
+
 
     @Override
     public void onTitleChanged(String title) {
@@ -66,11 +67,9 @@ public class DetailActivity extends BaseActivity implements DetailFragment.Liste
     }
 
 
-    private static final String TAG = "DetailActivity";
     @Override
     public void onImageChanged(String imgUrl) {
-        if (imgToolbar == null){
-            //tablet
+        if (imgToolbar == null) {
             return;
         }
 

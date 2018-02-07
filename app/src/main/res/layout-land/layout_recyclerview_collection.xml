@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.RecyclerView
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rcv_collection"
     android:layout_width="match_parent"
@@ -9,8 +9,8 @@
     android:clipToPadding="true"
     android:visibility="invisible"
     app:layoutManager="android.support.v7.widget.GridLayoutManager"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     app:spanCount="3"
     tools:listitem="@layout/item_collection"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
 
     tools:showIn="@layout/fragment_my_collection"/>
