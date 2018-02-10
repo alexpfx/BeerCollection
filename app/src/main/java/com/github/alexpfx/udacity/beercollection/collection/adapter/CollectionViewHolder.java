@@ -161,7 +161,7 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
 
 
     public void onDestroy() {
-        viewClicableArea.setOnClickListener(null);
+    //    viewClicableArea.setOnClickListener(null);
     }
 }
 
