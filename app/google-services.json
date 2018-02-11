@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "676555223828",
+    "firebase_url": "https://beercollection-b7111.firebaseio.com",
+    "project_id": "beercollection-b7111",
+    "storage_bucket": "beercollection-b7111.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:676555223828:android:60c58624ef125fd3",
+        "android_client_info": {
+          "package_name": "com.github.alexpfx.udacity.beercollection"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "676555223828-bmsl57n2g775ih66nlqa6kfqavn0igrp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.github.alexpfx.udacity.beercollection",
+            "certificate_hash": "989e6e049306d735157842a0cac2c21580cc56ae"
+          }
+        },
+        {
+          "client_id": "676555223828-2dj2qk4cncj0n3dl15vnbo593vepp0j8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3VEwOVVL0IXTvzMzpNwGS6veM_SoT5d4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "676555223828-2dj2qk4cncj0n3dl15vnbo593vepp0j8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
