@@ -17,7 +17,6 @@ dependencies {
         k, v -> testCompile v
     }
 
-    implementation 'com.jakewharton.timber:timber:4.6.0'
 
     compileOnly 'org.projectlombok:lombok:1.16.20'
 
