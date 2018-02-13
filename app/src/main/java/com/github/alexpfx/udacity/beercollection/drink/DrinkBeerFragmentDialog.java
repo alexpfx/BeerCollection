@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.NumberPicker;
 
-import com.github.alexpfx.udacity.beercollection.Constants;
+import com.github.alexpfx.udacity.beercollection.Constants.Keys;
 import com.github.alexpfx.udacity.beercollection.R;
 
 import butterknife.BindView;
@@ -32,7 +32,7 @@ public class DrinkBeerFragmentDialog extends DialogFragment {
 
     public static DrinkBeerFragmentDialog getInstance(String beerId) {
         Bundle bundle = new Bundle();
-        bundle.putString(Constants.KEY_BEER_ID, beerId);
+        bundle.putString(Keys.BEER_ID, beerId);
         DrinkBeerFragmentDialog drinkBeerFragmentDialog = new DrinkBeerFragmentDialog();
         drinkBeerFragmentDialog.setArguments(bundle);
         return drinkBeerFragmentDialog;

@@ -1,19 +1,31 @@
 package com.github.alexpfx.udacity.beercollection;
 
 
-public class Constants {
+public interface Constants {
 
-    public static final String KEY_BEER_ID = "KEY_BEER_KEY";
+    int DEFAULT_TIMEOUT = 30;
+    long CACHE_EXPIRATION_HOURS = 24;
+    int DEFAULT_MAX_SEARCH_RESULTS = 10;
+    long QUERY_DEBONCE_TIME = 500;
+    int DETAIL_BEER_LABEL_IMAGE_SIZE = 800;
+    int COLLECTION_BEER_LABEL_IMAGE_SIZE = 480;
+    int SEARCH_BEER_LABEL_IMAGE_SIZE = 320;
 
 
-    public static final int TIMEOUT = 30;
+    interface Keys {
+        String ADAPTER = "ADAPTER";
+        String SEARCH_QUERY = "SEARCH_QUERY";
+        String BEER_ID = "BEER_KEY";
+        String LAST_LIST_POSITION = "LAST_LIST_POSITION";
+        String IS_SELECTABLE = "IS_SELECTABLE";
+        String SELECTEDS = "SELECTEDS";
+    }
 
-    public static final long CACHE_EXPIRATION = 24;
 
-    public static final int DEFAULT_MAX_SEARCH_RESULTS = 10;
+    interface Beer {
 
-    public static final long QUERY_DEBONCE_TIME = 500;
-    public static final int DETAIL_BEER_LABEL_IMAGE_SIZE = 800;
-    public static final int COLLECTION_BEER_LABEL_IMAGE_SIZE = 480;
-    public static final int SEARCH_BEER_LABEL_IMAGE_SIZE = 320;
+        String BEER_ID = "beerId";
+        String QUANTITY = "quantity";
+        String TIMESTAMP = "timestamp";
+    }
 }

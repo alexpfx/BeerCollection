@@ -47,7 +47,7 @@ public class LoadCollectionPresenterImpl implements LoadCollectionPresenter {
     public void load(Comparator<CollectionItem> comparator) {
         view.showLoading();
 
-        Disposable disposable = collectionInteractor.load().timeout(Constants.TIMEOUT, TimeUnit.SECONDS).toFlowable()
+        Disposable disposable = collectionInteractor.load().timeout(Constants.DEFAULT_TIMEOUT, TimeUnit.SECONDS).toFlowable()
                 .flatMap
                         (Flowable::fromIterable)
                 .flatMap(civo ->

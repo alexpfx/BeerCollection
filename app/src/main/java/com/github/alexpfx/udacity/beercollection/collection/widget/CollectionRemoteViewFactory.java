@@ -8,7 +8,7 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.github.alexpfx.udacity.beercollection.BeerApp;
-import com.github.alexpfx.udacity.beercollection.Constants;
+import com.github.alexpfx.udacity.beercollection.Constants.Keys;
 import com.github.alexpfx.udacity.beercollection.R;
 import com.github.alexpfx.udacity.beercollection.beer.collection.LoadCollectionPresenter;
 import com.github.alexpfx.udacity.beercollection.beer.collection.MyCollectionView;
@@ -97,7 +97,7 @@ public class CollectionRemoteViewFactory implements RemoteViewsService.RemoteVie
 
         Intent fillInIntent = new Intent();
 
-        fillInIntent.putExtra(Constants.KEY_BEER_ID, item.getBeer().getId());
+        fillInIntent.putExtra(Keys.BEER_ID, item.getBeer().getId());
         remoteViews.setOnClickFillInIntent(R.id.widget_item_beer, fillInIntent);
 
         return remoteViews;

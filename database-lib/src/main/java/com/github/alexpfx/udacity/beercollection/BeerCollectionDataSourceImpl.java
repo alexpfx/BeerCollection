@@ -1,5 +1,6 @@
 package com.github.alexpfx.udacity.beercollection;
 
+import com.github.alexpfx.udacity.beercollection.Constants.Beer;
 import com.github.alexpfx.udacity.beercollection.domain.model.DrinkBeerUpdateItem;
 import com.github.alexpfx.udacity.beercollection.domain.model.collection.CollectionItemVO;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,7 +22,6 @@ import io.reactivex.SingleEmitter;
 
 public class BeerCollectionDataSourceImpl implements BeerCollectionDataSource {
     public static final String COLLECTION_CHILD = "collection";
-    private static final String TAG = "BeerCollectionDataSourc";
     private FirebaseDatabase database;
     private FirebaseAuth firebaseAuth;
 
@@ -39,9 +39,9 @@ public class BeerCollectionDataSourceImpl implements BeerCollectionDataSource {
 
             Map map = new HashMap();
             Integer quantity = collectionItem.getQuantity();
-            map.put("beerId", collectionItem.getBeerId());
-            map.put("quantity", quantity);
-            map.put("timestamp", ServerValue.TIMESTAMP);
+            map.put(Beer.BEER_ID, collectionItem.getBeerId());
+            map.put(Beer.QUANTITY, quantity);
+            map.put(Beer.TIMESTAMP, ServerValue.TIMESTAMP);
 
             refCollection.push()
                     .setValue(map)
@@ -87,7 +87,7 @@ public class BeerCollectionDataSourceImpl implements BeerCollectionDataSource {
         return Single.create(emitter -> {
             DatabaseReference ref = database.getReference().child(firebaseAuth.getCurrentUser().getUid()).child(COLLECTION_CHILD);
 
-            Query query = ref.orderByChild("beerId").equalTo(id);
+            Query query = ref.orderByChild(Beer.BEER_ID).equalTo(id);
 
             ValueEventListener v = new DeleteBeerEventListener(ref, emitter, id);
 

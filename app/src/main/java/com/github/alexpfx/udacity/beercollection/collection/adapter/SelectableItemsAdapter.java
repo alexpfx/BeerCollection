@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 
+import com.github.alexpfx.udacity.beercollection.Constants.Keys;
 import com.github.alexpfx.udacity.beercollection.R;
 import com.github.alexpfx.udacity.beercollection.databaselib.dagger.PerActivity;
 import com.github.alexpfx.udacity.beercollection.domain.model.collection.CollectionItem;
@@ -32,9 +33,6 @@ import io.reactivex.subjects.PublishSubject;
 public class SelectableItemsAdapter extends RecyclerView.Adapter<CollectionViewHolder> implements
         MultiSelectableAdapter, Filterable {
 
-    public static final String SELECTED_KEY = "selectables";
-
-    public static final String IS_SELECTABLE_KEY = "IS_SELECTABLE";
 
     private final PublishSubject<View> detailEvent = PublishSubject.create();
 
@@ -202,7 +200,7 @@ public class SelectableItemsAdapter extends RecyclerView.Adapter<CollectionViewH
 
     public Bundle onSaveInstanceState() {
         Bundle bundle = new Bundle();
-        bundle.putBoolean(IS_SELECTABLE_KEY, selectable);
+        bundle.putBoolean(Keys.IS_SELECTABLE, selectable);
         if (!selectable) {
             return bundle;
         }
@@ -212,7 +210,7 @@ public class SelectableItemsAdapter extends RecyclerView.Adapter<CollectionViewH
         for (Integer itemIndex : selectedItemsIndex) {
             sparseBooleanArray.put(itemIndex, true);
         }
-        bundle.putParcelable(SELECTED_KEY, new SparseBooleanArrayParcelable(sparseBooleanArray));
+        bundle.putParcelable(Keys.SELECTEDS, new SparseBooleanArrayParcelable(sparseBooleanArray));
         return bundle;
     }
 
@@ -221,12 +219,12 @@ public class SelectableItemsAdapter extends RecyclerView.Adapter<CollectionViewH
         if (bundle == null) {
             return;
         }
-        selectable = bundle.getBoolean(IS_SELECTABLE_KEY);
+        selectable = bundle.getBoolean(Keys.IS_SELECTABLE);
 
         if (!selectable) {
             return;
         }
-        sparseBooleanArray = bundle.getParcelable(SELECTED_KEY);
+        sparseBooleanArray = bundle.getParcelable(Keys.SELECTEDS);
         for (int i = 0; i < items.size(); i++) {
             SelectableItem<CollectionItem> collectionItemSelectableItem = items.get(i);
             collectionItemSelectableItem.setSelected(sparseBooleanArray.getSparseBooleanArray().get(i));

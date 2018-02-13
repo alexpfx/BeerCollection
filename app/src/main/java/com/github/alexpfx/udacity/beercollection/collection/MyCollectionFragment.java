@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.github.alexpfx.udacity.beercollection.BaseFragment;
 import com.github.alexpfx.udacity.beercollection.BeerApp;
+import com.github.alexpfx.udacity.beercollection.Constants.Keys;
 import com.github.alexpfx.udacity.beercollection.R;
 import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerPresenter;
 import com.github.alexpfx.udacity.beercollection.beer.DrinkBeerView;
@@ -49,11 +50,7 @@ import io.reactivex.disposables.Disposable;
 public class MyCollectionFragment extends BaseFragment implements MyCollectionView, SwipeRefreshLayout
         .OnRefreshListener, DrinkBeerView, DeleteBeerView {
 
-    public static final String LAST_POSITION = "lastPosition";
 
-    public static final String ADAPTER_KEY = "adapter_key";
-
-    public static final String SEARCH_QUERY_KEY = "SEARCH_QUERY_KEY";
 
     @BindView(R.id.rcv_collection)
     RecyclerView rcvCollection;
@@ -146,7 +143,7 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
         setupEvents();
 
         if (savedInstanceState != null) {
-            lastPosition = savedInstanceState.getInt(LAST_POSITION);
+            lastPosition = savedInstanceState.getInt(Keys.LAST_LIST_POSITION);
         }
 
         loadCollectionPresenter.load(Comparators.COLLECTION_ITEM_BY_DATE_DESC);
@@ -169,19 +166,19 @@ public class MyCollectionFragment extends BaseFragment implements MyCollectionVi
             return;
         }
         getLinearLayoutManager().scrollToPositionWithOffset(lastPosition, 0);
-        Bundle adapterState = savedInstanceState.getBundle(ADAPTER_KEY);
+        Bundle adapterState = savedInstanceState.getBundle(Keys.ADAPTER);
 
-        searchQuery = savedInstanceState.getString(SEARCH_QUERY_KEY);
+        searchQuery = savedInstanceState.getString(Keys.SEARCH_QUERY);
         this.adapterState = adapterState;
     }
 
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putInt(LAST_POSITION, getLinearLayoutManager().findFirstVisibleItemPosition());
+        outState.putInt(Keys.LAST_LIST_POSITION, getLinearLayoutManager().findFirstVisibleItemPosition());
         Bundle adapterBundle = adapter.onSaveInstanceState();
-        outState.putBundle(ADAPTER_KEY, adapterBundle);
-        outState.putString(SEARCH_QUERY_KEY, searchView.getQuery().toString());
+        outState.putBundle(Keys.ADAPTER, adapterBundle);
+        outState.putString(Keys.SEARCH_QUERY, searchView.getQuery().toString());
     }
 
 

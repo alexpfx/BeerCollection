@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.github.alexpfx.udacity.beercollection.BaseFragment;
 import com.github.alexpfx.udacity.beercollection.BeerApp;
-import com.github.alexpfx.udacity.beercollection.Constants;
+import com.github.alexpfx.udacity.beercollection.Constants.Keys;
 import com.github.alexpfx.udacity.beercollection.R;
 import com.github.alexpfx.udacity.beercollection.beer.beer.LoadBeerInfoPresenter;
 import com.github.alexpfx.udacity.beercollection.beer.beer.LoadBeerInfoPresenterView;
@@ -40,7 +40,7 @@ public class DetailFragment extends BaseFragment implements LoadBeerInfoPresente
     public static DetailFragment getInstance(String beerId) {
         DetailFragment detailFragment = new DetailFragment();
         Bundle args = new Bundle();
-        args.putString(Constants.KEY_BEER_ID, beerId);
+        args.putString(Keys.BEER_ID, beerId);
         detailFragment.setArguments(args);
         return detailFragment;
     }
@@ -58,10 +58,10 @@ public class DetailFragment extends BaseFragment implements LoadBeerInfoPresente
 
 
     private String getBeerId() {
-        if (getActivityIntent().hasExtra(Constants.KEY_BEER_ID)) {
-            return getActivityIntent().getStringExtra(Constants.KEY_BEER_ID);
+        if (getActivityIntent().hasExtra(Keys.BEER_ID)) {
+            return getActivityIntent().getStringExtra(Keys.BEER_ID);
         } else {
-            return getArguments().getString(Constants.KEY_BEER_ID);
+            return getArguments().getString(Keys.BEER_ID);
         }
     }
 

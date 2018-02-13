@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.github.alexpfx.udacity.beercollection.BaseActivity;
 import com.github.alexpfx.udacity.beercollection.BeerApp;
 import com.github.alexpfx.udacity.beercollection.Constants;
+import com.github.alexpfx.udacity.beercollection.Constants.Keys;
 import com.github.alexpfx.udacity.beercollection.R;
 import com.github.alexpfx.udacity.beercollection.utils.CropMiddleFirstPixelTransformation;
 import com.github.alexpfx.udacity.beercollection.utils.ToolbarUtils;
@@ -38,7 +39,7 @@ public class DetailActivity extends BaseActivity implements DetailFragment.Liste
 
     public static Intent getStartIntent(Context context, String beerId) {
         Intent intent = new Intent(context, DetailActivity.class);
-        intent.putExtra(Constants.KEY_BEER_ID, beerId);
+        intent.putExtra(Keys.BEER_ID, beerId);
         return intent;
     }
 
