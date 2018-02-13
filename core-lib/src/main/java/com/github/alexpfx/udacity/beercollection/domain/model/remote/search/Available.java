@@ -1,9 +1,15 @@
 package com.github.alexpfx.udacity.beercollection.domain.model.remote.search;
 
-import javax.annotation.Generated;
 import com.google.gson.annotations.SerializedName;
 
+import javax.annotation.Generated;
+
+import lombok.Data;
+import lombok.ToString;
+
 @Generated("com.robohorse.robopojogenerator")
+@Data
+@ToString
 public class Available{
 
 	@SerializedName("name")
@@ -15,37 +21,4 @@ public class Available{
 	@SerializedName("id")
 	private int id;
 
-	public void setName(String name){
-		this.name = name;
-	}
-
-	public String getName(){
-		return name;
-	}
-
-	public void setDescription(String description){
-		this.description = description;
-	}
-
-	public String getDescription(){
-		return description;
-	}
-
-	public void setId(int id){
-		this.id = id;
-	}
-
-	public int getId(){
-		return id;
-	}
-
-	@Override
- 	public String toString(){
-		return 
-			"Available{" + 
-			"name = '" + name + '\'' + 
-			",description = '" + description + '\'' + 
-			",id = '" + id + '\'' + 
-			"}";
-		}
 }

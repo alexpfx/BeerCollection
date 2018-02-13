@@ -6,10 +6,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by alexandre on 15/11/17.
- */
-
 public class CollectionItem {
 
     private List<CollectionItemVO> itemVOList;

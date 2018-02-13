@@ -19,6 +19,13 @@ dependencies {
 
     implementation 'com.jakewharton.timber:timber:4.6.0'
 
+    compileOnly 'org.projectlombok:lombok:1.16.20'
+
+    apt 'org.projectlombok:lombok:1.16.20'
+
+
+
+
 }
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"

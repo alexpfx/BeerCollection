@@ -1,8 +1,5 @@
 package com.github.alexpfx.udacity.beercollection.domain.model;
 
-/**
- * Created by alexandre on 12/11/17.
- */
 
 public class DrinkBeerUpdateItem {
 

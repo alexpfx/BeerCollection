@@ -4,7 +4,12 @@ import com.google.gson.annotations.SerializedName;
 
 import javax.annotation.Generated;
 
+import lombok.Data;
+import lombok.ToString;
+
 @Generated("com.robohorse.robopojogenerator")
+@Data
+@ToString
 public class LoadBeerResponse extends ServerResponse{
 
     @SerializedName("data")
@@ -14,32 +19,6 @@ public class LoadBeerResponse extends ServerResponse{
     private String message;
 
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public DataItem getDataItem() {
-        return dataItem;
-    }
-
-    public void setDataItem(DataItem dataItem) {
-        this.dataItem = dataItem;
-    }
-
-
-    @Override
-    public String toString() {
-        return
-                "LoadBeerResponse{" +
-                        "dataItem = '" + dataItem + '\'' +
-                        ",message = '" + message + '\'' +
-                        ",status = '" + getStatus() + '\'' +
-                        "}";
-    }
 
 
     @Override
