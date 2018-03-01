@@ -19,6 +19,8 @@ android {
 
         buildTypes.each {
             it.buildConfigField 'String', 'KEY_BREWERYDB', project_keys['brewerydb_key']
+            it.buildConfigField('String', 'UNTAPPDCLIENTID', project_keys['untappdClientId'])
+            it.buildConfigField('String', 'UNTAPPDCLIENTSECRET', project_keys['untappdClientSecret'])
         }
 
         configurations.all {

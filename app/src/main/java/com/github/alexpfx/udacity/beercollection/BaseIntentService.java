@@ -9,7 +9,6 @@ public abstract class BaseIntentService extends IntentService {
         super(name);
     }
 
-
     @Override
     public void onCreate() {
         super.onCreate();
